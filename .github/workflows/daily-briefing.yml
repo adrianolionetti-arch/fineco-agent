@@ -1,0 +1,82 @@
+name: Daily Briefing
+
+on:
+  schedule:
+    # 07:30 UTC = 09:30 ora italiana estate (08:30 inverno)
+    - cron: '30 7 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      model:
+        description: 'Override modello Claude (vuoto = default Sonnet)'
+        required: false
+        default: ''
+        type: choice
+        options:
+          - ''
+          - 'claude-haiku-4-5'
+          - 'claude-sonnet-4-5'
+          - 'claude-opus-4-7'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'daily-briefing'
+  cancel-in-progress: false
+
+jobs:
+  briefing-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run briefing
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+          CLAUDE_MODEL: ${{ inputs.model }}
+        run: python src/main.py
+
+      - name: Inject dashboard password hash
+        env:
+          DASHBOARD_PASSWORD: ${{ secrets.DASHBOARD_PASSWORD }}
+        run: |
+          if [ -z "$DASHBOARD_PASSWORD" ]; then
+            echo "::error::Secret DASHBOARD_PASSWORD mancante. Aggiungilo nelle impostazioni repo."
+            exit 1
+          fi
+          HASH=$(echo -n "$DASHBOARD_PASSWORD" | sha256sum | awk '{print $1}')
+          sed -i "s/__PASSWORD_HASH_PLACEHOLDER__/$HASH/g" docs/index.html
+          echo "Hash password iniettato"
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './docs'
+
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
+
+      - name: Commit journal and history
