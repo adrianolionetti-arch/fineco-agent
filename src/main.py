@@ -25,7 +25,7 @@ def main():
     print(f"  → {len(portfolio_data['alerts'])} alert soglia")
 
     print("\n[2/7] Fetch news finanziarie...")
-    tickers = [h["ticker"] for h in PORTFOLIO]
+    tickers = [h["display_ticker"] for h in PORTFOLIO]
     news = fetch_news(hours_back=24, portfolio_tickers=tickers)
     print(f"  → {len(news)} news raccolte")
 
