@@ -97,8 +97,9 @@ def fetch_twelvedata(symbol, display, currency):
 
 
 def fetch_borsaitaliana(isin, display, currency):
-    """Scarica prezzo attuale di un ETF dalla pagina pubblica di Borsa Italiana."""
-    url = "https://www.borsaitaliana.it/borsa/etf/scheda/" + isin + ".html"
+    """Scarica prezzo + variazione % di un ETF dalla pagina pubblica di Borsa Italiana."""
+    # NOTA: l'URL corretto ha il suffisso -ETFP, non solo l'ISIN
+    url = "https://www.borsaitaliana.it/borsa/etf/scheda/" + isin + "-ETFP.html?lang=it"
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
                       "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -113,39 +114,40 @@ def fetch_borsaitaliana(isin, display, currency):
     except Exception as e:
         return {"error": "BorsaItaliana HTTP: " + str(e)[:150], "ticker": display}
 
-    # Cerca il prezzo nella pagina HTML con vari pattern noti
-    current = None
+    # Cerca il blocco "Ultimo Contratto" che contiene prezzo e variazione %
+    # Pattern: il prezzo è in evidenza giallo, la variazione è a fianco
+    current_price = None
+    daily_change = 0.0
 
-    # Pattern 1: span con classe specifica
-    m = re.search(r'<span class="t-text -right -bold">\s*([\d\.,]+)\s*</span>', html)
-    if m:
-        current = m.group(1)
+    # Pattern principale: cerca un blocco con prezzo + variazione %
+    # Esempio nella pagina: <span>157,02</span> ... <span>-1,01%</span>
+    block_match = re.search(
+        r'(\d{1,3}(?:\.\d{3})*,\d{2})\s*[^\d\-+]{0,200}?([\-+]?\d+,\d+)%',
+        html
+    )
 
-    # Pattern 2: cerca un numero in formato italiano dentro un tag <strong>
-    if not current:
-        m = re.search(r'<strong>([\d]+,\d+)</strong>\s*<span[^>]*>\s*EUR', html)
+    if block_match:
+        price_str = block_match.group(1).replace(".", "").replace(",", ".")
+        change_str = block_match.group(2).replace(",", ".")
+        try:
+            current_price = float(price_str)
+            daily_change = float(change_str)
+        except ValueError:
+            current_price = None
+
+    # Fallback: cerca solo il prezzo se non riesco a estrarre la variazione
+    if current_price is None:
+        m = re.search(r'(\d{1,3}(?:\.\d{3})*,\d{2})\s*(?:</[^>]+>\s*){0,3}[\-+]?\d', html)
         if m:
-            current = m.group(1)
+            price_str = m.group(1).replace(".", "").replace(",", ".")
+            try:
+                current_price = float(price_str)
+            except ValueError:
+                pass
 
-    # Pattern 3: cerca "Prezzo Ultimo Contratto" o simile
-    if not current:
-        m = re.search(r'Ultimo Contratto[\s\S]{0,500}?([\d]+[\.,][\d]+)', html)
-        if m:
-            current = m.group(1)
-
-    if not current:
+    if current_price is None:
         return {
             "error": "Non sono riuscito a parsare il prezzo per " + display,
-            "ticker": display,
-        }
-
-    # Normalizza formato italiano (1.234,56) -> float
-    price_str = current.replace(".", "").replace(",", ".")
-    try:
-        current_price = float(price_str)
-    except ValueError:
-        return {
-            "error": "Prezzo non parsabile: " + current,
             "ticker": display,
         }
 
@@ -153,11 +155,11 @@ def fetch_borsaitaliana(isin, display, currency):
         "ticker": display,
         "current": round(current_price, 2),
         "currency": currency,
-        "daily_change_pct": 0.0,
+        "daily_change_pct": round(daily_change, 2),
         "weekly_change_pct": 0.0,
         "monthly_change_pct": 0.0,
         "volume": 0,
-        "note": "Prezzo da Borsa Italiana (storico non disponibile)",
+        "note": "Prezzo da Borsa Italiana (storico settimanale/mensile non disponibile)",
     }
 
 
