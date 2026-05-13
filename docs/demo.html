@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Briefing — Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0f0e0c; --bg-card: #161513; --bg-elevated: #1d1b18;
+    --ink: #e8e4d9; --ink-dim: #9a958a; --ink-muted: #625d54;
+    --accent: #d4a574; --rule: #2a2824;
+    --green: #7ab380; --green-bg: #1a2e1f;
+    --yellow: #d4a574; --yellow-bg: #2e241a;
+    --red: #c47a6f; --red-bg: #2e1c1a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    line-height: 1.5;
+    background-image:
+      radial-gradient(ellipse at top right, rgba(212, 165, 116, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom left, rgba(122, 179, 128, 0.03) 0%, transparent 50%);
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .serif { font-family: 'Fraunces', Georgia, serif; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 40px 28px 80px; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; padding-bottom: 20px; border-bottom: 1px solid var(--rule); }
+  header h1 { font-family: 'Fraunces', serif; font-weight: 400; font-size: 38px; letter-spacing: -0.02em; line-height: 1; }
+  header h1 em { font-style: italic; color: var(--accent); }
+  header .meta { text-align: right; font-size: 12px; color: var(--ink-dim); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.08em; }
+  .section-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--ink-muted); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .section-label::before { content: ''; display: inline-block; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; }
+  .signal-hero { padding: 32px; margin-bottom: 48px; border-radius: 2px; border-left: 3px solid var(--green); background: linear-gradient(90deg, var(--green-bg) 0%, var(--bg-card) 40%); }
+  .signal-hero .level { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--green); margin-bottom: 8px; }
+  .signal-hero .summary { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 400; line-height: 1.3; letter-spacing: -0.015em; margin-bottom: 16px; }
+  .signal-hero .summary em { font-style: italic; }
+  .signal-hero .detail { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .signal-hero .detail h4 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-muted); margin-bottom: 8px; }
+  .signal-hero .detail p { font-size: 14px; line-height: 1.6; color: var(--ink); }
+  .signal-hero .detail p.warn { color: var(--red); }
+  .portfolio-note { font-size: 14px; color: var(--ink-dim); font-style: italic; line-height: 1.6; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--rule); }
+  .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 32px; margin-bottom: 48px; }
+  .card { background: var(--bg-card); padding: 28px; border-radius: 2px; }
+  table.holdings { width: 100%; border-collapse: collapse; font-size: 14px; }
+  table.holdings th { text-align: left; padding: 10px 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); border-bottom: 1px solid var(--rule); }
+  table.holdings td { padding: 14px 8px; border-bottom: 1px solid var(--rule); }
+  table.holdings tr:last-child td { border-bottom: none; }
+  table.holdings .name { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 500; }
+  table.holdings .ticker { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-muted); margin-top: 2px; letter-spacing: 0.05em; }
+  table.holdings .pct { font-family: 'JetBrains Mono', monospace; font-weight: 500; text-align: right; }
+  .pos { color: var(--green); } .neg { color: var(--red); } .zero { color: var(--ink-muted); }
+  .chart-wrap { position: relative; height: 320px; margin-top: 8px; }
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 12px; }
+  .stat { padding: 18px 14px; background: var(--bg-elevated); border-radius: 2px; text-align: center; }
+  .stat .val { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 500; display: block; line-height: 1.1; }
+  .stat .val.mono { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+  .stat .lbl { font-family: 'JetBrains Mono', monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--ink-muted); margin-top: 6px; display: block; }
+  .timeline { display: flex; flex-direction: column; gap: 14px; }
+  .sig-item { padding: 16px 18px; background: var(--bg-card); border-left: 2px solid var(--ink-muted); border-radius: 2px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start; }
+  .sig-item.green { border-left-color: var(--green); }
+  .sig-item.yellow { border-left-color: var(--yellow); }
+  .sig-item .head { display: flex; gap: 10px; align-items: center; margin-bottom: 6px; flex-wrap: wrap; }
+  .sig-item .date { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-muted); }
+  .sig-item .lvl-tag { font-family: 'JetBrains Mono', monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 0.15em; padding: 2px 8px; border-radius: 2px; }
+  .sig-item.green .lvl-tag { background: var(--green-bg); color: var(--green); }
+  .sig-item.yellow .lvl-tag { background: var(--yellow-bg); color: var(--yellow); }
+  .sig-item .tkr { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 13px; }
+  .sig-item .act { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+  .sig-item .reas { font-size: 12px; color: var(--ink-dim); line-height: 1.5; }
+  .sig-item .perf { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 18px; text-align: right; min-width: 80px; }
+  .sig-item .perf-lbl { font-family: 'JetBrains Mono', monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); text-align: right; margin-top: 2px; }
+  .news-list { list-style: none; } .news-list li { padding: 12px 0; border-bottom: 1px solid var(--rule); } .news-list li:last-child { border-bottom: none; }
+  .news-list a { color: var(--ink); text-decoration: none; display: block; } .news-list a:hover { color: var(--accent); }
+  .news-list .src { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); }
+  .news-list .title { font-size: 14px; line-height: 1.4; margin-top: 4px; }
+  .events-list { list-style: none; } .events-list li { padding: 12px 0; border-bottom: 1px solid var(--rule); font-size: 13px; color: var(--ink-dim); }
+  .events-list li:last-child { border-bottom: none; }
+  footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--rule); font-size: 11px; color: var(--ink-muted); text-align: center; line-height: 1.7; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.02em; }
+  @media (max-width: 800px) { .grid-2 { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) {
+    header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    header h1 { font-size: 30px; }
+    .signal-hero .detail { grid-template-columns: 1fr; gap: 16px; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .sig-item { grid-template-columns: 1fr; }
+    .sig-item .perf, .sig-item .perf-lbl { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Briefing<em>.</em></h1>
+    <div class="meta">
+      <div>MERCOLEDÌ 22 APRILE</div>
+      <div style="margin-top:4px; opacity:0.6;">Last update <span>09:31</span></div>
+    </div>
+  </header>
+
+  <div class="signal-hero">
+    <div class="level">● SEGNALE FORTE</div>
+    <div class="summary serif">NVIDIA in ritracciamento <em>tecnico</em> pre-earnings: possibile finestra di accumulo con piccola somma.</div>
+    <div class="detail">
+      <div>
+        <h4>Asset / Azione</h4>
+        <p><span class="mono">NVDA</span> — Considerare ingresso incrementale</p>
+        <p style="margin-top:12px;"><strong>Perché:</strong> Calo del 6.5% oggi su news macro non specifiche al titolo (tariffe sui semiconduttori), earnings il 29 aprile storicamente positivi negli ultimi 6 trimestri, prezzo torna vicino alla media mobile a 50 giorni.</p>
+      </div>
+      <div>
+        <h4>Rischio / Contro-argomento</h4>
+        <p class="warn">Riunione Fed venerdì: se tono hawkish possibile ulteriore calo del settore tech. Titolo ancora +8.7% sul mese, non è un'occasione storica ma un ritracciamento.</p>
+        <p style="margin-top:12px;"><strong>Importo suggerito:</strong> €150-200</p>
+      </div>
+    </div>
+    <div class="portfolio-note">Portafoglio in leggero calo nella settimana, trainato dalla correzione tech. ETF obbligazionari stabili, bilanciamento funziona come atteso.</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="section-label">Performance vs Benchmark</div>
+      <div class="chart-wrap"><canvas id="chart-perf"></canvas></div>
+      <p style="font-size:11px; color:var(--ink-muted); margin-top:10px; font-family:'JetBrains Mono', monospace;">
+        INDICE BASE 100 · CONFRONTO CON VWCE.DE
+      </p>
+    </div>
+    <div class="card">
+      <div class="section-label">Backtest Segnali</div>
+      <div class="stats-grid">
+        <div class="stat"><span class="val mono">58.3%</span><span class="lbl">Hit Rate</span></div>
+        <div class="stat"><span class="val mono pos">+2.41%</span><span class="lbl">Perf Media</span></div>
+        <div class="stat"><span class="val">12</span><span class="lbl">Segnali</span></div>
+      </div>
+      <p style="font-size:11px; color:var(--ink-muted); margin-top:20px; line-height:1.6;">
+        Performance calcolata come prezzo attuale vs prezzo al momento del segnale. Non include commissioni né timing di uscita.
+      </p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:48px;">
+    <div class="section-label">Portafoglio</div>
+    <table class="holdings">
+      <thead>
+        <tr>
+          <th>Asset</th>
+          <th class="pct" style="text-align:right;">Oggi</th>
+          <th class="pct" style="text-align:right;">7 giorni</th>
+          <th class="pct" style="text-align:right;">30 giorni</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="name">NVIDIA</div><div class="ticker">NVDA · stock</div></td>
+          <td class="pct neg">-6.50%</td>
+          <td class="pct neg">-4.10%</td>
+          <td class="pct pos">+8.70%</td>
+        </tr>
+        <tr>
+          <td><div class="name">Vanguard FTSE All-World</div><div class="ticker">VWCE.DE · etf equity</div></td>
+          <td class="pct neg">-1.23%</td>
+          <td class="pct neg">-2.05%</td>
+          <td class="pct pos">+3.40%</td>
+        </tr>
+        <tr>
+          <td><div class="name">iShares Global Aggregate Bond</div><div class="ticker">AGGH.MI · etf bond</div></td>
+          <td class="pct pos">+0.12%</td>
+          <td class="pct pos">+0.45%</td>
+          <td class="pct neg">-0.80%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-bottom: 48px;">
+    <div class="section-label">Cronologia Segnali</div>
+    <div class="timeline">
+      <div class="sig-item green">
+        <div>
+          <div class="head"><span class="date">2026-04-22 09:30</span><span class="lvl-tag">GREEN</span><span class="tkr">NVDA</span></div>
+          <div class="act">Considerare ingresso incrementale</div>
+          <div class="reas">Calo 6.5% su news macro non specifiche, earnings in arrivo con storico positivo, prezzo torna vicino alla media 50gg.</div>
+        </div>
+        <div><div class="perf zero">—</div><div class="perf-lbl">in attesa</div></div>
+      </div>
+      <div class="sig-item yellow">
+        <div>
+          <div class="head"><span class="date">2026-04-15 09:30</span><span class="lvl-tag">YELLOW</span><span class="tkr">AGGH.MI</span></div>
+          <div class="act">Spunto di accumulo graduale</div>
+          <div class="reas">ETF bond in calo da 3 settimane, livello storicamente buono per incrementare, ma trend tassi può continuare.</div>
+        </div>
+        <div><div class="perf pos">+1.24%</div><div class="perf-lbl">da allora</div></div>
+      </div>
+      <div class="sig-item green">
+        <div>
+          <div class="head"><span class="date">2026-04-02 09:30</span><span class="lvl-tag">GREEN</span><span class="tkr">VWCE.DE</span></div>
+          <div class="act">Ingresso su correzione tech</div>
+          <div class="reas">Correzione -5% settimana su tensioni commerciali Cina, valutazione torna a media 6 mesi, fondamentali intatti.</div>
+        </div>
+        <div><div class="perf pos">+3.82%</div><div class="perf-lbl">da allora</div></div>
+      </div>
+      <div class="sig-item yellow">
+        <div>
+          <div class="head"><span class="date">2026-03-18 09:30</span><span class="lvl-tag">YELLOW</span><span class="tkr">NVDA</span></div>
+          <div class="act">Prese di beneficio parziali</div>
+          <div class="reas">+22% sul mese, valutazione tirata, Fed meeting domani con incertezza.</div>
+        </div>
+        <div><div class="perf neg">-2.14%</div><div class="perf-lbl">da allora</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="section-label">News rilevanti</div>
+      <ul class="news-list">
+        <li><a href="#"><div class="src">Reuters</div><div class="title">Semiconductor sector drops on renewed China tariff tensions</div></a></li>
+        <li><a href="#"><div class="src">CNBC</div><div class="title">Fed minutes reveal split on rate path for June meeting</div></a></li>
+        <li><a href="#"><div class="src">Il Sole 24 Ore</div><div class="title">BCE verso pausa tassi: analisti divisi sul prossimo taglio</div></a></li>
+        <li><a href="#"><div class="src">MarketWatch</div><div class="title">NVIDIA earnings preview: what Wall Street expects on April 29</div></a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="section-label">Eventi in arrivo</div>
+      <ul class="events-list">
+        <li>NVDA trimestrale tra 7 giorni (data: 2026-04-29)</li>
+        <li>FOMC Meeting 24-25 aprile (decisione tassi Fed)</li>
+        <li>CPI USA pubblicato il 10 maggio</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    Dashboard generata automaticamente · Non costituisce consulenza finanziaria<br>
+    Modello: claude-sonnet-4-5
+  </footer>
+</div>
+
+<script>
+// Genera storico 60gg sintetico
+const dates = [], port = [], benc = [];
+let p = 100, b = 100;
+for (let i = 60; i >= 0; i--) {
+  const d = new Date(); d.setDate(d.getDate() - i);
+  dates.push(d.toISOString().split('T')[0]);
+  p *= 1 + (Math.random() - 0.47) * 0.018;
+  b *= 1 + (Math.random() - 0.48) * 0.012;
+  port.push(+p.toFixed(2));
+  benc.push(+b.toFixed(2));
+}
+new Chart(document.getElementById('chart-perf').getContext('2d'), {
+  type: 'line',
+  data: {
+    labels: dates,
+    datasets: [
+      { label: 'Il tuo portafoglio', data: port, borderColor: '#d4a574', backgroundColor: 'rgba(212, 165, 116, 0.08)', borderWidth: 2, fill: true, tension: 0.25, pointRadius: 0, pointHoverRadius: 4 },
+      { label: 'VWCE (ETF World)', data: benc, borderColor: '#7ab380', borderWidth: 1.5, borderDash: [4, 4], fill: false, tension: 0.25, pointRadius: 0, pointHoverRadius: 4 },
+    ],
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { labels: { color: '#9a958a', font: { family: 'JetBrains Mono', size: 11 }, boxWidth: 20, boxHeight: 2 } },
+      tooltip: { backgroundColor: '#1d1b18', titleColor: '#e8e4d9', bodyColor: '#e8e4d9', borderColor: '#2a2824', borderWidth: 1, titleFont: { family: 'JetBrains Mono', size: 11 }, bodyFont: { family: 'JetBrains Mono', size: 12 }, padding: 10 },
+    },
+    scales: {
+      x: { grid: { color: 'rgba(42, 40, 36, 0.5)', drawBorder: false }, ticks: { color: '#625d54', font: { family: 'JetBrains Mono', size: 10 }, maxTicksLimit: 8 } },
+      y: { grid: { color: 'rgba(42, 40, 36, 0.5)', drawBorder: false }, ticks: { color: '#625d54', font: { family: 'JetBrains Mono', size: 10 } } },
+    },
+  },
+});
+</script>
+</body>
+</html>

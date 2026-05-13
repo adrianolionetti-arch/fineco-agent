@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Briefing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #161513;
+    --bg-elevated: #1d1b18;
+    --ink: #e8e4d9;
+    --ink-dim: #9a958a;
+    --ink-muted: #625d54;
+    --accent: #d4a574;
+    --rule: #2a2824;
+    --green: #7ab380;
+    --green-bg: #1a2e1f;
+    --yellow: #d4a574;
+    --yellow-bg: #2e241a;
+    --red: #c47a6f;
+    --red-bg: #2e1c1a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    line-height: 1.5;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at top right, rgba(212, 165, 116, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom left, rgba(122, 179, 128, 0.03) 0%, transparent 50%);
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; font-feature-settings: "ss02"; }
+  .serif { font-family: 'Fraunces', Georgia, serif; }
+
+  /* Password Gate */
+  #gate {
+    position: fixed; inset: 0;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000;
+  }
+  #gate .box {
+    padding: 48px 56px;
+    max-width: 420px;
+    text-align: center;
+  }
+  #gate h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 42px;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  #gate p { color: var(--ink-dim); font-size: 14px; margin-bottom: 32px; }
+  #gate input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    padding: 12px 4px;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  #gate input:focus { border-bottom-color: var(--accent); }
+  #gate .err { color: var(--red); font-size: 13px; margin-top: 12px; min-height: 18px; }
+
+  /* Layout */
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 40px 28px 80px; display: none; }
+  .wrap.visible { display: block; }
+
+  /* Header */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 48px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--rule);
+  }
+  header h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 38px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  header h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  header .meta {
+    text-align: right;
+    font-size: 12px;
+    color: var(--ink-dim);
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* Section headers */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 4px; height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  /* Signal hero */
+  .signal-hero {
+    padding: 32px;
+    margin-bottom: 48px;
+    border-radius: 2px;
+    border-left: 3px solid var(--ink-muted);
+    background: var(--bg-card);
+    position: relative;
+    overflow: hidden;
+  }
+  .signal-hero.green { border-left-color: var(--green); background: linear-gradient(90deg, var(--green-bg) 0%, var(--bg-card) 40%); }
+  .signal-hero.yellow { border-left-color: var(--yellow); background: linear-gradient(90deg, var(--yellow-bg) 0%, var(--bg-card) 40%); }
+  .signal-hero .level {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+  }
+  .signal-hero.green .level { color: var(--green); }
+  .signal-hero.yellow .level { color: var(--yellow); }
+  .signal-hero .summary {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    margin-bottom: 16px;
+  }
+  .signal-hero .summary em { font-style: italic; }
+  .signal-hero .detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+  }
+  .signal-hero .detail h4 {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+  }
+  .signal-hero .detail p { font-size: 14px; line-height: 1.6; color: var(--ink); }
+  .signal-hero .detail p.warn { color: var(--red); }
+  .portfolio-note {
+    font-size: 14px;
+    color: var(--ink-dim);
+    font-style: italic;
+    line-height: 1.6;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* Grid */
+  .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 32px; margin-bottom: 48px; }
+  @media (max-width: 800px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--bg-card);
+    padding: 28px;
+    border-radius: 2px;
+  }
+
+  /* Holdings table */
+  table.holdings {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  table.holdings th {
+    text-align: left;
+    padding: 10px 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted);
+    border-bottom: 1px solid var(--rule);
+  }
+  table.holdings td {
+    padding: 14px 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+  table.holdings tr:last-child td { border-bottom: none; }
+  table.holdings .name-cell { display: flex; flex-direction: column; }
+  table.holdings .name { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 500; }
+  table.holdings .ticker { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-muted); margin-top: 2px; letter-spacing: 0.05em; }
+  table.holdings .pct { font-family: 'JetBrains Mono', monospace; font-weight: 500; text-align: right; }
+  .pos { color: var(--green); }
+  .neg { color: var(--red); }
+  .zero { color: var(--ink-muted); }
+
+  /* Chart containers */
+  .chart-wrap { position: relative; height: 280px; margin-top: 8px; }
+  .chart-wrap.tall { height: 320px; }
+
+  /* Backtest stats */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .stat {
+    padding: 18px 14px;
+    background: var(--bg-elevated);
+    border-radius: 2px;
+    text-align: center;
+  }
+  .stat .val {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    display: block;
+    line-height: 1.1;
+  }
+  .stat .val.mono { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+  .stat .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* Signals timeline */
+  .timeline { display: flex; flex-direction: column; gap: 14px; }
+  .sig-item {
+    padding: 16px 18px;
+    background: var(--bg-card);
+    border-left: 2px solid var(--ink-muted);
+    border-radius: 2px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: start;
+  }
+  .sig-item.green { border-left-color: var(--green); }
+  .sig-item.yellow { border-left-color: var(--yellow); }
+  .sig-item .head { display: flex; gap: 10px; align-items: center; margin-bottom: 6px; flex-wrap: wrap; }
+  .sig-item .date { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-muted); }
+  .sig-item .lvl-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+  .sig-item.green .lvl-tag { background: var(--green-bg); color: var(--green); }
+  .sig-item.yellow .lvl-tag { background: var(--yellow-bg); color: var(--yellow); }
+  .sig-item .tkr { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 13px; }
+  .sig-item .act { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+  .sig-item .reas { font-size: 12px; color: var(--ink-dim); line-height: 1.5; }
+  .sig-item .perf {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 18px;
+    text-align: right;
+    min-width: 80px;
+  }
+  .sig-item .perf-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted);
+    text-align: right;
+    margin-top: 2px;
+  }
+
+  /* News */
+  .news-list { list-style: none; }
+  .news-list li { padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  .news-list li:last-child { border-bottom: none; }
+  .news-list a { color: var(--ink); text-decoration: none; display: block; }
+  .news-list a:hover { color: var(--accent); }
+  .news-list .src { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); }
+  .news-list .title { font-size: 14px; line-height: 1.4; margin-top: 4px; }
+
+  /* Events list */
+  .events-list { list-style: none; }
+  .events-list li { padding: 12px 0; border-bottom: 1px solid var(--rule); font-size: 13px; color: var(--ink-dim); }
+  .events-list li:last-child { border-bottom: none; }
+
+  /* Footer */
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-align: center;
+    line-height: 1.7;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.02em;
+  }
+  .empty-state { padding: 40px; text-align: center; color: var(--ink-muted); font-style: italic; }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    header h1 { font-size: 30px; }
+    .signal-hero { padding: 22px; }
+    .signal-hero .summary { font-size: 20px; }
+    .signal-hero .detail { grid-template-columns: 1fr; gap: 16px; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    table.holdings th:nth-child(4), table.holdings td:nth-child(4) { display: none; }
+    .sig-item { grid-template-columns: 1fr; }
+    .sig-item .perf, .sig-item .perf-lbl { text-align: left; }
+  }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  .wrap.visible > * { animation: fadeUp 0.6s ease-out backwards; }
+  .wrap.visible > *:nth-child(1) { animation-delay: 0.0s; }
+  .wrap.visible > *:nth-child(2) { animation-delay: 0.08s; }
+  .wrap.visible > *:nth-child(3) { animation-delay: 0.16s; }
+  .wrap.visible > *:nth-child(4) { animation-delay: 0.24s; }
+  .wrap.visible > *:nth-child(5) { animation-delay: 0.32s; }
+  .wrap.visible > *:nth-child(6) { animation-delay: 0.4s; }
+</style>
+</head>
+<body>
+
+<!-- Password Gate -->
+<div id="gate">
+  <div class="box">
+    <h1>briefing<em>.</em></h1>
+    <p>Accesso riservato</p>
+    <input id="pwd" type="password" placeholder="••••••••" autofocus />
+    <div class="err" id="err"></div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="wrap" id="main">
+
+  <header>
+    <h1>Briefing<em>.</em></h1>
+    <div class="meta">
+      <div id="today-date">—</div>
+      <div style="margin-top:4px; opacity:0.6;">Last update <span id="gen-at">—</span></div>
+    </div>
+  </header>
+
+  <!-- Signal hero -->
+  <div id="signal-hero" class="signal-hero">
+    <div class="level" id="sig-level">—</div>
+    <div class="summary serif" id="sig-summary">Caricamento...</div>
+    <div id="sig-detail" class="detail" style="display:none;">
+      <div>
+        <h4>Asset / Azione</h4>
+        <p><span class="mono" id="sig-asset"></span> — <span id="sig-action"></span></p>
+        <p style="margin-top:12px;"><strong>Perché:</strong> <span id="sig-reasoning"></span></p>
+      </div>
+      <div>
+        <h4>Rischio / Contro-argomento</h4>
+        <p class="warn" id="sig-counter"></p>
+        <p id="sig-amount" style="margin-top:12px;"></p>
+      </div>
+    </div>
+    <div class="portfolio-note" id="portfolio-note"></div>
+  </div>
+
+  <!-- Chart + Backtest -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="section-label">Performance vs Benchmark</div>
+      <div class="chart-wrap tall">
+        <canvas id="chart-perf"></canvas>
+      </div>
+      <p style="font-size:11px; color:var(--ink-muted); margin-top:10px; font-family:'JetBrains Mono', monospace;">
+        INDICE BASE 100 · CONFRONTO CON VWCE.DE
+      </p>
+    </div>
+    <div class="card">
+      <div class="section-label">Backtest Segnali</div>
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat"><span class="val mono" id="s-hit">—</span><span class="lbl">Hit Rate</span></div>
+        <div class="stat"><span class="val mono" id="s-avg">—</span><span class="lbl">Perf Media</span></div>
+        <div class="stat"><span class="val" id="s-tot">—</span><span class="lbl">Segnali</span></div>
+      </div>
+      <p style="font-size:11px; color:var(--ink-muted); margin-top:20px; line-height:1.6;">
+        Performance calcolata come prezzo attuale vs prezzo al momento del segnale. Non include commissioni né timing di uscita. Per giudizio completo usa lo script di backtest in locale.
+      </p>
+    </div>
+  </div>
+
+  <!-- Holdings -->
+  <div class="card" style="margin-bottom:48px;">
+    <div class="section-label">Portafoglio</div>
+    <table class="holdings">
+      <thead>
+        <tr>
+          <th>Asset</th>
+          <th class="pct" style="text-align:right;">Oggi</th>
+          <th class="pct" style="text-align:right;">7 giorni</th>
+          <th class="pct" style="text-align:right;">30 giorni</th>
+        </tr>
+      </thead>
+      <tbody id="holdings-body"></tbody>
+    </table>
+  </div>
+
+  <!-- Timeline segnali -->
+  <div style="margin-bottom: 48px;">
+    <div class="section-label">Cronologia Segnali</div>
+    <div class="timeline" id="signals-timeline"></div>
+  </div>
+
+  <!-- News + Events -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="section-label">News rilevanti</div>
+      <ul class="news-list" id="news-list"></ul>
+    </div>
+    <div class="card">
+      <div class="section-label">Eventi in arrivo</div>
+      <ul class="events-list" id="events-list"></ul>
+    </div>
+  </div>
+
+  <footer>
+    Dashboard generata automaticamente · Non costituisce consulenza finanziaria<br>
+    Modello: <span id="model-used">—</span>
+  </footer>
+</div>
+
+<script>
+// === PASSWORD GATE ===
+// Obfuscazione base via hash SHA-256. Non è sicurezza vera — chiunque con DevTools vede il codice.
+// Per cambiare password: genera hash con https://emn178.github.io/online-tools/sha256.html
+// e sostituisci il valore qui sotto.
+const PASSWORD_HASH = "__PASSWORD_HASH_PLACEHOLDER__"; // sostituito automaticamente dal workflow
+const STORAGE_KEY = "brfng_auth_v1";
+
+async function sha256(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function checkAuth() {
+  // usa sessionStorage così la password resta solo per la sessione corrente
+  if (sessionStorage.getItem(STORAGE_KEY) === 'ok') {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('main').classList.add('visible');
+    loadDashboard();
+    return;
+  }
+  const input = document.getElementById('pwd');
+  const err = document.getElementById('err');
+  input.addEventListener('keydown', async (e) => {
+    if (e.key === 'Enter') {
+      const h = await sha256(input.value);
+      if (h === PASSWORD_HASH) {
+        sessionStorage.setItem(STORAGE_KEY, 'ok');
+        document.getElementById('gate').style.display = 'none';
+        document.getElementById('main').classList.add('visible');
+        loadDashboard();
+      } else {
+        err.textContent = 'Password non corretta';
+        input.value = '';
+      }
+    }
+  });
+}
+
+// === DASHBOARD ===
+async function loadDashboard() {
+  try {
+    const res = await fetch('data.json?t=' + Date.now());
+    const d = await res.json();
+    render(d);
+  } catch (e) {
+    document.getElementById('sig-summary').textContent = 'Errore caricamento dati. Riprova più tardi.';
+    console.error(e);
+  }
+}
+
+function pctClass(v) {
+  if (v > 0.05) return 'pos';
+  if (v < -0.05) return 'neg';
+  return 'zero';
+}
+function pctFmt(v) {
+  if (v === null || v === undefined) return '—';
+  return (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
+}
+
+function render(d) {
+  // Header date
+  const today = new Date();
+  document.getElementById('today-date').textContent = today.toLocaleDateString('it-IT', {
+    weekday: 'long', day: 'numeric', month: 'long'
+  }).toUpperCase();
+  if (d.generated_at) {
+    const gen = new Date(d.generated_at);
+    document.getElementById('gen-at').textContent = gen.toLocaleTimeString('it-IT', {hour:'2-digit', minute:'2-digit'});
+  }
+
+  // Signal hero
+  const b = d.briefing || {};
+  const level = (b.signal_level || 'NONE').toLowerCase();
+  const hero = document.getElementById('signal-hero');
+  hero.className = 'signal-hero ' + (level === 'green' ? 'green' : level === 'yellow' ? 'yellow' : '');
+  document.getElementById('sig-level').textContent = level === 'none' ? 'NESSUN SEGNALE' : level === 'green' ? '● SEGNALE FORTE' : '● SPUNTO DA VALUTARE';
+  document.getElementById('sig-summary').innerHTML = b.summary || 'Giornata tranquilla.';
+
+  if (level === 'green' || level === 'yellow') {
+    document.getElementById('sig-detail').style.display = 'grid';
+    document.getElementById('sig-asset').textContent = b.signal_asset || '—';
+    document.getElementById('sig-action').textContent = b.signal_action || '';
+    document.getElementById('sig-reasoning').textContent = b.signal_reasoning || '';
+    document.getElementById('sig-counter').textContent = b.signal_counter || '';
+    if (b.signal_suggested_amount_eur) {
+      document.getElementById('sig-amount').innerHTML = '<strong>Importo suggerito:</strong> €' + b.signal_suggested_amount_eur;
+    }
+  }
+  document.getElementById('portfolio-note').textContent = b.portfolio_note || '';
+  document.getElementById('model-used').textContent = b.model_used || '—';
+
+  // Holdings
+  const tbody = document.getElementById('holdings-body');
+  tbody.innerHTML = (d.holdings || []).map(h => `
+    <tr>
+      <td>
+        <div class="name-cell">
+          <span class="name">${h.name}</span>
+          <span class="ticker">${h.ticker} · ${h.type.replace('_', ' ')}</span>
+        </div>
+      </td>
+      <td class="pct ${pctClass(h.daily_pct)}">${pctFmt(h.daily_pct)}</td>
+      <td class="pct ${pctClass(h.weekly_pct)}">${pctFmt(h.weekly_pct)}</td>
+      <td class="pct ${pctClass(h.monthly_pct)}">${pctFmt(h.monthly_pct)}</td>
+    </tr>
+  `).join('');
+
+  // Performance chart
+  renderPerformanceChart(d.portfolio_history || [], d.benchmark?.series || []);
+
+  // Backtest stats
+  const bt = d.backtest || {};
+  document.getElementById('s-hit').textContent = bt.hit_rate !== null && bt.hit_rate !== undefined ? bt.hit_rate.toFixed(1) + '%' : '—';
+  const avgEl = document.getElementById('s-avg');
+  if (bt.avg_performance !== null && bt.avg_performance !== undefined) {
+    avgEl.textContent = pctFmt(bt.avg_performance);
+    avgEl.className = 'val mono ' + pctClass(bt.avg_performance);
+  } else avgEl.textContent = '—';
+  document.getElementById('s-tot').textContent = bt.total_signals || '0';
+
+  // Signals timeline
+  const tl = document.getElementById('signals-timeline');
+  const signals = (d.signals || []);
+  if (!signals.length) {
+    tl.innerHTML = '<div class="empty-state">Nessun segnale ancora registrato. Il diario si popolerà nei prossimi giorni.</div>';
+  } else {
+    tl.innerHTML = signals.map(s => {
+      const perfHtml = s.performance_pct !== null
+        ? `<div><div class="perf ${pctClass(s.performance_pct)}">${pctFmt(s.performance_pct)}</div><div class="perf-lbl">da allora</div></div>`
+        : '<div><div class="perf zero">—</div><div class="perf-lbl">in attesa</div></div>';
+      return `
+        <div class="sig-item ${s.level.toLowerCase()}">
+          <div>
+            <div class="head">
+              <span class="date">${s.date}</span>
+              <span class="lvl-tag">${s.level}</span>
+              <span class="tkr">${s.ticker || ''}</span>
+            </div>
+            <div class="act">${s.action || '—'}</div>
+            <div class="reas">${s.reasoning || ''}</div>
+          </div>
+          ${perfHtml}
+        </div>
+      `;
+    }).join('');
+  }
+
+  // News
+  const nl = document.getElementById('news-list');
+  nl.innerHTML = (d.news || []).slice(0, 6).map(n => `
+    <li>
+      <a href="${n.link}" target="_blank" rel="noopener">
+        <div class="src">${n.source}</div>
+        <div class="title">${n.title}</div>
+      </a>
+    </li>
+  `).join('') || '<li class="empty-state">Nessuna news.</li>';
+
+  // Events
+  const el = document.getElementById('events-list');
+  const events = d.events_upcoming || [];
+  el.innerHTML = events.length
+    ? events.map(e => `<li>${e.description || JSON.stringify(e)}</li>`).join('')
+    : '<li class="empty-state">Nessun evento imminente.</li>';
+}
+
+function renderPerformanceChart(portfolio, benchmark) {
+  const ctx = document.getElementById('chart-perf').getContext('2d');
+  // allinea su date comuni
+  const portDates = portfolio.map(p => p.date);
+  const bencMap = Object.fromEntries(benchmark.map(b => [b.date, b.cumulative_index]));
+  const portData = portfolio.map(p => ({x: p.date, y: p.cumulative_index}));
+  const bencData = portDates.map(dt => ({x: dt, y: bencMap[dt]})).filter(p => p.y !== undefined);
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [
+        {
+          label: 'Il tuo portafoglio',
+          data: portData,
+          borderColor: '#d4a574',
+          backgroundColor: 'rgba(212, 165, 116, 0.08)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.25,
+          pointRadius: 0,
+          pointHoverRadius: 4,
+        },
+        {
+          label: 'VWCE (ETF World)',
+          data: bencData,
+          borderColor: '#7ab380',
+          borderWidth: 1.5,
+          borderDash: [4, 4],
+          fill: false,
+          tension: 0.25,
+          pointRadius: 0,
+          pointHoverRadius: 4,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          labels: {
+            color: '#9a958a',
+            font: { family: 'JetBrains Mono', size: 11 },
+            boxWidth: 20,
+            boxHeight: 2,
+          },
+        },
+        tooltip: {
+          backgroundColor: '#1d1b18',
+          titleColor: '#e8e4d9',
+          bodyColor: '#e8e4d9',
+          borderColor: '#2a2824',
+          borderWidth: 1,
+          titleFont: { family: 'JetBrains Mono', size: 11 },
+          bodyFont: { family: 'JetBrains Mono', size: 12 },
+          padding: 10,
+          callbacks: {
+            label: (ctx) => ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)}`,
+          },
+        },
+      },
+      scales: {
+        x: {
+          type: 'category',
+          grid: { color: 'rgba(42, 40, 36, 0.5)', drawBorder: false },
+          ticks: {
+            color: '#625d54',
+            font: { family: 'JetBrains Mono', size: 10 },
+            maxTicksLimit: 8,
+          },
+        },
+        y: {
+          grid: { color: 'rgba(42, 40, 36, 0.5)', drawBorder: false },
+          ticks: {
+            color: '#625d54',
+            font: { family: 'JetBrains Mono', size: 10 },
+          },
+        },
+      },
+    },
+  });
+}
+
+checkAuth();
+</script>
+</body>
+</html>
