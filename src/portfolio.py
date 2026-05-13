@@ -1,19 +1,24 @@
 """
 Recupera prezzi attuali e performance del portafoglio.
-Fonte dati: Yahoo Finance (gratuito, nessuna API key).
-Con retry per gestire rate limit di GitHub Actions.
+Fonte dati: Stooq (gratuito, illimitato, nessuna API key, stabile su GitHub Actions).
 """
-import yfinance as yf
+import pandas_datareader.data as pdr
 from datetime import datetime, timedelta
 import json
-import os
 import time
-import random
 
+# Mapping ticker locali → ticker Stooq
+# Stooq usa convenzioni leggermente diverse da Yahoo Finance:
+# - Azioni USA: ticker minuscolo + ".us" (es. nvda.us)
+# - ETF su Borsa Italiana: ticker minuscolo + ".it"
+# - Indici globali / borse europee: vedi documentazione stooq.com
 PORTFOLIO = [
-    {"ticker": "NVDA", "quantity": 1, "name": "NVIDIA", "type": "stock"},
-    {"ticker": "VWCE.MI", "quantity": 10, "name": "Vanguard FTSE All-World", "type": "etf_equity"},
-    {"ticker": "EQQQ.MI", "quantity": 1, "name": "Invesco EQQQ Nasdaq-100", "type": "etf_equity"},
+    {"ticker": "nvda.us", "display_ticker": "NVDA", "quantity": 1,
+     "name": "NVIDIA", "type": "stock", "currency": "USD"},
+    {"ticker": "vwce.it", "display_ticker": "VWCE.MI", "quantity": 10,
+     "name": "Vanguard FTSE All-World", "type": "etf_equity", "currency": "EUR"},
+    {"ticker": "eqqq.it", "display_ticker": "EQQQ.MI", "quantity": 1,
+     "name": "Invesco EQQQ Nasdaq-100", "type": "etf_equity", "currency": "EUR"},
 ]
 
 ALERT_THRESHOLDS = {
@@ -23,64 +28,43 @@ ALERT_THRESHOLDS = {
 }
 
 
-def fetch_asset_data(ticker: str, max_retries: int = 4) -> dict:
-    """Scarica dati di un asset con retry per gestire rate limit Yahoo Finance."""
-    for attempt in range(max_retries):
-        try:
-            # Pausa progressiva tra tentativi per evitare rate limit
-            if attempt > 0:
-                wait = (2 ** attempt) + random.uniform(0, 2)
-                print(f"  Retry {attempt}/{max_retries-1} per {ticker} tra {wait:.1f}s...")
-                time.sleep(wait)
-            else:
-                # Piccola pausa iniziale tra ticker per non saturare
-                time.sleep(random.uniform(1, 3))
+def fetch_asset_data(holding: dict) -> dict:
+    """Scarica dati di un asset da Stooq."""
+    ticker = holding["ticker"]
+    display = holding["display_ticker"]
 
-            t = yf.Ticker(ticker)
-            hist = t.history(period="1mo")
+    try:
+        end = datetime.now()
+        start = end - timedelta(days=45)
 
-            if hist.empty:
-                if attempt < max_retries - 1:
-                    continue
-                return {"error": f"Nessun dato per {ticker} dopo {max_retries} tentativi"}
+        df = pdr.DataReader(ticker, "stooq", start=start, end=end)
 
-            current = float(hist["Close"].iloc[-1])
-            prev_close = float(hist["Close"].iloc[-2]) if len(hist) >= 2 else current
-            week_ago = float(hist["Close"].iloc[-6]) if len(hist) >= 6 else current
-            month_ago = float(hist["Close"].iloc[0])
+        if df.empty:
+            return {"error": f"Nessun dato per {display}", "ticker": display}
 
-            daily_change = ((current - prev_close) / prev_close) * 100
-            weekly_change = ((current - week_ago) / week_ago) * 100
-            monthly_change = ((current - month_ago) / month_ago) * 100
+        # Stooq restituisce dati in ordine inverso (più recente in alto)
+        df = df.sort_index()
 
-            # info() può fallire indipendentemente
-            currency = "USD"
-            try:
-                info = t.info
-                currency = info.get("currency", "USD")
-            except Exception:
-                # Inferenza dal ticker
-                if ticker.endswith(".MI") or ticker.endswith(".DE"):
-                    currency = "EUR"
-                elif ticker.endswith(".L"):
-                    currency = "GBP"
+        current = float(df["Close"].iloc[-1])
+        prev_close = float(df["Close"].iloc[-2]) if len(df) >= 2 else current
+        week_ago = float(df["Close"].iloc[-6]) if len(df) >= 6 else current
+        month_ago = float(df["Close"].iloc[0])
 
-            return {
-                "ticker": ticker,
-                "current": round(current, 2),
-                "currency": currency,
-                "daily_change_pct": round(daily_change, 2),
-                "weekly_change_pct": round(weekly_change, 2),
-                "monthly_change_pct": round(monthly_change, 2),
-                "volume": int(hist["Volume"].iloc[-1]) if "Volume" in hist else 0,
-            }
-        except Exception as e:
-            if attempt < max_retries - 1:
-                print(f"  Errore {ticker} tentativo {attempt+1}: {str(e)[:100]}")
-                continue
-            return {"error": str(e), "ticker": ticker}
+        daily_change = ((current - prev_close) / prev_close) * 100
+        weekly_change = ((current - week_ago) / week_ago) * 100
+        monthly_change = ((current - month_ago) / month_ago) * 100
 
-    return {"error": f"Esaurito i retry per {ticker}", "ticker": ticker}
+        return {
+            "ticker": display,
+            "current": round(current, 2),
+            "currency": holding["currency"],
+            "daily_change_pct": round(daily_change, 2),
+            "weekly_change_pct": round(weekly_change, 2),
+            "monthly_change_pct": round(monthly_change, 2),
+            "volume": int(df["Volume"].iloc[-1]) if "Volume" in df else 0,
+        }
+    except Exception as e:
+        return {"error": str(e)[:200], "ticker": display}
 
 
 def analyze_portfolio() -> dict:
@@ -90,15 +74,19 @@ def analyze_portfolio() -> dict:
     total_value_eur_approx = 0.0
 
     for holding in PORTFOLIO:
-        print(f"  Scarico {holding['ticker']}...")
-        data = fetch_asset_data(holding["ticker"])
+        print(f"  Scarico {holding['display_ticker']} (via Stooq: {holding['ticker']})...")
+        data = fetch_asset_data(holding)
+
+        # Pausa minima tra richieste per cortesia
+        time.sleep(0.5)
+
         if "error" in data:
             results.append({**holding, **data})
             print(f"    ERRORE: {data['error'][:100]}")
             continue
 
         position_value = data["current"] * holding["quantity"]
-        # Conversione approssimativa
+
         if data["currency"] == "USD":
             fx = 0.92
         elif data["currency"] == "GBP":
@@ -119,12 +107,12 @@ def analyze_portfolio() -> dict:
 
         if abs(data["daily_change_pct"]) >= ALERT_THRESHOLDS["daily_change_pct"]:
             alerts.append(
-                f"⚠️ {holding['name']} ({holding['ticker']}) ha fatto "
+                f"⚠️ {holding['name']} ({holding['display_ticker']}) ha fatto "
                 f"{data['daily_change_pct']:+.2f}% oggi"
             )
         if abs(data["weekly_change_pct"]) >= ALERT_THRESHOLDS["weekly_change_pct"]:
             alerts.append(
-                f"📈 {holding['name']} ({holding['ticker']}) ha fatto "
+                f"📈 {holding['name']} ({holding['display_ticker']}) ha fatto "
                 f"{data['weekly_change_pct']:+.2f}% negli ultimi 5 giorni"
             )
 
