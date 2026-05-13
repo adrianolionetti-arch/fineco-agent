@@ -1,17 +1,19 @@
 """
 Recupera prezzi attuali e performance del portafoglio.
-Fonte dati: Stooq (gratuito, illimitato, nessuna API key, stabile su GitHub Actions).
+Fonte dati: Stooq via HTTP diretto (CSV pubblico, gratuito, illimitato, no API key).
+Funziona da GitHub Actions senza rate limit.
 """
-import pandas_datareader.data as pdr
+import requests
+import pandas as pd
+from io import StringIO
 from datetime import datetime, timedelta
 import json
 import time
 
 # Mapping ticker locali → ticker Stooq
-# Stooq usa convenzioni leggermente diverse da Yahoo Finance:
-# - Azioni USA: ticker minuscolo + ".us" (es. nvda.us)
-# - ETF su Borsa Italiana: ticker minuscolo + ".it"
-# - Indici globali / borse europee: vedi documentazione stooq.com
+# Stooq convenzioni:
+#   - Azioni USA: ticker minuscolo + ".us"  (es. nvda.us)
+#   - ETF/azioni su Borsa Italiana: ticker minuscolo + ".it"
 PORTFOLIO = [
     {"ticker": "nvda.us", "display_ticker": "NVDA", "quantity": 1,
      "name": "NVIDIA", "type": "stock", "currency": "USD"},
@@ -28,27 +30,46 @@ ALERT_THRESHOLDS = {
 }
 
 
+def fetch_stooq_csv(ticker: str) -> pd.DataFrame:
+    """Scarica i dati storici di un ticker da Stooq come CSV."""
+    url = f"https://stooq.com/q/d/l/?s={ticker}&i=d"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (compatible; FinecoAgent/1.0)"
+    }
+    response = requests.get(url, headers=headers, timeout=15)
+    response.raise_for_status()
+
+    # Se Stooq non trova il ticker, restituisce un CSV vuoto o messaggio di errore
+    if not response.text or "No data" in response.text or len(response.text) < 50:
+        raise ValueError(f"Stooq non ha dati per {ticker}")
+
+    df = pd.read_csv(StringIO(response.text))
+    if df.empty or "Close" not in df.columns:
+        raise ValueError(f"CSV malformato per {ticker}")
+
+    df["Date"] = pd.to_datetime(df["Date"])
+    df = df.sort_values("Date").reset_index(drop=True)
+    return df
+
+
 def fetch_asset_data(holding: dict) -> dict:
-    """Scarica dati di un asset da Stooq."""
+    """Scarica dati di un asset da Stooq con prezzi calcolati su finestra ~30gg."""
     ticker = holding["ticker"]
     display = holding["display_ticker"]
 
     try:
-        end = datetime.now()
-        start = end - timedelta(days=45)
+        df = fetch_stooq_csv(ticker)
 
-        df = pdr.DataReader(ticker, "stooq", start=start, end=end)
+        # Prendi solo gli ultimi 30 giorni di trading per i calcoli
+        df_recent = df.tail(30)
 
-        if df.empty:
-            return {"error": f"Nessun dato per {display}", "ticker": display}
+        if len(df_recent) < 2:
+            return {"error": f"Dati insufficienti per {display}", "ticker": display}
 
-        # Stooq restituisce dati in ordine inverso (più recente in alto)
-        df = df.sort_index()
-
-        current = float(df["Close"].iloc[-1])
-        prev_close = float(df["Close"].iloc[-2]) if len(df) >= 2 else current
-        week_ago = float(df["Close"].iloc[-6]) if len(df) >= 6 else current
-        month_ago = float(df["Close"].iloc[0])
+        current = float(df_recent["Close"].iloc[-1])
+        prev_close = float(df_recent["Close"].iloc[-2])
+        week_ago = float(df_recent["Close"].iloc[-6]) if len(df_recent) >= 6 else current
+        month_ago = float(df_recent["Close"].iloc[0])
 
         daily_change = ((current - prev_close) / prev_close) * 100
         weekly_change = ((current - week_ago) / week_ago) * 100
@@ -61,7 +82,7 @@ def fetch_asset_data(holding: dict) -> dict:
             "daily_change_pct": round(daily_change, 2),
             "weekly_change_pct": round(weekly_change, 2),
             "monthly_change_pct": round(monthly_change, 2),
-            "volume": int(df["Volume"].iloc[-1]) if "Volume" in df else 0,
+            "volume": int(df_recent["Volume"].iloc[-1]) if "Volume" in df_recent else 0,
         }
     except Exception as e:
         return {"error": str(e)[:200], "ticker": display}
@@ -74,19 +95,16 @@ def analyze_portfolio() -> dict:
     total_value_eur_approx = 0.0
 
     for holding in PORTFOLIO:
-        print(f"  Scarico {holding['display_ticker']} (via Stooq: {holding['ticker']})...")
+        print(f"  Scarico {holding['display_ticker']} (Stooq: {holding['ticker']})...")
         data = fetch_asset_data(holding)
-
-        # Pausa minima tra richieste per cortesia
-        time.sleep(0.5)
+        time.sleep(0.5)  # cortesia verso Stooq
 
         if "error" in data:
             results.append({**holding, **data})
-            print(f"    ERRORE: {data['error'][:100]}")
+            print(f"    ERRORE: {data['error'][:120]}")
             continue
 
         position_value = data["current"] * holding["quantity"]
-
         if data["currency"] == "USD":
             fx = 0.92
         elif data["currency"] == "GBP":
