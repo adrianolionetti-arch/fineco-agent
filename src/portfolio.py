@@ -1,25 +1,28 @@
 """
 Recupera prezzi attuali e performance del portafoglio.
-Fonte dati: Stooq via HTTP diretto (CSV pubblico, gratuito, illimitato, no API key).
-Funziona da GitHub Actions senza rate limit.
+Fonte dati: Twelve Data API (gratuita fino a 800 req/giorno con API key).
+Affidabile da GitHub Actions, supporta ETF europei.
 """
+import os
 import requests
-import pandas as pd
-from io import StringIO
-from datetime import datetime, timedelta
+from datetime import datetime
 import json
 import time
 
-# Mapping ticker locali → ticker Stooq
-# Stooq convenzioni:
-#   - Azioni USA: ticker minuscolo + ".us"  (es. nvda.us)
-#   - ETF/azioni su Borsa Italiana: ticker minuscolo + ".it"
+API_KEY = os.environ.get("TWELVE_DATA_API_KEY", "")
+
+# Mapping ticker → simbolo Twelve Data
+# Convenzione Twelve Data:
+#   - Azioni USA: solo ticker (es. NVDA)
+#   - ETF Borsa Italiana: TICKER:MIL
+#   - ETF Xetra: TICKER:XETR
+#   - ETF Londra: TICKER:LSE
 PORTFOLIO = [
-    {"ticker": "nvda.us", "display_ticker": "NVDA", "quantity": 1,
+    {"symbol": "NVDA", "display_ticker": "NVDA", "quantity": 1,
      "name": "NVIDIA", "type": "stock", "currency": "USD"},
-    {"ticker": "vwce.it", "display_ticker": "VWCE.MI", "quantity": 10,
+    {"symbol": "VWCE:MIL", "display_ticker": "VWCE.MI", "quantity": 10,
      "name": "Vanguard FTSE All-World", "type": "etf_equity", "currency": "EUR"},
-    {"ticker": "eqqq.it", "display_ticker": "EQQQ.MI", "quantity": 1,
+    {"symbol": "EQQQ:MIL", "display_ticker": "EQQQ.MI", "quantity": 1,
      "name": "Invesco EQQQ Nasdaq-100", "type": "etf_equity", "currency": "EUR"},
 ]
 
@@ -30,46 +33,43 @@ ALERT_THRESHOLDS = {
 }
 
 
-def fetch_stooq_csv(ticker: str) -> pd.DataFrame:
-    """Scarica i dati storici di un ticker da Stooq come CSV."""
-    url = f"https://stooq.com/q/d/l/?s={ticker}&i=d"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (compatible; FinecoAgent/1.0)"
-    }
-    response = requests.get(url, headers=headers, timeout=15)
-    response.raise_for_status()
-
-    # Se Stooq non trova il ticker, restituisce un CSV vuoto o messaggio di errore
-    if not response.text or "No data" in response.text or len(response.text) < 50:
-        raise ValueError(f"Stooq non ha dati per {ticker}")
-
-    df = pd.read_csv(StringIO(response.text))
-    if df.empty or "Close" not in df.columns:
-        raise ValueError(f"CSV malformato per {ticker}")
-
-    df["Date"] = pd.to_datetime(df["Date"])
-    df = df.sort_values("Date").reset_index(drop=True)
-    return df
-
-
 def fetch_asset_data(holding: dict) -> dict:
-    """Scarica dati di un asset da Stooq con prezzi calcolati su finestra ~30gg."""
-    ticker = holding["ticker"]
+    """Scarica prezzi storici 30 giorni da Twelve Data."""
+    symbol = holding["symbol"]
     display = holding["display_ticker"]
 
+    if not API_KEY:
+        return {"error": "TWELVE_DATA_API_KEY non configurata", "ticker": display}
+
     try:
-        df = fetch_stooq_csv(ticker)
+        url = "https://api.twelvedata.com/time_series"
+        params = {
+            "symbol": symbol,
+            "interval": "1day",
+            "outputsize": 30,
+            "apikey": API_KEY,
+        }
+        response = requests.get(url, params=params, timeout=15)
+        response.raise_for_status()
+        data = response.json()
 
-        # Prendi solo gli ultimi 30 giorni di trading per i calcoli
-        df_recent = df.tail(30)
+        # Twelve Data restituisce un campo "status": "error" se qualcosa va storto
+        if data.get("status") == "error":
+            return {"error": f"TwelveData: {data.get('message', 'errore sconosciuto')}", "ticker": display}
 
-        if len(df_recent) < 2:
+        values = data.get("values", [])
+        if not values or len(values) < 2:
             return {"error": f"Dati insufficienti per {display}", "ticker": display}
 
-        current = float(df_recent["Close"].iloc[-1])
-        prev_close = float(df_recent["Close"].iloc[-2])
-        week_ago = float(df_recent["Close"].iloc[-6]) if len(df_recent) >= 6 else current
-        month_ago = float(df_recent["Close"].iloc[0])
+        # Twelve Data restituisce dal più recente al più vecchio: inverto
+        values = list(reversed(values))
+
+        closes = [float(v["close"]) for v in values]
+
+        current = closes[-1]
+        prev_close = closes[-2]
+        week_ago = closes[-6] if len(closes) >= 6 else current
+        month_ago = closes[0]
 
         daily_change = ((current - prev_close) / prev_close) * 100
         weekly_change = ((current - week_ago) / week_ago) * 100
@@ -82,7 +82,7 @@ def fetch_asset_data(holding: dict) -> dict:
             "daily_change_pct": round(daily_change, 2),
             "weekly_change_pct": round(weekly_change, 2),
             "monthly_change_pct": round(monthly_change, 2),
-            "volume": int(df_recent["Volume"].iloc[-1]) if "Volume" in df_recent else 0,
+            "volume": int(values[-1].get("volume", 0)),
         }
     except Exception as e:
         return {"error": str(e)[:200], "ticker": display}
@@ -95,9 +95,9 @@ def analyze_portfolio() -> dict:
     total_value_eur_approx = 0.0
 
     for holding in PORTFOLIO:
-        print(f"  Scarico {holding['display_ticker']} (Stooq: {holding['ticker']})...")
+        print(f"  Scarico {holding['display_ticker']} (TwelveData: {holding['symbol']})...")
         data = fetch_asset_data(holding)
-        time.sleep(0.5)  # cortesia verso Stooq
+        time.sleep(1)  # gentile col rate limit (max 8 req/min su free tier)
 
         if "error" in data:
             results.append({**holding, **data})
