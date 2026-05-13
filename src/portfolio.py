@@ -13,10 +13,9 @@ import os
 # Come trovare il ticker: su Fineco ogni strumento ha un codice ISIN, cerchialo su finance.yahoo.com
 # e usa il simbolo (es. "VWCE.DE", "IWDA.AS", "NVDA").
 PORTFOLIO = [
-    {"ticker": "NVDA", "quantity": 1, "name": "NVIDIA", "type": "stock"},
-    # Esempi di ETF comuni su Fineco — SOSTITUISCI con i tuoi:
-    # {"ticker": "VWCE.DE", "quantity": 2, "name": "Vanguard FTSE All-World", "type": "etf_equity"},
-    # {"ticker": "AGGH.MI", "quantity": 5, "name": "iShares Global Aggregate Bond", "type": "etf_bond"},
+    {"ticker": "1NVDA.MI", "quantity": 1, "name": "NVIDIA", "type": "stock"},
+    {"ticker": "VWCE.MI", "quantity": 10, "name": "Vanguard FTSE All-World", "type": "etf_equity"},
+    {"ticker": "EQQQ.MI", "quantity": 1, "name": "Invesco EQQQ Nasdaq-100", "type": "etf_equity"},
 ]
 
 # Soglie per triggerare un alert
