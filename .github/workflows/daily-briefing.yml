@@ -52,7 +52,7 @@ jobs:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
-          CLAUDE_MODEL: ${{ inputs.model }}
+          CLAUDE_MODEL: ${{ inputs.model  || 'claude-sonnet-4-5' }}
         run: python src/main.py
 
       - name: Inject dashboard password hash
