@@ -1,19 +1,22 @@
 """
-portfolio.py — recupera prezzi delle posizioni in portafoglio.
+portfolio.py — recupera prezzi attuali e performance del portafoglio.
 
 Strategia:
-  1) yfinance come fonte primaria (gratis, no API key).
-  2) Retry 3 volte con backoff in caso di errore transitorio.
-  3) Fallback su exchange alternativo (Xetra) se quello primario (Milano) non risponde.
-  4) Se tutto fallisce: stato 'unavailable' esplicito, NON inventiamo prezzi.
+  - Fonte: yfinance (gratis, no API key). Listing primario Borsa Italiana (.MI),
+    fallback Xetra (.DE) o NASDAQ (NVDA) se Milano non risponde.
+  - Retry 3x con backoff esponenziale per gestire i blip transitori di Yahoo.
+  - Conversione USD->EUR live (niente cambi hardcoded).
+  - Se proprio non c'è dato: record con "error" esplicito, NON inventiamo prezzi.
 
-Output: lista di Quote, ognuna con prezzo in EUR, P/L, e tracciabilità della fonte.
+Schema di ritorno IDENTICO al vecchio file (analyze_portfolio) per compatibilità
+con briefing.py, journal.py, dashboard_builder.py, emailer.py.
 """
 from __future__ import annotations
 
+import json
 import logging
 import time
-from dataclasses import dataclass, asdict
+from datetime import datetime
 from typing import Optional
 
 import yfinance as yf
@@ -21,170 +24,255 @@ import yfinance as yf
 log = logging.getLogger(__name__)
 
 
-# Configurazione del portafoglio.
-# - primary : ticker preferito (la borsa dove hai comprato, di solito Milano)
-# - fallback: ticker alternativo se il primario non risponde
-# - fx_convert: True se il fallback è in valuta diversa da EUR (richiede conversione)
+# Portafoglio: stesso schema concettuale di prima.
+# - "primary" : ticker preferito (la borsa dove ho comprato, di solito Milano)
+# - "fallback": ticker alternativo se il primario non risponde
+# - "fx_convert": True se il fallback è in valuta diversa da EUR
 PORTFOLIO = [
     {
-        "id": "NVIDIA",
+        "symbol": "NVDA",
         "display_ticker": "1NVDA.MI",
-        "primary": "1NVDA.MI",
-        "fallback": "NVDA",          # NASDAQ in USD se Milano non risponde
+        "primary": "1NVDA.MI",             # NVIDIA su Borsa Italiana
+        "fallback": "NVDA",                # NASDAQ in USD se Milano non risponde
         "fx_convert": True,
         "quantity": 1,
-        "cost_basis_eur": 160.71,
+        "name": "NVIDIA",
+        "type": "stock",
+        "currency": "EUR",                 # valuta di display, post-conversione
     },
     {
-        "id": "VWCE",
+        "symbol": "IE00BK5BQT80",
         "display_ticker": "VWCE.MI",
         "primary": "VWCE.MI",
-        "fallback": "VWCE.DE",       # Xetra in EUR
+        "fallback": "VWCE.DE",             # Xetra in EUR
         "fx_convert": False,
         "quantity": 10,
-        "cost_basis_eur": 149.70,
+        "name": "Vanguard FTSE All-World",
+        "type": "etf_equity",
+        "currency": "EUR",
     },
     {
-        # Invesco EQQQ Nasdaq-100 UCITS ETF Acc — ISIN IE00BFZXGZ54
-        # NB: versione ad accumulazione (Acc), NON la versione a distribuzione (ISIN IE0032077012, ticker EQQQ).
-        "id": "EQQQ",
+        # Invesco EQQQ Nasdaq-100 UCITS ETF Acc - ISIN IE00BFZXGZ54
+        # NB: versione ad accumulazione (Acc).
+        # NON la versione a distribuzione (ISIN IE0032077012, ticker EQQQ.MI).
+        "symbol": "IE00BFZXGZ54",
         "display_ticker": "EQAC.MI",
         "primary": "EQAC.MI",
-        "fallback": "EQQB.DE",       # stessa quota su Xetra, in EUR
+        "fallback": "EQQB.DE",             # stessa quota su Xetra, in EUR
         "fx_convert": False,
         "quantity": 1,
-        "cost_basis_eur": 368.36,
+        "name": "Invesco EQQQ Nasdaq-100 (Acc)",
+        "type": "etf_equity",
+        "currency": "EUR",
     },
 ]
 
-
-@dataclass
-class Quote:
-    holding_id: str
-    ticker_used: str
-    price_eur: Optional[float]
-    currency_native: str
-    quantity: float
-    cost_basis_eur: float
-    market_value_eur: Optional[float]
-    pl_eur: Optional[float]
-    pl_pct: Optional[float]
-    source: str               # "primary" | "fallback" | "unavailable"
-    last_date: Optional[str]
-    error: Optional[str] = None
-
-    def to_dict(self) -> dict:
-        return asdict(self)
+ALERT_THRESHOLDS = {
+    "daily_change_pct": 5.0,
+    "weekly_change_pct": 10.0,
+    "portfolio_change_pct": 3.0,
+}
 
 
-# --- helpers ---------------------------------------------------------------
+# --- helpers di fetch -----------------------------------------------------
 
-def _fetch_price(ticker: str, attempts: int = 3, backoff: float = 1.5):
+def _fetch_history(ticker: str, period: str = "1mo", attempts: int = 3,
+                   backoff: float = 1.5):
     """
-    Legge il prezzo di chiusura più recente da yfinance, con retry.
-    Ritorna (price, currency, last_date_iso, error).
+    Scarica lo storico di un ticker da yfinance, con retry.
+    Ritorna (DataFrame|None, currency|None, error|None).
+    Lo storico serve per calcolare daily/weekly/monthly change.
     """
-    last_err = None
+    last_err: Optional[str] = None
     for i in range(attempts):
         try:
             tk = yf.Ticker(ticker)
-            hist = tk.history(period="5d", auto_adjust=False)
+            hist = tk.history(period=period, auto_adjust=False)
             if not hist.empty:
-                price = float(hist["Close"].iloc[-1])
-                last_date = hist.index[-1].strftime("%Y-%m-%d")
+                # Yahoo a volte ritorna l'ultima riga del giorno corrente con Close=NaN
+                # (il dato di chiusura non e' ancora consolidato). Scarto le righe
+                # con Close NaN in coda per non leggere prezzi sporchi.
+                hist = hist.dropna(subset=["Close"])
+            if hist is not None and not hist.empty:
                 currency = (tk.fast_info.get("currency") or "EUR").upper()
-                return price, currency, last_date, None
+                return hist, currency, None
             last_err = "empty history"
         except Exception as e:
-            last_err = str(e)[:120]
+            last_err = str(e)[:150]
         if i < attempts - 1:
             time.sleep(backoff * (i + 1))
-    return None, None, None, last_err
+    return None, None, last_err
 
 
-def _to_eur(price: float, currency: str) -> Optional[float]:
-    """Converte un prezzo in EUR usando il cambio spot di Yahoo."""
+def _get_fx_rate(currency: str) -> Optional[float]:
+    """Cambio LIVE da Yahoo, non hardcoded. Ritorna None se Yahoo non risponde."""
     if currency == "EUR":
-        return price
-    if currency == "GBP":
-        pair = "GBPEUR=X"
-    elif currency == "USD":
-        pair = "USDEUR=X"
-    else:
-        pair = f"{currency}EUR=X"
-    fx, _, _, err = _fetch_price(pair, attempts=2)
-    if fx is None:
-        log.warning("FX %s→EUR non disponibile (%s)", currency, err)
+        return 1.0
+    pair = f"{currency}EUR=X"
+    hist, _, err = _fetch_history(pair, period="5d", attempts=2)
+    if hist is None or hist.empty:
+        log.warning("FX %s->EUR non disponibile (%s)", currency, err)
         return None
-    return price * fx
+    return float(hist["Close"].iloc[-1])
 
 
-# --- entrypoint pubblico --------------------------------------------------
+def _compute_changes(hist) -> tuple[float, float, float]:
+    """
+    Da uno storico di chiusure calcola le variazioni daily/weekly/monthly in %.
+    Se non ci sono abbastanza punti, la variazione corrispondente e' 0.0.
+    """
+    closes = hist["Close"].tolist()
+    if len(closes) < 2:
+        return 0.0, 0.0, 0.0
+    current = closes[-1]
+    daily = ((current - closes[-2]) / closes[-2]) * 100
+    week_ago = closes[-6] if len(closes) >= 6 else closes[0]
+    weekly = ((current - week_ago) / week_ago) * 100 if week_ago else 0.0
+    month_ago = closes[0]
+    monthly = ((current - month_ago) / month_ago) * 100 if month_ago else 0.0
+    return daily, weekly, monthly
 
-def get_quotes() -> list[Quote]:
-    """Recupera i prezzi correnti per tutte le posizioni in PORTFOLIO."""
-    out: list[Quote] = []
-    for h in PORTFOLIO:
-        # 1° tentativo: ticker primario (.MI)
-        price, ccy, last_date, err = _fetch_price(h["primary"])
-        source = "primary"
-        ticker_used = h["primary"]
 
-        # 2° tentativo: ticker di fallback
-        if price is None:
-            log.warning("Primario %s fallito (%s); provo fallback %s",
-                        h["primary"], err, h["fallback"])
-            price, ccy, last_date, err = _fetch_price(h["fallback"])
-            source = "fallback"
-            ticker_used = h["fallback"]
+# --- fetcher per singola posizione ---------------------------------------
 
-        # Conversione in EUR
-        price_eur = None
-        if price is not None:
-            if ccy == "EUR":
-                price_eur = price
-            elif h.get("fx_convert"):
-                price_eur = _to_eur(price, ccy)
-            else:
-                log.warning("Currency inattesa %s per %s — niente conversione configurata",
-                            ccy, ticker_used)
+def fetch_asset_data(holding: dict) -> dict:
+    """
+    Recupera prezzo + variazioni per una posizione del portafoglio.
+    Ritorna un dict con LE STESSE chiavi del vecchio fetch_asset_data:
+    ticker, current, currency, daily_change_pct, weekly_change_pct,
+    monthly_change_pct, volume, note?, error?
+    """
+    display = holding["display_ticker"]
+    primary = holding["primary"]
+    fallback = holding["fallback"]
 
-        # Compongo il risultato
-        if price_eur is not None:
-            mv = price_eur * h["quantity"]
-            pl_eur = mv - (h["cost_basis_eur"] * h["quantity"])
-            pl_pct = (price_eur / h["cost_basis_eur"] - 1) * 100
-            quote = Quote(
-                holding_id=h["id"],
-                ticker_used=ticker_used,
-                price_eur=round(price_eur, 4),
-                currency_native=ccy or "EUR",
-                quantity=h["quantity"],
-                cost_basis_eur=h["cost_basis_eur"],
-                market_value_eur=round(mv, 2),
-                pl_eur=round(pl_eur, 2),
-                pl_pct=round(pl_pct, 2),
-                source=source,
-                last_date=last_date,
-            )
-        else:
-            quote = Quote(
-                holding_id=h["id"],
-                ticker_used=ticker_used,
-                price_eur=None,
-                currency_native=ccy or "?",
-                quantity=h["quantity"],
-                cost_basis_eur=h["cost_basis_eur"],
-                market_value_eur=None,
-                pl_eur=None,
-                pl_pct=None,
-                source="unavailable",
-                last_date=last_date,
-                error=err or "no price",
-            )
-            log.error("Prezzo NON disponibile per %s (ultimo errore: %s)", h["id"], err)
-        out.append(quote)
+    # 1deg tentativo: ticker primario (.MI)
+    hist, native_ccy, err = _fetch_history(primary)
+    source_used = "primary"
+    ticker_used = primary
+
+    # 2deg tentativo: fallback exchange
+    if hist is None or hist.empty:
+        log.warning("Primario %s fallito (%s); provo fallback %s",
+                    primary, err, fallback)
+        hist, native_ccy, err = _fetch_history(fallback)
+        source_used = "fallback"
+        ticker_used = fallback
+
+    if hist is None or hist.empty:
+        return {
+            "error": f"Prezzo non disponibile (ultimo: {err})",
+            "ticker": display,
+        }
+
+    # Estraggo prezzo + variazioni in valuta nativa
+    price_native = float(hist["Close"].iloc[-1])
+    daily, weekly, monthly = _compute_changes(hist)
+    volume = int(hist["Volume"].iloc[-1]) if "Volume" in hist.columns else 0
+
+    # Conversione in EUR se necessario
+    if native_ccy != "EUR" and holding.get("fx_convert"):
+        fx = _get_fx_rate(native_ccy)
+        if fx is None:
+            return {
+                "error": f"Cambio {native_ccy}->EUR non disponibile",
+                "ticker": display,
+            }
+        price_eur = price_native * fx
+        # Le variazioni % restano valide anche dopo conversione (sono adimensionali).
+        currency_out = "EUR"
+    elif native_ccy == "EUR":
+        price_eur = price_native
+        currency_out = "EUR"
+    else:
+        # Caso edge: fallback in valuta non EUR ma fx_convert=False.
+        # Non dovrebbe succedere con la PORTFOLIO attuale, ma ci tuteliamo.
+        log.warning("Currency inattesa %s per %s - niente conversione configurata",
+                    native_ccy, ticker_used)
+        price_eur = price_native
+        currency_out = native_ccy
+
+    note = None
+    if source_used == "fallback":
+        note = f"Prezzo da fallback {ticker_used} (primary {primary} non disponibile)"
+
+    out = {
+        "ticker": display,
+        "current": round(price_eur, 2),
+        "currency": currency_out,
+        "daily_change_pct": round(daily, 2),
+        "weekly_change_pct": round(weekly, 2),
+        "monthly_change_pct": round(monthly, 2),
+        "volume": volume,
+        "_source": source_used,            # campo extra utile per debug, non breaking
+        "_ticker_used": ticker_used,
+    }
+    if note:
+        out["note"] = note
     return out
+
+
+# --- entrypoint principale (stesso nome di prima) -------------------------
+
+def analyze_portfolio() -> dict:
+    """
+    Analizza l'intero portafoglio.
+    Ritorna lo stesso schema del vecchio analyze_portfolio:
+    {holdings: [...], alerts: [...], total_value_eur_approx: ..., timestamp: ...}
+    """
+    results: list[dict] = []
+    alerts: list[str] = []
+    total_value_eur = 0.0
+
+    for holding in PORTFOLIO:
+        print(f"  Scarico {holding['display_ticker']} "
+              f"(primary={holding['primary']}, fallback={holding['fallback']})...")
+        data = fetch_asset_data(holding)
+        # Niente sleep aggressivo: yfinance non ha rate limit stretto come Twelve Data.
+
+        if "error" in data:
+            results.append({**holding, **data})
+            print(f"    ERRORE: {data['error'][:120]}")
+            # Aggiungo un alert: una posizione "muta" e' informazione, non silenzio.
+            alerts.append(
+                f"Prezzo non disponibile per {holding['name']} "
+                f"({holding['display_ticker']}): {data['error']}"
+            )
+            continue
+
+        # Calcolo valore posizione (price_eur e' gia' in EUR a questo punto)
+        position_value = data["current"] * holding["quantity"]
+        position_value_eur = position_value  # gia' in EUR
+        total_value_eur += position_value_eur
+
+        enriched = {**holding, **data}
+        enriched["position_value"] = round(position_value, 2)
+        enriched["position_value_eur_approx"] = round(position_value_eur, 2)
+        results.append(enriched)
+
+        note_str = f" -- {data['note']}" if data.get("note") else ""
+        sign = "+" if data["daily_change_pct"] >= 0 else ""
+        print(f"    OK: {data['current']} {data['currency']} "
+              f"({sign}{data['daily_change_pct']}%){note_str}")
+
+        # Alert di soglia (stessa logica del vecchio file)
+        if abs(data["daily_change_pct"]) >= ALERT_THRESHOLDS["daily_change_pct"]:
+            alerts.append(
+                f"Attenzione: {holding['name']} ({holding['display_ticker']}) "
+                f"ha fatto {data['daily_change_pct']}% oggi"
+            )
+        if abs(data["weekly_change_pct"]) >= ALERT_THRESHOLDS["weekly_change_pct"]:
+            alerts.append(
+                f"Trend: {holding['name']} ({holding['display_ticker']}) "
+                f"ha fatto {data['weekly_change_pct']}% in 5 giorni"
+            )
+
+    return {
+        "holdings": results,
+        "alerts": alerts,
+        "total_value_eur_approx": round(total_value_eur, 2),
+        "timestamp": datetime.now().isoformat(),
+    }
 
 
 # --- esecuzione locale ----------------------------------------------------
@@ -192,23 +280,6 @@ def get_quotes() -> list[Quote]:
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO,
                         format="%(asctime)s %(levelname)s %(message)s")
-    quotes = get_quotes()
+    data = analyze_portfolio()
     print()
-    print(f"{'Holding':10s} {'Ticker':12s} {'Px EUR':>10s} "
-          f"{'Valore':>10s} {'P/L %':>8s} {'Fonte':10s}")
-    print("-" * 70)
-    for q in quotes:
-        px = f"{q.price_eur:.2f}" if q.price_eur is not None else "N/A"
-        mv = f"{q.market_value_eur:.2f}" if q.market_value_eur is not None else "N/A"
-        pl = f"{q.pl_pct:+.2f}" if q.pl_pct is not None else "N/A"
-        print(f"{q.holding_id:10s} {q.ticker_used:12s} {px:>10s} "
-              f"{mv:>10s} {pl:>8s} {q.source:10s}")
-        if q.error:
-            print(f"           └─ {q.error}")
-    # Totali
-    total_mv = sum(q.market_value_eur for q in quotes if q.market_value_eur is not None)
-    total_cb = sum(q.cost_basis_eur * q.quantity for q in quotes)
-    total_pl = total_mv - total_cb
-    print("-" * 70)
-    print(f"{'TOTALE':10s} {'':12s} {'':>10s} {total_mv:>10.2f} "
-          f"{total_pl/total_cb*100:+.2f}%")
+    print(json.dumps(data, indent=2, ensure_ascii=False))
