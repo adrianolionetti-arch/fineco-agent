@@ -77,6 +77,68 @@ def _render_signal_box(b: dict) -> str:
     """
 
 
+def _render_pillola_box(pillola: dict | None) -> str:
+    """Box HTML della pillola formativa, mostrato solo il lunedì."""
+    if not pillola:
+        return ""
+
+    # Trasforma il corpo da testo con doppio newline in paragrafi HTML
+    corpo_raw = pillola.get("corpo", "")
+    paragrafi = corpo_raw.split("\n\n")
+    corpo_html = "".join(
+        f'<p style="margin:12px 0;">{p.replace(chr(10), "<br>")}</p>'
+        for p in paragrafi
+    )
+
+    return f"""
+    <div style="background:#f3edff;padding:22px;border-radius:8px;
+                margin:24px 0;border-left:5px solid #6c4ab6;">
+        <div style="font-size:11px;font-weight:bold;color:#6c4ab6;
+                    text-transform:uppercase;letter-spacing:1px;">
+            📚 Pillola della settimana #{pillola.get("settimana_corrente", "?")}
+        </div>
+        <div style="font-size:20px;font-weight:bold;margin-top:10px;color:#2a1f4f;
+                    font-family:Georgia, serif;line-height:1.3;">
+            {pillola.get("titolo", "")}
+        </div>
+        <div style="font-size:13px;color:#6c4ab6;font-style:italic;margin-top:4px;">
+            {pillola.get("sottotitolo", "")}
+        </div>
+
+        <div style="margin-top:16px;font-size:14.5px;line-height:1.6;color:#2a2a3a;">
+            {corpo_html}
+        </div>
+
+        <div style="margin-top:18px;padding:14px 16px;background:#fff;border-radius:6px;
+                    border-left:3px solid #2e7d32;">
+            <div style="font-size:12px;font-weight:bold;color:#2e7d32;
+                        text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">
+                🎯 Esercizio della settimana
+            </div>
+            <div style="font-size:14px;line-height:1.6;color:#2a2a3a;">
+                {pillola.get("esercizio", "")}
+            </div>
+        </div>
+
+        <div style="margin-top:14px;padding:14px 16px;background:#fff;border-radius:6px;
+                    border-left:3px solid #f9a825;">
+            <div style="font-size:12px;font-weight:bold;color:#b07700;
+                        text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">
+                🤔 Domanda da farti
+            </div>
+            <div style="font-size:14px;line-height:1.6;color:#2a2a3a;font-style:italic;">
+                {pillola.get("riflessione", "")}
+            </div>
+        </div>
+
+        <div style="margin-top:14px;font-size:11px;color:#888;text-align:center;">
+            La pillola della prossima settimana arriverà lunedì.
+            Trovi tutto l'archivio nella sezione "Allenamento" della dashboard.
+        </div>
+    </div>
+    """
+
+
 def send_email(briefing: dict, portfolio_data: dict) -> bool:
     """Invia email con briefing strutturato."""
     gmail_user = os.environ.get("GMAIL_USER")
@@ -155,6 +217,8 @@ def send_email(briefing: dict, portfolio_data: dict) -> bool:
 
         {_render_signal_box(briefing)}
 
+        {_render_pillola_box(briefing.get("pillola_settimanale"))}
+
         {events_html}
 
         <h3 style="margin-top:24px;">Portafoglio</h3>
@@ -202,6 +266,17 @@ Asset: {briefing.get('signal_asset')}
 Azione: {briefing.get('signal_action')}
 Perché: {briefing.get('signal_reasoning')}
 Attenzione: {briefing.get('signal_counter')}
+"""
+    # Plain text per pillola (solo se presente)
+    pillola = briefing.get("pillola_settimanale")
+    if pillola:
+        plain += f"""
+
+📚 PILLOLA DELLA SETTIMANA #{pillola.get('settimana_corrente', '?')}
+{pillola.get('titolo', '')}
+({pillola.get('sottotitolo', '')})
+
+Apri l'email in HTML per leggere il testo completo, l'esercizio e la domanda di riflessione.
 """
     plain += f"\n{briefing.get('closing_note', '')}"
 
