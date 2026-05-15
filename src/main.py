@@ -2,7 +2,7 @@
 Orchestratore principale, eseguito da GitHub Actions ogni mattina.
 Flusso:
 1. Portafoglio → 2. News → 3. Eventi → 4. Briefing AI strutturato
-→ 5. Diario segnali → 6. Email
+→ 5. Pillola formativa (solo lunedì) → 6. Diario segnali → 7. Dashboard → 8. Email
 """
 import json
 from portfolio import analyze_portfolio, PORTFOLIO
@@ -12,6 +12,7 @@ from briefing import generate_briefing
 from emailer import send_email
 from journal import log_signal, read_journal_stats
 from dashboard_builder import build_dashboard_data
+from pillole import get_pillola_della_settimana
 
 
 def main():
@@ -43,6 +44,13 @@ def main():
         t = briefing["_tokens"]
         print(f"  → Tokens: {t['input']} in / {t['output']} out "
               f"({briefing.get('_model_used')})")
+
+    # Pillola formativa (solo il lunedì, None altrimenti)
+    pillola = get_pillola_della_settimana()
+    if pillola:
+        print(f"  → Pillola della settimana {pillola['settimana_corrente']}: "
+              f"{pillola['titolo']}")
+        briefing["pillola_settimanale"] = pillola
 
     print("\n[5/7] Salvataggio nel diario segnali...")
     log_signal(briefing, portfolio_data)
