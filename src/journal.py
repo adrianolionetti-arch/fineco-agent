@@ -20,15 +20,47 @@ JOURNAL_HEADERS = [
     "counter_argument",
     "portfolio_value_eur",
     "model_used",
+    # Aggiunti per la cronologia con "cosa fare / cosa monitorare / importanza".
+    # Righe storiche pre-rilascio hanno questi campi vuoti.
+    "what_to_do",
+    "what_to_watch",
+    "importance",
 ]
 
 
 def _ensure_journal_exists():
-    """Crea la cartella e il file CSV con headers se non esistono."""
+    """Crea la cartella e il file CSV con headers se non esistono.
+    Se l'header esiste ma è obsoleto (manca qualche colonna), lo aggiorna
+    aggiungendo le colonne nuove con valori vuoti per le righe pregresse."""
     os.makedirs(os.path.dirname(JOURNAL_PATH), exist_ok=True)
     if not os.path.exists(JOURNAL_PATH):
         with open(JOURNAL_PATH, "w", newline="", encoding="utf-8") as f:
             csv.writer(f).writerow(JOURNAL_HEADERS)
+        return
+
+    # Migration: se il CSV esistente non ha tutte le colonne nuove, riscrivilo
+    with open(JOURNAL_PATH, "r", newline="", encoding="utf-8") as f:
+        reader = csv.reader(f)
+        try:
+            current_headers = next(reader)
+        except StopIteration:
+            current_headers = []
+        rows = list(reader)
+
+    if current_headers == JOURNAL_HEADERS:
+        return  # già aggiornato
+
+    missing = [h for h in JOURNAL_HEADERS if h not in current_headers]
+    if not missing:
+        return
+
+    # Padding di righe esistenti con stringa vuota per le nuove colonne
+    padded_rows = [row + [""] * len(missing) for row in rows]
+    with open(JOURNAL_PATH, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(JOURNAL_HEADERS)
+        writer.writerows(padded_rows)
+    print(f"  → Journal migrato: +{len(missing)} colonne ({', '.join(missing)})")
 
 
 def log_signal(briefing: dict, portfolio_data: dict) -> bool:
@@ -66,6 +98,9 @@ def log_signal(briefing: dict, portfolio_data: dict) -> bool:
         (briefing.get("signal_counter") or "").replace("\n", " ")[:300],
         portfolio_data.get("total_value_eur_approx", ""),
         briefing.get("_model_used", ""),
+        (briefing.get("signal_what_to_do") or "").replace("\n", " ")[:600],
+        (briefing.get("signal_what_to_watch") or "").replace("\n", " ")[:600],
+        briefing.get("signal_importance") or "",
     ]
 
     with open(JOURNAL_PATH, "a", newline="", encoding="utf-8") as f:

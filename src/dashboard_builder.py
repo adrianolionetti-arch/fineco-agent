@@ -185,6 +185,12 @@ def _read_journal_with_performance(portfolio_data: dict):
         if price_then and price_now:
             perf = round(((price_now - price_then) / price_then) * 100, 2)
 
+        # Importance può essere int, stringa o vuoto se segnale pre-feature
+        try:
+            importance = int(r.get("importance") or 0) or None
+        except (TypeError, ValueError):
+            importance = None
+
         enriched.append({
             "date": r["date"],
             "level": r["signal_level"],
@@ -196,6 +202,9 @@ def _read_journal_with_performance(portfolio_data: dict):
             "price_now": price_now,
             "performance_pct": perf,
             "model": r.get("model_used", ""),
+            "what_to_do": r.get("what_to_do") or "",
+            "what_to_watch": r.get("what_to_watch") or "",
+            "importance": importance,
         })
 
     # Più recenti in alto

@@ -301,50 +301,124 @@
     display: block;
   }
 
-  /* Signals timeline */
-  .timeline { display: flex; flex-direction: column; gap: 14px; }
-  .sig-item {
-    padding: 16px 18px;
+  /* Signals timeline - layout a card 2 colonne */
+  .timeline { display: flex; flex-direction: column; gap: 16px; }
+  .sig-card {
     background: var(--bg-card);
     border-left: 2px solid var(--ink-muted);
     border-radius: 2px;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 16px;
-    align-items: start;
+    overflow: hidden;
   }
-  .sig-item.green { border-left-color: var(--green); }
-  .sig-item.yellow { border-left-color: var(--yellow); }
-  .sig-item .head { display: flex; gap: 10px; align-items: center; margin-bottom: 6px; flex-wrap: wrap; }
-  .sig-item .date { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-muted); }
-  .sig-item .lvl-tag {
+  .sig-card.green { border-left-color: var(--green); }
+  .sig-card.yellow { border-left-color: var(--yellow); }
+  .sig-card .head {
+    padding: 14px 20px;
+    background: rgba(0,0,0,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .sig-card .head-left {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .sig-card .date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-muted);
+  }
+  .sig-card .lvl-tag {
     font-family: 'JetBrains Mono', monospace;
     font-size: 9px;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    padding: 2px 8px;
+    padding: 3px 9px;
     border-radius: 2px;
   }
-  .sig-item.green .lvl-tag { background: var(--green-bg); color: var(--green); }
-  .sig-item.yellow .lvl-tag { background: var(--yellow-bg); color: var(--yellow); }
-  .sig-item .tkr { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 13px; }
-  .sig-item .act { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 500; margin-bottom: 4px; }
-  .sig-item .reas { font-size: 12px; color: var(--ink-dim); line-height: 1.5; }
-  .sig-item .perf {
+  .sig-card.green .lvl-tag { background: var(--green-bg); color: var(--green); }
+  .sig-card.yellow .lvl-tag { background: var(--yellow-bg); color: var(--yellow); }
+  .sig-card .tkr {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 600;
-    font-size: 18px;
-    text-align: right;
-    min-width: 80px;
+    font-size: 13px;
   }
-  .sig-item .perf-lbl {
+  .sig-card .imp {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+  }
+  .sig-card .imp-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--ink-muted);
+    opacity: 0.3;
+  }
+  .sig-card .imp-dot.on { background: var(--accent); opacity: 1; }
+  .sig-card .imp-label {
     font-family: 'JetBrains Mono', monospace;
     font-size: 9px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--ink-muted);
-    text-align: right;
-    margin-top: 2px;
+    margin-right: 6px;
+  }
+  .sig-card .perf {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  .sig-card .body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .sig-card .pane {
+    padding: 16px 20px;
+  }
+  .sig-card .pane + .pane {
+    border-left: 1px solid var(--rule);
+  }
+  .sig-card .pane-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    margin-bottom: 10px;
+  }
+  .sig-card .act {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .sig-card .reas, .sig-card .counter, .sig-card .what {
+    font-size: 12.5px;
+    color: var(--ink-dim);
+    line-height: 1.55;
+    margin-bottom: 8px;
+  }
+  .sig-card .counter strong, .sig-card .what strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .sig-card .empty-pane {
+    font-size: 12px;
+    color: var(--ink-muted);
+    font-style: italic;
+    line-height: 1.6;
+  }
+  @media (max-width: 800px) {
+    .sig-card .body { grid-template-columns: 1fr; }
+    .sig-card .pane + .pane {
+      border-left: none;
+      border-top: 1px solid var(--rule);
+    }
   }
 
   /* News */
@@ -796,31 +870,13 @@ function render(d) {
   } else avgEl.textContent = '—';
   document.getElementById('s-tot').textContent = bt.total_signals || '0';
 
-  // Signals timeline
+  // Signals timeline (card 2-col: AI dice / Cosa fare in pratica)
   const tl = document.getElementById('signals-timeline');
   const signals = (d.signals || []);
   if (!signals.length) {
     tl.innerHTML = '<div class="empty-state">Nessun segnale ancora registrato. Il diario si popolerà nei prossimi giorni.</div>';
   } else {
-    tl.innerHTML = signals.map(s => {
-      const perfHtml = s.performance_pct !== null
-        ? `<div><div class="perf ${pctClass(s.performance_pct)}">${pctFmt(s.performance_pct)}</div><div class="perf-lbl">da allora</div></div>`
-        : '<div><div class="perf zero">—</div><div class="perf-lbl">in attesa</div></div>';
-      return `
-        <div class="sig-item ${s.level.toLowerCase()}">
-          <div>
-            <div class="head">
-              <span class="date">${s.date}</span>
-              <span class="lvl-tag">${s.level}</span>
-              <span class="tkr">${s.ticker || ''}</span>
-            </div>
-            <div class="act">${s.action || '—'}</div>
-            <div class="reas">${s.reasoning || ''}</div>
-          </div>
-          ${perfHtml}
-        </div>
-      `;
-    }).join('');
+    tl.innerHTML = signals.map(renderSignalCard).join('');
   }
 
   // Events: combina API (date precise) + AI (contesto macro)
@@ -926,6 +982,69 @@ function selectPillola(num) {
           <div class="lbl">Domanda da farti</div>
           <div class="txt">${p.riflessione}</div>
         </div>` : ''}
+    </div>
+  `;
+}
+
+function renderImportanceDots(level) {
+  const n = Math.max(0, Math.min(5, parseInt(level || 0, 10)));
+  if (!n) return '';
+  let dots = '';
+  for (let i = 1; i <= 5; i++) {
+    dots += `<span class="imp-dot ${i <= n ? 'on' : ''}"></span>`;
+  }
+  return `<span class="imp-label">Priorità</span><span class="imp">${dots}</span>`;
+}
+
+function renderSignalCard(s) {
+  const lvl = (s.level || 'NONE').toLowerCase();
+  const perfHtml = s.performance_pct !== null && s.performance_pct !== undefined
+    ? `<span class="perf ${pctClass(s.performance_pct)}">${pctFmt(s.performance_pct)} da allora</span>`
+    : `<span class="perf zero">— in attesa</span>`;
+  const importanceHtml = renderImportanceDots(s.importance);
+
+  // Pane sinistro: cosa dice l'agente
+  const leftPane = `
+    <div class="pane">
+      <div class="pane-label">Cosa dice l'agente</div>
+      ${s.action ? `<div class="act">${s.action}</div>` : ''}
+      ${s.reasoning ? `<div class="reas"><strong>Ragionamento:</strong> ${s.reasoning}</div>` : ''}
+      ${s.counter ? `<div class="counter"><strong>Rischio:</strong> ${s.counter}</div>` : ''}
+    </div>
+  `;
+
+  // Pane destro: cosa fare in pratica
+  let rightContent = '';
+  if (s.what_to_do || s.what_to_watch) {
+    rightContent = `
+      ${s.what_to_do ? `<div class="what"><strong>Cosa fare:</strong> ${s.what_to_do}</div>` : ''}
+      ${s.what_to_watch ? `<div class="what"><strong>Cosa monitorare:</strong> ${s.what_to_watch}</div>` : ''}
+    `;
+  } else {
+    rightContent = `<div class="empty-pane">Segnale registrato prima dell'aggiornamento. Nei prossimi segnali troverai qui suggerimenti pratici e cosa monitorare.</div>`;
+  }
+  const rightPane = `
+    <div class="pane">
+      <div class="pane-label">Cosa fare in pratica</div>
+      ${rightContent}
+    </div>
+  `;
+
+  return `
+    <div class="sig-card ${lvl}">
+      <div class="head">
+        <div class="head-left">
+          <span class="date">${s.date}</span>
+          <span class="lvl-tag">${s.level}</span>
+          <span class="tkr">${s.ticker || ''}</span>
+          ${importanceHtml}
+        </div>
+        ${perfHtml}
+      </div>
+      <div class="body">
+        ${leftPane}
+        ${rightPane}
+      </div>
     </div>
   `;
 }
