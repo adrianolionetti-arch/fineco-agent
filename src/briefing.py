@@ -282,7 +282,12 @@ def generate_briefing(portfolio_data: dict, news: list, events: dict,
     try:
         response = client.messages.create(
             model=MODEL,
-            max_tokens=1500,
+            # 2500 token output: 1500 erano sufficienti col vecchio schema (4 campi
+            # signal_*), ma con i 3 nuovi (what_to_do, what_to_watch, importance) +
+            # ragionamento più lungo sulla watchlist (15 asset extra) il JSON
+            # finiva troncato → "Unterminated string". 2500 dà margine abbondante
+            # senza incidere significativamente sui costi (~$0.03/run su Sonnet).
+            max_tokens=2500,
             system=SYSTEM_PROMPT,
             messages=[{"role": "user", "content": uc}],
         )
