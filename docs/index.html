@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow" />
-<title>Briefing</title>
+<title>Fineco Agent</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
@@ -428,67 +428,70 @@
   }
   .pillola-current .box.reflect .txt { font-style: italic; color: var(--ink-dim); }
 
-  .pillola-archive details {
-    background: var(--bg-card);
-    border-left: 2px solid var(--ink-muted);
-    border-radius: 2px;
-    margin-bottom: 10px;
-    overflow: hidden;
+  /* Pillole layout con aside */
+  .pillole-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 36px;
+    align-items: start;
   }
-  .pillola-archive details[open] { border-left-color: var(--accent); }
-  .pillola-archive summary {
-    padding: 14px 18px;
-    cursor: pointer;
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    user-select: none;
-  }
-  .pillola-archive summary::-webkit-details-marker { display: none; }
-  .pillola-archive summary::after {
-    content: '+';
-    margin-left: auto;
+  .pillole-aside { position: sticky; top: 20px; }
+  .pillole-aside .aside-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 18px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
     color: var(--ink-muted);
-    transition: transform 0.2s;
+    margin-bottom: 14px;
+    padding-left: 14px;
   }
-  .pillola-archive details[open] summary::after { content: '−'; color: var(--accent); }
-  .pillola-archive summary:hover { background: var(--bg-elevated); }
-  .pillola-archive .num {
+  .pillole-nav { list-style: none; }
+  .pillole-nav li {
+    padding: 14px 16px;
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .pillole-nav li:hover { background: var(--bg-card); }
+  .pillole-nav li.active {
+    border-left-color: var(--accent);
+    background: var(--bg-card);
+  }
+  .pillole-nav li .num {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     color: var(--ink-muted);
     letter-spacing: 0.1em;
-    min-width: 42px;
+    flex-shrink: 0;
   }
-  .pillola-archive .arc-title {
+  .pillole-nav li.active .num { color: var(--accent); }
+  .pillole-nav li .title {
     font-family: 'Fraunces', serif;
-    font-size: 15px;
-    font-weight: 500;
-  }
-  .pillola-archive .arc-body {
-    padding: 0 18px 20px 74px;
-    font-size: 13.5px;
-    line-height: 1.65;
+    font-size: 14px;
+    line-height: 1.35;
     color: var(--ink-dim);
-    white-space: pre-line;
   }
-  .pillola-archive .arc-body .mini-box {
-    margin-top: 12px;
-    padding: 10px 14px;
-    background: var(--bg-elevated);
-    border-radius: 2px;
-    font-size: 12.5px;
-  }
-  .pillola-archive .arc-body .mini-box .lbl {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--ink-muted);
-    margin-bottom: 4px;
+  .pillole-nav li.active .title { color: var(--ink); font-weight: 500; }
+  @media (max-width: 800px) {
+    .pillole-layout { grid-template-columns: 1fr; gap: 20px; }
+    .pillole-aside { position: static; }
+    .pillole-nav {
+      display: flex;
+      overflow-x: auto;
+      gap: 8px;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+    }
+    .pillole-nav li {
+      border-left: none;
+      border-bottom: 2px solid transparent;
+      flex-shrink: 0;
+      padding: 8px 12px;
+    }
+    .pillole-nav li.active { border-bottom-color: var(--accent); }
   }
 
   /* Footer */
@@ -544,7 +547,7 @@
 <div class="wrap" id="main">
 
   <header>
-    <h1>Briefing<em>.</em></h1>
+    <h1>Fineco<em> Agent.</em></h1>
     <div class="meta">
       <div id="today-date">—</div>
       <div style="margin-top:4px; opacity:0.6;">Last update <span id="gen-at">—</span></div>
@@ -582,23 +585,23 @@
   <!-- Chart + Backtest -->
   <div class="grid-2">
     <div class="card">
-      <div class="section-label">Performance vs Benchmark</div>
+      <div class="section-label">Andamento del tuo portafoglio</div>
       <div class="chart-wrap tall">
         <canvas id="chart-perf"></canvas>
       </div>
-      <p style="font-size:11px; color:var(--ink-muted); margin-top:10px; font-family:'JetBrains Mono', monospace;">
-        INDICE BASE 100 · CONFRONTO CON VWCE.DE
+      <p style="font-size:12px; color:var(--ink-dim); margin-top:14px; line-height:1.6;">
+        La linea oro è il tuo portafoglio, la linea verde tratteggiata è il benchmark mondiale (VWCE — l'ETF del mondo intero). Entrambi partono da <strong>100</strong> nel primo giorno tracciato: un valore di <strong>102</strong> significa +2%, un valore di <strong>98</strong> significa −2%. Serve per capire se il tuo portafoglio sta facendo meglio o peggio del mercato globale.
       </p>
     </div>
     <div class="card">
-      <div class="section-label">Backtest Segnali</div>
+      <div class="section-label">Storico dei segnali AI</div>
       <div class="stats-grid" id="stats-grid">
-        <div class="stat"><span class="val mono" id="s-hit">—</span><span class="lbl">Hit Rate</span></div>
-        <div class="stat"><span class="val mono" id="s-avg">—</span><span class="lbl">Perf Media</span></div>
-        <div class="stat"><span class="val" id="s-tot">—</span><span class="lbl">Segnali</span></div>
+        <div class="stat"><span class="val mono" id="s-hit">—</span><span class="lbl">Quante volte ha azzeccato</span></div>
+        <div class="stat"><span class="val mono" id="s-avg">—</span><span class="lbl">Guadagno medio</span></div>
+        <div class="stat"><span class="val" id="s-tot">—</span><span class="lbl">Segnali totali</span></div>
       </div>
-      <p style="font-size:11px; color:var(--ink-muted); margin-top:20px; line-height:1.6;">
-        Performance calcolata come prezzo attuale vs prezzo al momento del segnale. Non include commissioni né timing di uscita. Per giudizio completo usa lo script di backtest in locale.
+      <p style="font-size:12px; color:var(--ink-dim); margin-top:20px; line-height:1.6;">
+        Ogni volta che l'agente ti suggerisce un'azione (compra / vendi / monitora) registra il prezzo del momento. Poi confronta il prezzo attuale per capire se il suggerimento sarebbe stato giusto. Serve per giudicare quanto fidarti dei suggerimenti dell'AI <em>nel tempo</em>.
       </p>
     </div>
   </div>
@@ -625,16 +628,13 @@
     <div class="timeline" id="signals-timeline"></div>
   </div>
 
-  <!-- News + Events -->
-  <div class="grid-2">
-    <div class="card">
-      <div class="section-label">News rilevanti</div>
-      <ul class="news-list" id="news-list"></ul>
-    </div>
-    <div class="card">
-      <div class="section-label">Eventi in arrivo</div>
-      <ul class="events-list" id="events-list"></ul>
-    </div>
+  <!-- Eventi in arrivo -->
+  <div class="card" style="margin-bottom: 48px;">
+    <div class="section-label">Eventi in arrivo</div>
+    <ul class="events-list" id="events-list"></ul>
+    <p style="font-size:11px; color:var(--ink-muted); margin-top:14px; line-height:1.6;">
+      Trimestrali e dividendi nei prossimi 14 giorni per gli asset del tuo portafoglio (NVIDIA pubblica earnings ~ogni 3 mesi, mercoledì sera ora USA).
+    </p>
   </div>
 
   </div> <!-- /tab-briefing -->
@@ -645,8 +645,13 @@
       <div id="pillole-empty" class="empty-state" style="display:none;">
         Le pillole formative arriveranno a partire dalla prima settimana di pubblicazione.
       </div>
-      <div id="pillola-current-wrap"></div>
-      <div id="pillole-archive-wrap" class="pillola-archive" style="margin-top: 28px;"></div>
+      <div class="pillole-layout" id="pillole-layout">
+        <aside class="pillole-aside">
+          <div class="aside-label">Archivio pillole</div>
+          <ul class="pillole-nav" id="pillole-list"></ul>
+        </aside>
+        <main id="pillole-content"></main>
+      </div>
     </div>
   </div>
 
@@ -805,17 +810,6 @@ function render(d) {
     }).join('');
   }
 
-  // News
-  const nl = document.getElementById('news-list');
-  nl.innerHTML = (d.news || []).slice(0, 6).map(n => `
-    <li>
-      <a href="${n.link}" target="_blank" rel="noopener">
-        <div class="src">${n.source}</div>
-        <div class="title">${n.title}</div>
-      </a>
-    </li>
-  `).join('') || '<li class="empty-state">Nessuna news.</li>';
-
   // Events
   const el = document.getElementById('events-list');
   const events = d.events_upcoming || [];
@@ -835,84 +829,84 @@ function escapeHtml(s) {
     .replace(/>/g, '&gt;');
 }
 
-function renderPillole(d) {
-  const current = d.pillola_corrente;
-  const archive = d.archivio_pillole || [];
-  const empty = document.getElementById('pillole-empty');
-  const curWrapEl = document.getElementById('pillola-current-wrap');
-  const arcWrapEl = document.getElementById('pillole-archive-wrap');
+// Stato del tab Allenamento: lista pillole e quale è selezionata
+let _pilloleItems = [];
 
-  if (!current && !archive.length) {
+function renderPillole(d) {
+  const archive = d.archivio_pillole || [];
+  const current = d.pillola_corrente;
+  const empty = document.getElementById('pillole-empty');
+  const layout = document.getElementById('pillole-layout');
+
+  if (!archive.length && !current) {
     empty.style.display = 'block';
-    curWrapEl.style.display = 'none';
-    arcWrapEl.style.display = 'none';
+    layout.style.display = 'none';
     return;
   }
   empty.style.display = 'none';
-  curWrapEl.style.display = 'block';
-  arcWrapEl.style.display = 'block';
+  layout.style.display = 'grid';
 
-  // Pillola corrente
-  // NB: i campi corpo/esercizio/riflessione contengono HTML volontario
-  // (strong, em, link a justetf) dal modulo Python pillole.py - non
-  // sono input utente, quindi NON facciamo escape.
-  const curWrap = document.getElementById('pillola-current-wrap');
-  if (current) {
-    curWrap.innerHTML = `
-      <div class="pillola-current">
-        <div class="meta-row">
-          <span>Pillola della settimana</span>
-          <span class="tag">#${current.numero ?? current.settimana_corrente ?? '?'}</span>
-        </div>
-        <h3>${current.titolo || ''}</h3>
-        <div class="sub">${current.sottotitolo || ''}</div>
-        <div class="body">${current.corpo || ''}</div>
-        ${current.esercizio ? `
-          <div class="box">
-            <div class="lbl">Esercizio della settimana</div>
-            <div class="txt">${current.esercizio}</div>
-          </div>` : ''}
-        ${current.riflessione ? `
-          <div class="box reflect">
-            <div class="lbl">Domanda da farti</div>
-            <div class="txt">${current.riflessione}</div>
-          </div>` : ''}
-      </div>
-    `;
-  } else {
-    curWrap.innerHTML = '';
-  }
-
-  // Archivio (escludo la corrente per non duplicarla)
-  const arcWrap = document.getElementById('pillole-archive-wrap');
-  const currentNum = current ? (current.numero ?? current.settimana_corrente) : null;
-  const past = archive
-    .filter(p => p.numero !== currentNum)
+  // Ordina per numero discendente (più recenti in cima)
+  // Se archive è vuoto ma c'è current, usalo come unica voce
+  _pilloleItems = (archive.length ? archive : [current])
+    .slice()
     .sort((a, b) => (b.numero || 0) - (a.numero || 0));
 
-  if (!past.length) {
-    arcWrap.innerHTML = '';
-    return;
-  }
-
-  arcWrap.innerHTML = past.map(p => `
-    <details>
-      <summary>
-        <span class="num">#${p.numero ?? '?'}</span>
-        <span class="arc-title">${p.titolo || ''}</span>
-      </summary>
-      <div class="arc-body">${p.corpo || ''}${p.esercizio ? `
-        <div class="mini-box">
-          <div class="lbl">Esercizio</div>
-          ${p.esercizio}
-        </div>` : ''}${p.riflessione ? `
-        <div class="mini-box">
-          <div class="lbl">Domanda</div>
-          ${p.riflessione}
-        </div>` : ''}
-      </div>
-    </details>
+  // Render lista aside
+  const ul = document.getElementById('pillole-list');
+  ul.innerHTML = _pilloleItems.map(p => `
+    <li data-num="${p.numero}">
+      <span class="num">#${p.numero}</span>
+      <span class="title">${p.titolo || ''}</span>
+    </li>
   `).join('');
+
+  ul.querySelectorAll('li').forEach(li => {
+    li.addEventListener('click', () => {
+      selectPillola(parseInt(li.dataset.num, 10));
+    });
+  });
+
+  // Default: la corrente, altrimenti la più recente
+  const startNum = current
+    ? (current.numero ?? current.settimana_corrente)
+    : _pilloleItems[0].numero;
+  selectPillola(startNum);
+}
+
+function selectPillola(num) {
+  const p = _pilloleItems.find(x => x.numero === num);
+  if (!p) return;
+
+  // Aggiorna highlight aside
+  document.querySelectorAll('#pillole-list li').forEach(li => {
+    li.classList.toggle('active', parseInt(li.dataset.num, 10) === num);
+  });
+
+  // Renderizza contenuto. NB: corpo/esercizio/riflessione contengono
+  // HTML volontario (strong, em, link a justetf) - no escape.
+  const cnt = document.getElementById('pillole-content');
+  cnt.innerHTML = `
+    <div class="pillola-current">
+      <div class="meta-row">
+        <span>Pillola della settimana</span>
+        <span class="tag">#${p.numero}</span>
+      </div>
+      <h3>${p.titolo || ''}</h3>
+      <div class="sub">${p.sottotitolo || ''}</div>
+      <div class="body">${p.corpo || ''}</div>
+      ${p.esercizio ? `
+        <div class="box">
+          <div class="lbl">Esercizio della settimana</div>
+          <div class="txt">${p.esercizio}</div>
+        </div>` : ''}
+      ${p.riflessione ? `
+        <div class="box reflect">
+          <div class="lbl">Domanda da farti</div>
+          <div class="txt">${p.riflessione}</div>
+        </div>` : ''}
+    </div>
+  `;
 }
 
 function renderPerformanceChart(portfolio, benchmark) {
@@ -928,7 +922,7 @@ function renderPerformanceChart(portfolio, benchmark) {
     data: {
       datasets: [
         {
-          label: 'Il tuo portafoglio',
+          label: 'Tuo portafoglio',
           data: portData,
           borderColor: '#d4a574',
           backgroundColor: 'rgba(212, 165, 116, 0.08)',
@@ -974,7 +968,12 @@ function renderPerformanceChart(portfolio, benchmark) {
           bodyFont: { family: 'JetBrains Mono', size: 12 },
           padding: 10,
           callbacks: {
-            label: (ctx) => ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)}`,
+            label: (ctx) => {
+              const v = ctx.parsed.y;
+              const pct = (v - 100).toFixed(2);
+              const sign = pct >= 0 ? '+' : '';
+              return ` ${ctx.dataset.label}: ${sign}${pct}% (da inizio tracciato)`;
+            },
           },
         },
       },
