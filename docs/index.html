@@ -328,6 +328,136 @@
   .events-list li { padding: 12px 0; border-bottom: 1px solid var(--rule); font-size: 13px; color: var(--ink-dim); }
   .events-list li:last-child { border-bottom: none; }
 
+  /* Pillole / Allenamento */
+  .pillola-current {
+    padding: 32px 36px;
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.06) 0%, var(--bg-card) 60%);
+    border-left: 3px solid var(--accent);
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+  .pillola-current .meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+  }
+  .pillola-current .meta-row .tag {
+    background: rgba(212, 165, 116, 0.1);
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+  .pillola-current h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    margin-bottom: 6px;
+  }
+  .pillola-current .sub {
+    font-style: italic;
+    color: var(--ink-dim);
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .pillola-current .body {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink);
+    white-space: pre-line;
+  }
+  .pillola-current .box {
+    margin-top: 20px;
+    padding: 16px 18px;
+    background: var(--bg-elevated);
+    border-radius: 2px;
+    border-left: 2px solid var(--green);
+  }
+  .pillola-current .box.reflect { border-left-color: var(--yellow); }
+  .pillola-current .box .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+  }
+  .pillola-current .box .txt {
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-line;
+  }
+  .pillola-current .box.reflect .txt { font-style: italic; color: var(--ink-dim); }
+
+  .pillola-archive details {
+    background: var(--bg-card);
+    border-left: 2px solid var(--ink-muted);
+    border-radius: 2px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .pillola-archive details[open] { border-left-color: var(--accent); }
+  .pillola-archive summary {
+    padding: 14px 18px;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    user-select: none;
+  }
+  .pillola-archive summary::-webkit-details-marker { display: none; }
+  .pillola-archive summary::after {
+    content: '+';
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    color: var(--ink-muted);
+    transition: transform 0.2s;
+  }
+  .pillola-archive details[open] summary::after { content: '−'; color: var(--accent); }
+  .pillola-archive summary:hover { background: var(--bg-elevated); }
+  .pillola-archive .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 0.1em;
+    min-width: 42px;
+  }
+  .pillola-archive .arc-title {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .pillola-archive .arc-body {
+    padding: 0 18px 20px 74px;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--ink-dim);
+    white-space: pre-line;
+  }
+  .pillola-archive .arc-body .mini-box {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: var(--bg-elevated);
+    border-radius: 2px;
+    font-size: 12.5px;
+  }
+  .pillola-archive .arc-body .mini-box .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    margin-bottom: 4px;
+  }
+
   /* Footer */
   footer {
     margin-top: 64px;
@@ -451,6 +581,13 @@
   <div style="margin-bottom: 48px;">
     <div class="section-label">Cronologia Segnali</div>
     <div class="timeline" id="signals-timeline"></div>
+  </div>
+
+  <!-- Allenamento / Pillole formative -->
+  <div id="pillole-section" style="margin-bottom: 48px; display:none;">
+    <div class="section-label">Allenamento</div>
+    <div id="pillola-current-wrap"></div>
+    <div id="pillole-archive-wrap" class="pillola-archive" style="margin-top: 20px;"></div>
   </div>
 
   <!-- News + Events -->
@@ -637,6 +774,88 @@ function render(d) {
   el.innerHTML = events.length
     ? events.map(e => `<li>${e.description || JSON.stringify(e)}</li>`).join('')
     : '<li class="empty-state">Nessun evento imminente.</li>';
+
+  // Pillole formative
+  renderPillole(d);
+}
+
+function escapeHtml(s) {
+  if (s === null || s === undefined) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function renderPillole(d) {
+  const section = document.getElementById('pillole-section');
+  const current = d.pillola_corrente;
+  const archive = d.archivio_pillole || [];
+
+  if (!current && !archive.length) {
+    section.style.display = 'none';
+    return;
+  }
+  section.style.display = 'block';
+
+  // Pillola corrente
+  const curWrap = document.getElementById('pillola-current-wrap');
+  if (current) {
+    curWrap.innerHTML = `
+      <div class="pillola-current">
+        <div class="meta-row">
+          <span>Pillola della settimana</span>
+          <span class="tag">#${current.numero ?? current.settimana_corrente ?? '?'}</span>
+        </div>
+        <h3>${escapeHtml(current.titolo)}</h3>
+        <div class="sub">${escapeHtml(current.sottotitolo || '')}</div>
+        <div class="body">${escapeHtml(current.corpo || '')}</div>
+        ${current.esercizio ? `
+          <div class="box">
+            <div class="lbl">Esercizio della settimana</div>
+            <div class="txt">${escapeHtml(current.esercizio)}</div>
+          </div>` : ''}
+        ${current.riflessione ? `
+          <div class="box reflect">
+            <div class="lbl">Domanda da farti</div>
+            <div class="txt">${escapeHtml(current.riflessione)}</div>
+          </div>` : ''}
+      </div>
+    `;
+  } else {
+    curWrap.innerHTML = '';
+  }
+
+  // Archivio (escludo la corrente per non duplicarla)
+  const arcWrap = document.getElementById('pillole-archive-wrap');
+  const currentNum = current ? (current.numero ?? current.settimana_corrente) : null;
+  const past = archive
+    .filter(p => p.numero !== currentNum)
+    .sort((a, b) => (b.numero || 0) - (a.numero || 0));
+
+  if (!past.length) {
+    arcWrap.innerHTML = '';
+    return;
+  }
+
+  arcWrap.innerHTML = past.map(p => `
+    <details>
+      <summary>
+        <span class="num">#${p.numero ?? '?'}</span>
+        <span class="arc-title">${escapeHtml(p.titolo)}</span>
+      </summary>
+      <div class="arc-body">${escapeHtml(p.corpo || '')}${p.esercizio ? `
+        <div class="mini-box">
+          <div class="lbl">Esercizio</div>
+          ${escapeHtml(p.esercizio)}
+        </div>` : ''}${p.riflessione ? `
+        <div class="mini-box">
+          <div class="lbl">Domanda</div>
+          ${escapeHtml(p.riflessione)}
+        </div>` : ''}
+      </div>
+    </details>
+  `).join('');
 }
 
 function renderPerformanceChart(portfolio, benchmark) {
