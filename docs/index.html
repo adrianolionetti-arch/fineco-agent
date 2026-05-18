@@ -628,12 +628,12 @@
     <div class="timeline" id="signals-timeline"></div>
   </div>
 
-  <!-- Eventi in arrivo -->
+  <!-- Eventi e contesto di mercato -->
   <div class="card" style="margin-bottom: 48px;">
-    <div class="section-label">Eventi in arrivo</div>
+    <div class="section-label">Eventi e contesto di mercato</div>
     <ul class="events-list" id="events-list"></ul>
-    <p style="font-size:11px; color:var(--ink-muted); margin-top:14px; line-height:1.6;">
-      Trimestrali e dividendi nei prossimi 14 giorni per gli asset del tuo portafoglio (NVIDIA pubblica earnings ~ogni 3 mesi, mercoledì sera ora USA).
+    <p style="font-size:12px; color:var(--ink-dim); margin-top:14px; line-height:1.6;">
+      Mix di <strong>date in calendario</strong> (trimestrali, dividendi) e <strong>contesto macro</strong> che l'AI ha ritenuto rilevante per le tue posizioni (tassi, banche centrali, attese di mercato).
     </p>
   </div>
 
@@ -810,12 +810,20 @@ function render(d) {
     }).join('');
   }
 
-  // Events
+  // Events: combina API (date precise) + AI (contesto macro)
+  const eventsApi = d.events_upcoming || [];
+  const eventsAi = (d.briefing || {}).events || [];
   const el = document.getElementById('events-list');
-  const events = d.events_upcoming || [];
-  el.innerHTML = events.length
-    ? events.map(e => `<li>${e.description || JSON.stringify(e)}</li>`).join('')
-    : '<li class="empty-state">Nessun evento imminente.</li>';
+  let evHtml = '';
+  if (eventsApi.length) {
+    evHtml += eventsApi.map(e =>
+      `<li><strong>${e.description || JSON.stringify(e)}</strong></li>`
+    ).join('');
+  }
+  if (eventsAi.length) {
+    evHtml += eventsAi.map(e => `<li>${e}</li>`).join('');
+  }
+  el.innerHTML = evHtml || '<li class="empty-state">Nessun evento rilevante.</li>';
 
   // Pillole formative
   renderPillole(d);
