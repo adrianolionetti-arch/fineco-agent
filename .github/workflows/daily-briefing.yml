@@ -89,10 +89,20 @@ jobs:
           git config user.name "fineco-agent-bot"
           git config user.email "bot@noreply.local"
           git add journal/ data/ || true
-          if ! git diff --staged --quiet; then
-            git commit -m "chore: update journal & history $(date -u +%Y-%m-%d)"
-            git push
-            echo "Dati committati"
-          else
+          if git diff --staged --quiet; then
             echo "Nessun cambiamento nei dati persistenti"
+            exit 0
           fi
+          git commit -m "chore: update journal & history $(date -u +%Y-%m-%d)"
+          # Retry con rebase in caso di race condition (umano sta pushando in parallelo).
+          # Senza questo, basta un commit umano nel minuto tra checkout e fine job per
+          # far fallire il push con "rejected (fetch first)".
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "Push completato al tentativo $attempt"
+              exit 0
+            fi
+            echo "Push respinto, rebase e riprovo (tentativo $attempt)..."
+            git pull --rebase --autostash origin main || true
+          done
+          echo "::warning::Push journal fallito dopo 3 tentativi. I dati verranno scritti al prossimo run."
