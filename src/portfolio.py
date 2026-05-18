@@ -91,34 +91,38 @@ PORTFOLIO = [
 
 WATCHLIST = [
     # === Titoli di stato e bond (sicurezza/decorrelazione) ===
+    # NB: primary_symbol usa .XETRA (Deutsche Börse) o .L (London) perché
+    # EODHD non copre bene Borsa Italiana (.MI restituisce 404). Lo stesso
+    # ETF UCITS è quotato su più borse: scegliamo quella con copertura EODHD.
+    # Il display_ticker resta .MI per coerenza con Fineco.
     {
         "symbol": "IE00B7K1G870", "display_ticker": "IBGS.MI",
-        "primary_source": "eodhd", "primary_symbol": "IBGS.MI",
-        "primary_currency": "EUR", "fallback_yf": "IBGS.MI", "fallback_yf_2": "IBGS.DE",
+        "primary_source": "eodhd", "primary_symbol": "IBGS.XETRA",
+        "primary_currency": "EUR", "fallback_yf": "IBGS.MI", "fallback_yf_2": "IBGS.L",
         "fx_convert_from_primary": False, "quantity": 0,
         "name": "iShares Italy Govt Bond (BTP)", "type": "etf_bond",
         "currency": "EUR", "category": "bond_govt",
     },
     {
         "symbol": "IE00B1FZS798", "display_ticker": "IBTL.MI",
-        "primary_source": "eodhd", "primary_symbol": "IBTL.MI",
-        "primary_currency": "EUR", "fallback_yf": "IBTL.MI", "fallback_yf_2": "IBTL.DE",
+        "primary_source": "eodhd", "primary_symbol": "IBTL.XETRA",
+        "primary_currency": "EUR", "fallback_yf": "IBTL.L", "fallback_yf_2": "IBTL.MI",
         "fx_convert_from_primary": False, "quantity": 0,
         "name": "iShares Treasury USA 7-10Y", "type": "etf_bond",
         "currency": "EUR", "category": "bond_govt",
     },
     {
         "symbol": "IE00B1FZS681", "display_ticker": "IBGM.MI",
-        "primary_source": "eodhd", "primary_symbol": "IBGM.MI",
-        "primary_currency": "EUR", "fallback_yf": "IBGM.MI", "fallback_yf_2": "IBGM.DE",
+        "primary_source": "eodhd", "primary_symbol": "IBGM.XETRA",
+        "primary_currency": "EUR", "fallback_yf": "IBGM.L", "fallback_yf_2": "IBGM.MI",
         "fx_convert_from_primary": False, "quantity": 0,
         "name": "iShares Germany Govt Bond (Bund)", "type": "etf_bond",
         "currency": "EUR", "category": "bond_govt",
     },
     {
         "symbol": "IE00BDBRDM35", "display_ticker": "AGGH.MI",
-        "primary_source": "eodhd", "primary_symbol": "AGGH.MI",
-        "primary_currency": "EUR", "fallback_yf": "AGGH.MI", "fallback_yf_2": "AGGH.DE",
+        "primary_source": "eodhd", "primary_symbol": "AGGH.XETRA",
+        "primary_currency": "EUR", "fallback_yf": "AGGH.L", "fallback_yf_2": "AGGH.MI",
         "fx_convert_from_primary": False, "quantity": 0,
         "name": "iShares Global Aggregate Bond (EUR hedged)", "type": "etf_bond",
         "currency": "EUR", "category": "bond_globale",
@@ -126,17 +130,17 @@ WATCHLIST = [
     # === Oro fisico ===
     {
         "symbol": "IE00B4ND3602", "display_ticker": "SGLD.MI",
-        "primary_source": "eodhd", "primary_symbol": "SGLD.MI",
-        "primary_currency": "EUR", "fallback_yf": "SGLD.MI", "fallback_yf_2": "SGLD.L",
-        "fx_convert_from_primary": False, "quantity": 0,
+        "primary_source": "eodhd", "primary_symbol": "SGLD.L",
+        "primary_currency": "USD", "fallback_yf": "SGLD.MI", "fallback_yf_2": "SGLD.L",
+        "fx_convert_from_primary": True, "quantity": 0,
         "name": "iShares Physical Gold", "type": "etc_commodity",
         "currency": "EUR", "category": "oro",
     },
     # === Emerging markets ===
     {
         "symbol": "IE00BKM4GZ66", "display_ticker": "EIMI.MI",
-        "primary_source": "eodhd", "primary_symbol": "EIMI.MI",
-        "primary_currency": "EUR", "fallback_yf": "EIMI.MI", "fallback_yf_2": "EIMI.DE",
+        "primary_source": "eodhd", "primary_symbol": "EIMI.XETRA",
+        "primary_currency": "EUR", "fallback_yf": "EIMI.MI", "fallback_yf_2": "EIMI.L",
         "fx_convert_from_primary": False, "quantity": 0,
         "name": "iShares MSCI Emerging Markets", "type": "etf_equity",
         "currency": "EUR", "category": "azionario_em",
@@ -144,16 +148,16 @@ WATCHLIST = [
     # === Settoriali difensivi ===
     {
         "symbol": "IE00B43HR379", "display_ticker": "HEAL.MI",
-        "primary_source": "eodhd", "primary_symbol": "HEAL.MI",
-        "primary_currency": "EUR", "fallback_yf": "HEAL.MI", "fallback_yf_2": "HEAL.DE",
+        "primary_source": "eodhd", "primary_symbol": "HEAL.XETRA",
+        "primary_currency": "EUR", "fallback_yf": "HEAL.MI", "fallback_yf_2": "HEAL.L",
         "fx_convert_from_primary": False, "quantity": 0,
         "name": "iShares Healthcare Innovation", "type": "etf_equity",
         "currency": "EUR", "category": "settoriale_healthcare",
     },
     {
         "symbol": "DE000A0F5UJ7", "display_ticker": "EXV1.MI",
-        "primary_source": "eodhd", "primary_symbol": "EXV1.MI",
-        "primary_currency": "EUR", "fallback_yf": "EXV1.MI", "fallback_yf_2": "EXV1.DE",
+        "primary_source": "eodhd", "primary_symbol": "EXV1.XETRA",
+        "primary_currency": "EUR", "fallback_yf": "EXV1.DE", "fallback_yf_2": "EXV1.MI",
         "fx_convert_from_primary": False, "quantity": 0,
         "name": "iShares STOXX 600 Banks", "type": "etf_equity",
         "currency": "EUR", "category": "settoriale_banche",
