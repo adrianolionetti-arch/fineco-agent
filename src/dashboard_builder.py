@@ -21,6 +21,7 @@ import urllib.request
 from datetime import datetime, timezone
 
 from pillole import get_pillola_della_settimana, get_archivio_pillole
+from portfolio import PORTFOLIO
 
 HISTORY_FILE = "data/history.json"
 DASHBOARD_JSON = "docs/data.json"
@@ -145,12 +146,31 @@ def _read_journal_with_performance(portfolio_data: dict):
         return []
 
     # Costruisci mappa ticker → prezzo attuale dai dati già caricati.
-    # Il journal usa display_ticker (es. "VWCE.MI") che combacia.
-    current_prices = {
+    # I segnali storici usano vari alias (display "1NVDA.MI", primary
+    # "NVDA", a volte "VWCE.MI" o "VWCE.XETRA"). Registro tutti gli alias
+    # noti dalla config PORTFOLIO con lo stesso prezzo del display_ticker.
+    current_prices = {}
+    holdings_by_display = {
         h["ticker"]: h["current"]
         for h in portfolio_data.get("holdings", [])
         if "error" not in h
     }
+    for cfg in PORTFOLIO:
+        display = cfg["display_ticker"]
+        price = holdings_by_display.get(display)
+        if price is None:
+            continue
+        # Tutti i possibili alias per questo asset
+        for alias in {
+            cfg.get("display_ticker"),
+            cfg.get("primary_symbol"),
+            cfg.get("symbol"),
+            cfg.get("fallback_yf"),
+            cfg.get("fallback_yf_2"),
+            cfg.get("earnings_ticker"),
+        }:
+            if alias:
+                current_prices[alias] = price
 
     enriched = []
     for r in rows:
