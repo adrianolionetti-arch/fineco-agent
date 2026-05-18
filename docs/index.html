@@ -592,6 +592,16 @@
       <p style="font-size:12px; color:var(--ink-dim); margin-top:14px; line-height:1.6;">
         La linea oro è il tuo portafoglio, la linea verde tratteggiata è il benchmark mondiale (VWCE — l'ETF del mondo intero). Entrambi partono da <strong>100</strong> nel primo giorno tracciato: un valore di <strong>102</strong> significa +2%, un valore di <strong>98</strong> significa −2%. Serve per capire se il tuo portafoglio sta facendo meglio o peggio del mercato globale.
       </p>
+
+      <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--rule);">
+        <div class="section-label">Andamento per singolo asset</div>
+        <div class="chart-wrap tall">
+          <canvas id="chart-assets"></canvas>
+        </div>
+        <p style="font-size:12px; color:var(--ink-dim); margin-top:14px; line-height:1.6;">
+          Una linea per ciascuno dei tuoi titoli (NVIDIA, VWCE, EQAC). Anche qui ogni linea parte da <strong>100</strong> al primo giorno disponibile, così puoi confrontare i movimenti pur avendo prezzi unitari molto diversi (NVIDIA ≈ €193, VWCE ≈ €159, EQAC ≈ €427). Passa il mouse per vedere il prezzo reale del giorno.
+        </p>
+      </div>
     </div>
     <div class="card">
       <div class="section-label">Storico dei segnali AI</div>
@@ -770,8 +780,11 @@ function render(d) {
     </tr>
   `).join('');
 
-  // Performance chart
+  // Performance chart (portfolio vs benchmark, indice base 100)
   renderPerformanceChart(d.portfolio_history || [], d.benchmark?.series || []);
+
+  // Andamento per singolo asset (3 linee normalizzate, base 100)
+  renderAssetsChart(d.holdings || []);
 
   // Backtest stats
   const bt = d.backtest || {};
@@ -915,6 +928,96 @@ function selectPillola(num) {
         </div>` : ''}
     </div>
   `;
+}
+
+// Palette per le linee dei 3 asset (tonalità calde coordinate)
+const ASSET_COLORS = ['#d4a574', '#7ab380', '#c47a6f', '#9a8fb8', '#b8a87a'];
+
+function renderAssetsChart(holdings) {
+  const ctx = document.getElementById('chart-assets').getContext('2d');
+  // Filtra solo holding con price_history non vuoto
+  const series = holdings
+    .filter(h => h.price_history && h.price_history.length >= 2)
+    .map((h, i) => {
+      const first = h.price_history[0].close;
+      const points = h.price_history.map(p => ({
+        x: p.date,
+        y: (p.close / first) * 100,
+        rawPrice: p.close,
+        currency: h.currency,
+      }));
+      return {
+        label: `${h.name} (${h.ticker})`,
+        data: points,
+        borderColor: ASSET_COLORS[i % ASSET_COLORS.length],
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        fill: false,
+        tension: 0.25,
+        pointRadius: 0,
+        pointHoverRadius: 4,
+      };
+    });
+
+  // Distrugge istanza precedente se esiste
+  if (window._assetsChart) { window._assetsChart.destroy(); }
+
+  window._assetsChart = new Chart(ctx, {
+    type: 'line',
+    data: { datasets: series },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          labels: {
+            color: '#9a958a',
+            font: { family: 'JetBrains Mono', size: 11 },
+            boxWidth: 20,
+            boxHeight: 2,
+          },
+        },
+        tooltip: {
+          backgroundColor: '#1d1b18',
+          titleColor: '#e8e4d9',
+          bodyColor: '#e8e4d9',
+          borderColor: '#2a2824',
+          borderWidth: 1,
+          titleFont: { family: 'JetBrains Mono', size: 11 },
+          bodyFont: { family: 'JetBrains Mono', size: 12 },
+          padding: 10,
+          callbacks: {
+            label: (ctx) => {
+              const pt = ctx.raw;
+              const pctChange = (pt.y - 100).toFixed(2);
+              const sign = pctChange >= 0 ? '+' : '';
+              return ` ${ctx.dataset.label}: ${pt.rawPrice.toFixed(2)} ${pt.currency} (${sign}${pctChange}%)`;
+            },
+          },
+        },
+      },
+      scales: {
+        x: {
+          type: 'category',
+          grid: { color: 'rgba(42, 40, 36, 0.5)' },
+          ticks: {
+            color: '#625d54',
+            font: { family: 'JetBrains Mono', size: 10 },
+            maxTicksLimit: 8,
+          },
+        },
+        y: {
+          grid: { color: 'rgba(42, 40, 36, 0.5)' },
+          ticks: {
+            color: '#625d54',
+            font: { family: 'JetBrains Mono', size: 10 },
+            callback: (v) => v.toFixed(0),
+          },
+        },
+      },
+    },
+  });
 }
 
 function renderPerformanceChart(portfolio, benchmark) {

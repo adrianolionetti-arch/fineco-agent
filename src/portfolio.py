@@ -136,6 +136,9 @@ def _fetch_twelvedata(symbol: str) -> dict:
     # values e' in ordine reverse-chronological -> inverto
     values = list(reversed(values))
     closes = [float(v["close"]) for v in values]
+    price_series = [
+        {"date": v["datetime"], "close": float(v["close"])} for v in values
+    ]
 
     current = closes[-1]
     prev = closes[-2]
@@ -148,6 +151,7 @@ def _fetch_twelvedata(symbol: str) -> dict:
         "weekly_change_pct": ((current - week_ago) / week_ago) * 100 if week_ago else 0.0,
         "monthly_change_pct": ((current - month_ago) / month_ago) * 100 if month_ago else 0.0,
         "volume": int(values[-1].get("volume") or 0),
+        "price_series": price_series,
     }
 
 
@@ -170,12 +174,13 @@ def _fetch_eodhd(symbol: str) -> dict:
     daily_pct = float(rt.get("change_p") or 0.0)
     volume = int(rt.get("volume") or 0)
 
-    # 2) Storico EOD (per weekly e monthly)
+    # 2) Storico EOD (per weekly, monthly e serie per il grafico)
     eod_url = (f"https://eodhd.com/api/eod/{symbol}"
                f"?api_token={EOD_API_KEY}&fmt=json&period=d&order=d")
     hist, err = _http_json(eod_url)
     weekly_pct = 0.0
     monthly_pct = 0.0
+    price_series = []
     if isinstance(hist, list) and len(hist) >= 2:
         # ordinato desc per data -> hist[0] e' il piu' recente
         closes = [float(h["close"]) for h in hist if h.get("close") is not None]
@@ -185,6 +190,12 @@ def _fetch_eodhd(symbol: str) -> dict:
             monthly_pct = ((closes[0] - closes[20]) / closes[20]) * 100
         elif len(closes) >= 2:
             monthly_pct = ((closes[0] - closes[-1]) / closes[-1]) * 100
+        # Serie cronologica per il grafico (inverto a chronological, ultimi 90gg)
+        price_series = [
+            {"date": h["date"], "close": float(h["close"])}
+            for h in reversed(hist[:90])
+            if h.get("close") is not None
+        ]
     else:
         log.warning("EODHD storico non disponibile per %s (%s)", symbol, err)
 
@@ -194,6 +205,7 @@ def _fetch_eodhd(symbol: str) -> dict:
         "weekly_change_pct": weekly_pct,
         "monthly_change_pct": monthly_pct,
         "volume": volume,
+        "price_series": price_series,
     }
 
 

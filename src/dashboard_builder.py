@@ -239,20 +239,26 @@ def build_dashboard_data(portfolio_data: dict, briefing: dict, news: list, event
     history = _append_history(portfolio_data)
     benchmark = _get_benchmark_history(days=90)
 
-    # 2. Holdings sanitizzate (solo %, no valore assoluto)
+    # 2. Holdings sanitizzate (solo %, no valore assoluto della posizione)
+    # Include serie storica prezzi unitari (ok da esporre, sono dati pubblici).
     holdings_public = []
     for h in portfolio_data.get("holdings", []):
         if "error" in h:
             continue
+        # Ultimi 60 giorni di chiusure per il grafico "prezzi assoluti"
+        price_series = h.get("price_series") or []
+        if price_series:
+            price_series = price_series[-60:]
         holdings_public.append({
             "name": h["name"],
             "ticker": h["ticker"],
             "type": h.get("type", "unknown"),
             "currency": h["currency"],
-            "current_price": h["current"],  # prezzo unitario pubblico, non posizione
+            "current_price": h["current"],
             "daily_pct": h["daily_change_pct"],
             "weekly_pct": h["weekly_change_pct"],
             "monthly_pct": h["monthly_change_pct"],
+            "price_history": price_series,
         })
 
     # 3. Segnali storici con performance
