@@ -421,6 +421,57 @@
     }
   }
 
+  /* Watchlist */
+  .wl-group { margin-top: 18px; }
+  .wl-group:first-child { margin-top: 0; }
+  .wl-group h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+  table.wl {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  table.wl td {
+    padding: 9px 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+  table.wl tr:last-child td { border-bottom: none; }
+  table.wl .name-col {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  table.wl .ticker-col {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-muted);
+  }
+  table.wl .price-col {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-dim);
+    text-align: right;
+  }
+  table.wl .pct-col {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    text-align: right;
+    width: 70px;
+  }
+  @media (max-width: 640px) {
+    table.wl td:nth-child(2) { display: none; }
+    table.wl td:nth-child(4) { display: none; }
+  }
+
   /* News */
   .news-list { list-style: none; }
   .news-list li { padding: 12px 0; border-bottom: 1px solid var(--rule); }
@@ -691,7 +742,7 @@
   </div>
 
   <!-- Holdings -->
-  <div class="card" style="margin-bottom:48px;">
+  <div class="card" style="margin-bottom:32px;">
     <div class="section-label">Portafoglio</div>
     <table class="holdings">
       <thead>
@@ -704,6 +755,15 @@
       </thead>
       <tbody id="holdings-body"></tbody>
     </table>
+  </div>
+
+  <!-- Watchlist (asset monitorati, non posseduti) -->
+  <div class="card" style="margin-bottom:48px;" id="watchlist-card">
+    <div class="section-label">Watchlist</div>
+    <p style="font-size:12px; color:var(--ink-dim); margin-bottom:16px; line-height:1.6;">
+      Asset che <strong>non possiedi</strong> ma che l'agente monitora ogni giorno. Se vede un'occasione, può proporne uno come segnale del giorno. Raggruppati per categoria.
+    </p>
+    <div id="watchlist-body"></div>
   </div>
 
   <!-- Timeline segnali -->
@@ -860,6 +920,9 @@ function render(d) {
   // Andamento per singolo asset (3 linee normalizzate, base 100)
   renderAssetsChart(d.holdings || []);
 
+  // Watchlist (asset monitorati non posseduti)
+  renderWatchlist(d.watchlist || []);
+
   // Backtest stats
   const bt = d.backtest || {};
   document.getElementById('s-hit').textContent = bt.hit_rate !== null && bt.hit_rate !== undefined ? bt.hit_rate.toFixed(1) + '%' : '—';
@@ -994,6 +1057,73 @@ function renderImportanceDots(level) {
     dots += `<span class="imp-dot ${i <= n ? 'on' : ''}"></span>`;
   }
   return `<span class="imp-label">Priorità</span><span class="imp">${dots}</span>`;
+}
+
+// Etichette user-friendly per le categorie watchlist
+const WL_CATEGORY_LABELS = {
+  bond_govt: 'Titoli di Stato',
+  bond_globale: 'Bond globali',
+  oro: 'Oro / commodities',
+  azionario_em: 'Mercati emergenti',
+  settoriale_healthcare: 'Settoriale: healthcare',
+  settoriale_banche: 'Settoriale: banche',
+  azione_tech_usa: 'Azioni — big tech USA',
+  azione_banche_usa: 'Azioni — banche USA',
+  azione_holding_diversificata: 'Azioni — holding diversificate',
+  azione_healthcare_usa: 'Azioni — healthcare USA',
+  altro: 'Altro',
+};
+
+// Ordine di visualizzazione (prima i diversificatori, poi le azioni)
+const WL_CATEGORY_ORDER = [
+  'bond_govt', 'bond_globale', 'oro', 'azionario_em',
+  'settoriale_healthcare', 'settoriale_banche',
+  'azione_holding_diversificata', 'azione_healthcare_usa',
+  'azione_banche_usa', 'azione_tech_usa',
+  'altro',
+];
+
+function renderWatchlist(items) {
+  const card = document.getElementById('watchlist-card');
+  const body = document.getElementById('watchlist-body');
+  if (!items || !items.length) {
+    card.style.display = 'none';
+    return;
+  }
+  card.style.display = 'block';
+
+  // Raggruppa per categoria
+  const groups = {};
+  items.forEach(w => {
+    const cat = w.category || 'altro';
+    if (!groups[cat]) groups[cat] = [];
+    groups[cat].push(w);
+  });
+
+  const orderedCats = WL_CATEGORY_ORDER.filter(c => groups[c]);
+  // Aggiungi eventuali categorie non previste alla fine
+  Object.keys(groups).forEach(c => {
+    if (!orderedCats.includes(c)) orderedCats.push(c);
+  });
+
+  body.innerHTML = orderedCats.map(cat => {
+    const rows = groups[cat].map(w => `
+      <tr>
+        <td class="name-col">${w.name}</td>
+        <td class="ticker-col">${w.ticker}</td>
+        <td class="price-col">${w.current_price.toFixed(2)} ${w.currency}</td>
+        <td class="pct-col ${pctClass(w.daily_pct)}">${pctFmt(w.daily_pct)}</td>
+        <td class="pct-col ${pctClass(w.weekly_pct)}">${pctFmt(w.weekly_pct)}</td>
+        <td class="pct-col ${pctClass(w.monthly_pct)}">${pctFmt(w.monthly_pct)}</td>
+      </tr>
+    `).join('');
+    return `
+      <div class="wl-group">
+        <h4>${WL_CATEGORY_LABELS[cat] || cat}</h4>
+        <table class="wl"><tbody>${rows}</tbody></table>
+      </div>
+    `;
+  }).join('');
 }
 
 function renderSignalCard(s) {

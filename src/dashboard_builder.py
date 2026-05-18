@@ -240,7 +240,28 @@ def _compute_backtest_summary(signals: list) -> dict:
     }
 
 
-def build_dashboard_data(portfolio_data: dict, briefing: dict, news: list, events: dict):
+def _sanitize_watchlist(watchlist: list) -> list:
+    """Sanitizza la watchlist per esporla in dashboard (no posizione, niente assoluti)."""
+    out = []
+    for w in watchlist or []:
+        if "error" in w:
+            continue
+        out.append({
+            "name": w["name"],
+            "ticker": w["display_ticker"],
+            "type": w.get("type", "unknown"),
+            "category": w.get("category", "altro"),
+            "currency": w["currency"],
+            "current_price": w["current"],
+            "daily_pct": w["daily_change_pct"],
+            "weekly_pct": w["weekly_change_pct"],
+            "monthly_pct": w["monthly_change_pct"],
+        })
+    return out
+
+
+def build_dashboard_data(portfolio_data: dict, briefing: dict, news: list, events: dict,
+                          watchlist: list | None = None):
     """Genera docs/data.json con tutto quello che serve alla dashboard."""
     os.makedirs("docs", exist_ok=True)
 
@@ -310,6 +331,7 @@ def build_dashboard_data(portfolio_data: dict, briefing: dict, news: list, event
             for n in news[:8]
         ],
         "events_upcoming": events.get("earnings", []),
+        "watchlist": _sanitize_watchlist(watchlist or []),
         # Tappa 4: pillole formative
         "pillola_corrente": pillola_corrente,
         "archivio_pillole": archivio_pillole,

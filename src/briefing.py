@@ -142,6 +142,24 @@ REGOLE CRITICHE
    sul tech USA (NVIDIA + VWCE + EQAC si sovrappongono). NON suggerirgli mai di comprare
    altro NVIDIA, altro tech USA, altri ETF Nasdaq.
 
+8. PRIORITA' DI SUGGERIMENTO sulla watchlist: l'obiettivo e' DIVERSIFICARE.
+   Asset PREFERITI (alta priorita' se ci sono buone occasioni):
+   - bond_govt (BTP, Bund, Treasury): mancano completamente nel portafoglio
+   - bond_globale (AGGH): mancano completamente
+   - oro (SGLD): decorrelato, ottimo hedge inflazione
+   - azionario_em (EIMI): VWCE e' 70% USA, gli emerging mancano
+   - settoriali NON-tech (banche, healthcare): diversifica settorialmente
+   Asset CON CAUTELA (suggerisci solo se davvero c'e' motivo eccellente):
+   - azioni tech USA singole (AAPL/MSFT/GOOGL/META): Adriano ha gia' troppa
+     esposizione tech via NVIDIA + EQAC + 30% di VWCE. Suggerisci solo come
+     scambio sostitutivo, non come accumulo.
+   Asset NEUTRI:
+   - JPM, BRK-B, UNH: ok come diversificatori settoriali
+
+9. Il signal_asset puo' essere QUALSIASI ticker (portfolio o watchlist).
+   Se e' un asset di watchlist, signal_action sara' tipicamente "valuta ingresso/accumulo".
+   Se e' un asset del portfolio, puo' essere "considera incremento" o "considera alleggerimento".
+
 ==============================
 OUTPUT FORMAT
 ==============================
@@ -176,8 +194,11 @@ Mai parole inglesi non spiegate (hawkish, dovish, sell-off, rally, dip, ecc. - t
 o spiegale tra parentesi)."""
 
 
-def generate_briefing(portfolio_data: dict, news: list, events: dict) -> dict:
-    """Chiama Claude e restituisce briefing strutturato in dict."""
+def generate_briefing(portfolio_data: dict, news: list, events: dict,
+                      watchlist: list | None = None) -> dict:
+    """Chiama Claude e restituisce briefing strutturato in dict.
+    watchlist: lista di asset NON posseduti ma monitorati. L'AI può
+    emettere segnali GREEN/YELLOW sia su portfolio che su watchlist."""
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         return {
@@ -209,6 +230,30 @@ def generate_briefing(portfolio_data: dict, news: list, events: dict) -> dict:
         uc += "\n## Alert soglie automatiche\n"
         for a in portfolio_data["alerts"]:
             uc += f"- {a}\n"
+
+    if watchlist:
+        uc += (
+            "\n## Watchlist (asset NON posseduti ma monitorati per possibile acquisto)\n"
+            "Puoi suggerire ingresso/accumulo su questi se vedi una buona ragione "
+            "(prezzo scontato, evento favorevole, diversificazione utile per il portafoglio).\n"
+        )
+        # Raggruppa per category per dare contesto al modello
+        from collections import defaultdict
+        by_cat = defaultdict(list)
+        for w in watchlist:
+            if "error" in w:
+                continue
+            by_cat[w.get("category", "altro")].append(w)
+        for cat, items in by_cat.items():
+            cat_label = cat.replace("_", " ")
+            uc += f"\n### {cat_label}\n"
+            for w in items:
+                uc += (
+                    f"- {w['name']} ({w['display_ticker']}): {w['current']} {w['currency']}, "
+                    f"oggi {w['daily_change_pct']:+.2f}%, "
+                    f"settimana {w['weekly_change_pct']:+.2f}%, "
+                    f"mese {w['monthly_change_pct']:+.2f}%\n"
+                )
 
     if events.get("earnings"):
         uc += "\n## Earnings imminenti (date in cui le aziende pubblicano i risultati)\n"

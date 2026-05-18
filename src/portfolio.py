@@ -81,6 +81,144 @@ PORTFOLIO = [
     },
 ]
 
+
+# --- WATCHLIST -----------------------------------------------------------
+# Asset NON posseduti ma monitorati per generare segnali di ingresso.
+# L'AI riceve sia PORTFOLIO che WATCHLIST e può suggerire acquisti su
+# entrambi. Niente quantity, niente alert su soglie (eviterebbero rumore).
+# Schema compatibile con PORTFOLIO per riutilizzare fetch_asset_data,
+# ma quantity = 0 segnala "non posseduto".
+
+WATCHLIST = [
+    # === Titoli di stato e bond (sicurezza/decorrelazione) ===
+    {
+        "symbol": "IE00B7K1G870", "display_ticker": "IBGS.MI",
+        "primary_source": "eodhd", "primary_symbol": "IBGS.MI",
+        "primary_currency": "EUR", "fallback_yf": "IBGS.MI", "fallback_yf_2": "IBGS.DE",
+        "fx_convert_from_primary": False, "quantity": 0,
+        "name": "iShares Italy Govt Bond (BTP)", "type": "etf_bond",
+        "currency": "EUR", "category": "bond_govt",
+    },
+    {
+        "symbol": "IE00B1FZS798", "display_ticker": "IBTL.MI",
+        "primary_source": "eodhd", "primary_symbol": "IBTL.MI",
+        "primary_currency": "EUR", "fallback_yf": "IBTL.MI", "fallback_yf_2": "IBTL.DE",
+        "fx_convert_from_primary": False, "quantity": 0,
+        "name": "iShares Treasury USA 7-10Y", "type": "etf_bond",
+        "currency": "EUR", "category": "bond_govt",
+    },
+    {
+        "symbol": "IE00B1FZS681", "display_ticker": "IBGM.MI",
+        "primary_source": "eodhd", "primary_symbol": "IBGM.MI",
+        "primary_currency": "EUR", "fallback_yf": "IBGM.MI", "fallback_yf_2": "IBGM.DE",
+        "fx_convert_from_primary": False, "quantity": 0,
+        "name": "iShares Germany Govt Bond (Bund)", "type": "etf_bond",
+        "currency": "EUR", "category": "bond_govt",
+    },
+    {
+        "symbol": "IE00BDBRDM35", "display_ticker": "AGGH.MI",
+        "primary_source": "eodhd", "primary_symbol": "AGGH.MI",
+        "primary_currency": "EUR", "fallback_yf": "AGGH.MI", "fallback_yf_2": "AGGH.DE",
+        "fx_convert_from_primary": False, "quantity": 0,
+        "name": "iShares Global Aggregate Bond (EUR hedged)", "type": "etf_bond",
+        "currency": "EUR", "category": "bond_globale",
+    },
+    # === Oro fisico ===
+    {
+        "symbol": "IE00B4ND3602", "display_ticker": "SGLD.MI",
+        "primary_source": "eodhd", "primary_symbol": "SGLD.MI",
+        "primary_currency": "EUR", "fallback_yf": "SGLD.MI", "fallback_yf_2": "SGLD.L",
+        "fx_convert_from_primary": False, "quantity": 0,
+        "name": "iShares Physical Gold", "type": "etc_commodity",
+        "currency": "EUR", "category": "oro",
+    },
+    # === Emerging markets ===
+    {
+        "symbol": "IE00BKM4GZ66", "display_ticker": "EIMI.MI",
+        "primary_source": "eodhd", "primary_symbol": "EIMI.MI",
+        "primary_currency": "EUR", "fallback_yf": "EIMI.MI", "fallback_yf_2": "EIMI.DE",
+        "fx_convert_from_primary": False, "quantity": 0,
+        "name": "iShares MSCI Emerging Markets", "type": "etf_equity",
+        "currency": "EUR", "category": "azionario_em",
+    },
+    # === Settoriali difensivi ===
+    {
+        "symbol": "IE00B43HR379", "display_ticker": "HEAL.MI",
+        "primary_source": "eodhd", "primary_symbol": "HEAL.MI",
+        "primary_currency": "EUR", "fallback_yf": "HEAL.MI", "fallback_yf_2": "HEAL.DE",
+        "fx_convert_from_primary": False, "quantity": 0,
+        "name": "iShares Healthcare Innovation", "type": "etf_equity",
+        "currency": "EUR", "category": "settoriale_healthcare",
+    },
+    {
+        "symbol": "DE000A0F5UJ7", "display_ticker": "EXV1.MI",
+        "primary_source": "eodhd", "primary_symbol": "EXV1.MI",
+        "primary_currency": "EUR", "fallback_yf": "EXV1.MI", "fallback_yf_2": "EXV1.DE",
+        "fx_convert_from_primary": False, "quantity": 0,
+        "name": "iShares STOXX 600 Banks", "type": "etf_equity",
+        "currency": "EUR", "category": "settoriale_banche",
+    },
+    # === Big tech singoli (azioni US, via Twelve Data) ===
+    {
+        "symbol": "AAPL", "display_ticker": "AAPL",
+        "primary_source": "twelvedata", "primary_symbol": "AAPL",
+        "primary_currency": "USD", "fallback_yf": "AAPL", "fallback_yf_2": "AAPL",
+        "fx_convert_from_primary": True, "quantity": 0,
+        "name": "Apple", "type": "stock",
+        "currency": "EUR", "category": "azione_tech_usa",
+    },
+    {
+        "symbol": "MSFT", "display_ticker": "MSFT",
+        "primary_source": "twelvedata", "primary_symbol": "MSFT",
+        "primary_currency": "USD", "fallback_yf": "MSFT", "fallback_yf_2": "MSFT",
+        "fx_convert_from_primary": True, "quantity": 0,
+        "name": "Microsoft", "type": "stock",
+        "currency": "EUR", "category": "azione_tech_usa",
+    },
+    {
+        "symbol": "GOOGL", "display_ticker": "GOOGL",
+        "primary_source": "twelvedata", "primary_symbol": "GOOGL",
+        "primary_currency": "USD", "fallback_yf": "GOOGL", "fallback_yf_2": "GOOGL",
+        "fx_convert_from_primary": True, "quantity": 0,
+        "name": "Alphabet (Google)", "type": "stock",
+        "currency": "EUR", "category": "azione_tech_usa",
+    },
+    {
+        "symbol": "META", "display_ticker": "META",
+        "primary_source": "twelvedata", "primary_symbol": "META",
+        "primary_currency": "USD", "fallback_yf": "META", "fallback_yf_2": "META",
+        "fx_convert_from_primary": True, "quantity": 0,
+        "name": "Meta Platforms", "type": "stock",
+        "currency": "EUR", "category": "azione_tech_usa",
+    },
+    # === Azioni single non-tech (diversificazione settoriale) ===
+    {
+        "symbol": "JPM", "display_ticker": "JPM",
+        "primary_source": "twelvedata", "primary_symbol": "JPM",
+        "primary_currency": "USD", "fallback_yf": "JPM", "fallback_yf_2": "JPM",
+        "fx_convert_from_primary": True, "quantity": 0,
+        "name": "JPMorgan Chase", "type": "stock",
+        "currency": "EUR", "category": "azione_banche_usa",
+    },
+    {
+        "symbol": "BRK.B", "display_ticker": "BRK-B",
+        "primary_source": "twelvedata", "primary_symbol": "BRK.B",
+        "primary_currency": "USD", "fallback_yf": "BRK-B", "fallback_yf_2": "BRK-B",
+        "fx_convert_from_primary": True, "quantity": 0,
+        "name": "Berkshire Hathaway B", "type": "stock",
+        "currency": "EUR", "category": "azione_holding_diversificata",
+    },
+    {
+        "symbol": "UNH", "display_ticker": "UNH",
+        "primary_source": "twelvedata", "primary_symbol": "UNH",
+        "primary_currency": "USD", "fallback_yf": "UNH", "fallback_yf_2": "UNH",
+        "fx_convert_from_primary": True, "quantity": 0,
+        "name": "UnitedHealth", "type": "stock",
+        "currency": "EUR", "category": "azione_healthcare_usa",
+    },
+]
+
+
 ALERT_THRESHOLDS = {
     "daily_change_pct": 5.0,
     "weekly_change_pct": 10.0,
@@ -431,6 +569,27 @@ def analyze_portfolio() -> dict:
         "total_value_eur_approx": round(total_value_eur, 2),
         "timestamp": datetime.now().isoformat(),
     }
+
+
+def analyze_watchlist() -> list:
+    """Fetcha prezzi degli asset in WATCHLIST (non posseduti, monitorati).
+    Niente alert/posizione: solo dati di prezzo+performance per il prompt AI
+    e la sezione 'Watchlist' della dashboard. Errori vengono loggati ma il
+    fetch degli altri continua."""
+    results: list[dict] = []
+    for item in WATCHLIST:
+        print(f"  [watchlist] {item['display_ticker']} "
+              f"(primary={item['primary_source']}:{item['primary_symbol']})...")
+        data = fetch_asset_data(item)
+        if "error" in data:
+            print(f"    [watchlist] ERRORE: {data['error'][:120]}")
+            results.append({**item, **data})
+            continue
+        sign = "+" if data["daily_change_pct"] >= 0 else ""
+        print(f"    [watchlist] OK: {data['current']} EUR "
+              f"({sign}{data['daily_change_pct']}%)")
+        results.append({**item, **data})
+    return results
 
 
 # --- Esecuzione locale ----------------------------------------------------
