@@ -312,9 +312,20 @@ def _fetch_eodhd(symbol: str) -> dict:
     if not isinstance(rt, dict) or "close" not in rt:
         return {"error": f"EODHD real-time: risposta inattesa {str(rt)[:120]}"}
 
-    current = float(rt["close"])
-    daily_pct = float(rt.get("change_p") or 0.0)
-    volume = int(rt.get("volume") or 0)
+    # EODHD può ritornare "NA" come close se l'asset esiste ma non
+    # ha avuto scambi recenti (ETF poco liquidi su Xetra).
+    try:
+        current = float(rt["close"])
+    except (ValueError, TypeError):
+        return {"error": f"EODHD: prezzo close={rt.get('close')!r} non numerico per {symbol}"}
+    try:
+        daily_pct = float(rt.get("change_p") or 0.0)
+    except (ValueError, TypeError):
+        daily_pct = 0.0
+    try:
+        volume = int(rt.get("volume") or 0)
+    except (ValueError, TypeError):
+        volume = 0
 
     # 2) Storico EOD (per weekly, monthly e serie per il grafico)
     eod_url = (f"https://eodhd.com/api/eod/{symbol}"
@@ -578,13 +589,19 @@ def analyze_portfolio() -> dict:
 def analyze_watchlist() -> list:
     """Fetcha prezzi degli asset in WATCHLIST (non posseduti, monitorati).
     Niente alert/posizione: solo dati di prezzo+performance per il prompt AI
-    e la sezione 'Watchlist' della dashboard. Errori vengono loggati ma il
-    fetch degli altri continua."""
+    e la sezione 'Watchlist' della dashboard. Errori (anche eccezioni non
+    gestite a livello di singolo asset) vengono loggati ma il fetch degli
+    altri continua — nessun bug su un ticker deve bloccare gli altri 14."""
     results: list[dict] = []
     for item in WATCHLIST:
         print(f"  [watchlist] {item['display_ticker']} "
               f"(primary={item['primary_source']}:{item['primary_symbol']})...")
-        data = fetch_asset_data(item)
+        try:
+            data = fetch_asset_data(item)
+        except Exception as e:
+            print(f"    [watchlist] CRASH: {type(e).__name__}: {str(e)[:120]}")
+            results.append({**item, "error": f"crash {type(e).__name__}: {str(e)[:120]}"})
+            continue
         if "error" in data:
             print(f"    [watchlist] ERRORE: {data['error'][:120]}")
             results.append({**item, **data})
