@@ -8,12 +8,15 @@ Include:
 - lista segnali dal diario con esito attuale
 - benchmark comparison (VWCE.DE come richiesto)
 - news rilevanti
+- pillola formativa corrente + archivio (Tappa 4)
 """
 import json
 import os
 import csv
 from datetime import datetime, timezone
 import yfinance as yf
+
+from pillole import get_pillola_della_settimana, get_archivio_pillole
 
 HISTORY_FILE = "data/history.json"
 DASHBOARD_JSON = "docs/data.json"
@@ -210,7 +213,14 @@ def build_dashboard_data(portfolio_data: dict, briefing: dict, news: list, event
     signals = _read_journal_with_performance()
     backtest = _compute_backtest_summary(signals)
 
-    # 4. Payload finale
+    # 4. Pillole formative (Tappa 4)
+    # La dashboard mostra sempre la pillola della settimana corrente,
+    # indipendentemente dal giorno della settimana (l'email invece solo il lunedì).
+    # Prima di START_DATE entrambe sono None / [].
+    pillola_corrente = get_pillola_della_settimana()
+    archivio_pillole = get_archivio_pillole()
+
+    # 5. Payload finale
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "briefing": {
@@ -239,12 +249,20 @@ def build_dashboard_data(portfolio_data: dict, briefing: dict, news: list, event
             for n in news[:8]
         ],
         "events_upcoming": events.get("earnings", []),
+        # Tappa 4: pillole formative
+        "pillola_corrente": pillola_corrente,
+        "archivio_pillole": archivio_pillole,
     }
 
     with open(DASHBOARD_JSON, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2, ensure_ascii=False, default=str)
 
     print(f"  → Dashboard data scritto in {DASHBOARD_JSON}")
+    if pillola_corrente:
+        print(f"  → Pillola corrente: settimana {pillola_corrente.get('settimana_corrente')} — {pillola_corrente.get('titolo')}")
+        print(f"  → Archivio: {len(archivio_pillole)} pillole uscite")
+    else:
+        print("  → Pillole: prima di START_DATE, nessuna pillola attiva")
     return payload
 
 
