@@ -45,6 +45,9 @@ PORTFOLIO = [
         "name": "NVIDIA",
         "type": "stock",
         "currency": "EUR",
+        # Ticker da usare per gli earnings (events.py via yfinance).
+        # ETF non hanno earnings -> il campo è omesso negli altri holding.
+        "earnings_ticker": "NVDA",
     },
     {
         "symbol": "IE00BK5BQT80",

@@ -6,22 +6,28 @@ Include:
 - snapshot portafoglio corrente (solo %, no valori assoluti per privacy)
 - storico performance cumulativa (appeso giorno per giorno in data/history.json)
 - lista segnali dal diario con esito attuale
-- benchmark comparison (VWCE.DE come richiesto)
-- news rilevanti
+- benchmark comparison (VWCE via EODHD)
 - pillola formativa corrente + archivio (Tappa 4)
+
+NB: i prezzi (benchmark e prezzo attuale segnali) vengono presi da EODHD,
+non da yfinance, perché i runner GitHub Actions sono rate-limitati da
+Yahoo e tornano vuoti quasi sempre.
 """
 import json
 import os
 import csv
+import urllib.parse
+import urllib.request
 from datetime import datetime, timezone
-import yfinance as yf
 
 from pillole import get_pillola_della_settimana, get_archivio_pillole
 
 HISTORY_FILE = "data/history.json"
 DASHBOARD_JSON = "docs/data.json"
 JOURNAL_FILE = "journal/signals.csv"
-BENCHMARK_TICKER = "VWCE.DE"  # Vanguard FTSE All-World, ETF azionario globale
+BENCHMARK_SYMBOL = "VWCE.XETRA"  # EODHD symbol per Vanguard FTSE All-World
+BENCHMARK_DISPLAY = "VWCE"  # nome visualizzato in dashboard
+EOD_API_KEY = os.environ.get("EOD_API_KEY", "")
 
 
 def _append_history(portfolio_data: dict):
@@ -83,20 +89,37 @@ def _append_history(portfolio_data: dict):
 
 
 def _get_benchmark_history(days: int = 90):
-    """Scarica performance benchmark ETF World degli ultimi N giorni, indicizzata a 100."""
+    """Scarica serie storica benchmark via EODHD, indicizzata a 100 al primo giorno."""
+    if not EOD_API_KEY:
+        print("[WARN] benchmark: EOD_API_KEY non configurata")
+        return []
     try:
-        t = yf.Ticker(BENCHMARK_TICKER)
-        hist = t.history(period=f"{days}d")
-        if hist.empty:
+        qs = urllib.parse.urlencode({
+            "api_token": EOD_API_KEY,
+            "fmt": "json",
+            "period": "d",
+            "order": "a",  # ascending: oldest first
+        })
+        url = f"https://eodhd.com/api/eod/{BENCHMARK_SYMBOL}?{qs}"
+        req = urllib.request.Request(url, headers={"User-Agent": "fineco-agent"})
+        with urllib.request.urlopen(req, timeout=15) as r:
+            hist = json.loads(r.read().decode("utf-8"))
+        if not isinstance(hist, list) or not hist:
+            print(f"[WARN] benchmark EODHD: risposta vuota o malformata")
             return []
-        first_price = float(hist["Close"].iloc[0])
+        # Prendi solo ultimi `days` giorni di trading
+        hist = hist[-days:]
+        first_price = float(hist[0]["close"])
+        if first_price == 0:
+            return []
         data = []
-        for date, row in hist.iterrows():
-            price = float(row["Close"])
-            indexed = (price / first_price) * 100
+        for h in hist:
+            close = float(h.get("close") or 0)
+            if close <= 0:
+                continue
             data.append({
-                "date": date.strftime("%Y-%m-%d"),
-                "cumulative_index": round(indexed, 2),
+                "date": h["date"],
+                "cumulative_index": round((close / first_price) * 100, 2),
             })
         return data
     except Exception as e:
@@ -104,8 +127,14 @@ def _get_benchmark_history(days: int = 90):
         return []
 
 
-def _read_journal_with_performance():
-    """Legge il diario e calcola la performance attuale di ogni segnale."""
+def _read_journal_with_performance(portfolio_data: dict):
+    """Legge il diario e calcola la performance attuale di ogni segnale.
+
+    Usa i prezzi già caricati in portfolio_data (via EODHD/Twelvedata)
+    invece di rifare fetch via yfinance (che è rate-limitato sui runner
+    GitHub Actions). I segnali sono sempre su asset del nostro portfolio,
+    quindi i prezzi attuali sono già disponibili.
+    """
     if not os.path.exists(JOURNAL_FILE):
         return []
 
@@ -115,16 +144,13 @@ def _read_journal_with_performance():
     if not rows:
         return []
 
-    # Batch fetch prezzi attuali (uno per ticker unico)
-    tickers = {r["asset_ticker"] for r in rows if r["asset_ticker"]}
-    current_prices = {}
-    for t in tickers:
-        try:
-            data = yf.Ticker(t).history(period="1d")
-            if not data.empty:
-                current_prices[t] = float(data["Close"].iloc[-1])
-        except Exception:
-            pass
+    # Costruisci mappa ticker → prezzo attuale dai dati già caricati.
+    # Il journal usa display_ticker (es. "VWCE.MI") che combacia.
+    current_prices = {
+        h["ticker"]: h["current"]
+        for h in portfolio_data.get("holdings", [])
+        if "error" not in h
+    }
 
     enriched = []
     for r in rows:
@@ -210,7 +236,7 @@ def build_dashboard_data(portfolio_data: dict, briefing: dict, news: list, event
         })
 
     # 3. Segnali storici con performance
-    signals = _read_journal_with_performance()
+    signals = _read_journal_with_performance(portfolio_data)
     backtest = _compute_backtest_summary(signals)
 
     # 4. Pillole formative (Tappa 4)
@@ -239,7 +265,7 @@ def build_dashboard_data(portfolio_data: dict, briefing: dict, news: list, event
         "holdings": holdings_public,
         "portfolio_history": history,
         "benchmark": {
-            "ticker": BENCHMARK_TICKER,
+            "ticker": BENCHMARK_DISPLAY,
             "series": benchmark,
         },
         "signals": signals[:50],  # max 50 più recenti

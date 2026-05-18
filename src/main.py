@@ -31,8 +31,12 @@ def main():
     print(f"  → {len(news)} news raccolte")
 
     print("\n[3/7] Eventi aziendali/macro...")
-    events = get_all_events(tickers)
-    print(f"  → {len(events.get('earnings', []))} earnings in 14gg")
+    # Earnings: usa i ticker primary USA (es. NVDA non 1NVDA.MI),
+    # yfinance non ha calendar per i ticker Borsa Italiana. Gli ETF
+    # non hanno earnings -> non passano il filtro earnings_ticker.
+    earnings_tickers = [h["earnings_ticker"] for h in PORTFOLIO if h.get("earnings_ticker")]
+    events = get_all_events(earnings_tickers)
+    print(f"  → {len(events.get('earnings', []))} earnings in 14gg (su {len(earnings_tickers)} ticker)")
 
     print("\n[4/7] Briefing AI strutturato...")
     briefing = generate_briefing(portfolio_data, news, events)
