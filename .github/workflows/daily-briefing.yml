@@ -2,8 +2,10 @@ name: Daily Briefing
 
 on:
   schedule:
-    # 07:30 UTC = 09:30 ora italiana estate (08:30 inverno)
-    - cron: '30 7 * * 1-5'
+    # 06:15 UTC = 08:15 ora italiana estate (07:15 inverno)
+    # Spostato da 07:30 UTC perché lì il carico globale GitHub Actions
+    # è alto e gli schedule saltano spesso.
+    - cron: '15 6 * * 1-5'
   workflow_dispatch:
     inputs:
       model:
@@ -53,7 +55,7 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
           TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
-          EOD_API_KEY: ${{ secrets.EOD_API_KEY }}
+          DASHBOARD_URL: ${{ secrets.DASHBOARD_URL }}
           CLAUDE_MODEL: ${{ inputs.model  || 'claude-sonnet-4-5' }}
         run: python src/main.py
 
