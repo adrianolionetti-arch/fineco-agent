@@ -280,12 +280,16 @@ def build_dashboard_data(portfolio_data: dict, briefing: dict, news: list, event
         price_series = h.get("price_series") or []
         if price_series:
             price_series = price_series[-60:]
+        quantity = h.get("quantity", 0)
+        position_value = round(h.get("current", 0) * quantity, 2)
         holdings_public.append({
             "name": h["name"],
             "ticker": h["ticker"],
             "type": h.get("type", "unknown"),
             "currency": h["currency"],
             "current_price": h["current"],
+            "quantity": quantity,
+            "position_value": position_value,
             "daily_pct": h["daily_change_pct"],
             "weekly_pct": h["weekly_change_pct"],
             "monthly_pct": h["monthly_change_pct"],
@@ -306,6 +310,7 @@ def build_dashboard_data(portfolio_data: dict, briefing: dict, news: list, event
     # 5. Payload finale
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
+        "total_value_eur": portfolio_data.get("total_value_eur_approx", 0),
         "briefing": {
             "summary": briefing.get("summary"),
             "portfolio_note": briefing.get("portfolio_note"),
