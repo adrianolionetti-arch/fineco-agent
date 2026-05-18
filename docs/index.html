@@ -113,6 +113,39 @@
     letter-spacing: 0.08em;
   }
 
+  /* Tabs navigation */
+  .tabs-nav {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 36px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--ink-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 14px 22px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .tab-btn:hover { color: var(--ink-dim); }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  @media (max-width: 640px) {
+    .tab-btn { padding: 12px 14px; font-size: 11px; letter-spacing: 0.08em; }
+  }
+
   /* Section headers */
   .section-label {
     font-family: 'JetBrains Mono', monospace;
@@ -518,6 +551,15 @@
     </div>
   </header>
 
+  <!-- Tab navigation -->
+  <nav class="tabs-nav" role="tablist">
+    <button class="tab-btn active" data-target="briefing" role="tab" aria-selected="true">Briefing</button>
+    <button class="tab-btn" data-target="pillole" role="tab" aria-selected="false">Allenamento</button>
+  </nav>
+
+  <!-- TAB: BRIEFING -->
+  <div class="tab-panel active" id="tab-briefing" role="tabpanel">
+
   <!-- Signal hero -->
   <div id="signal-hero" class="signal-hero">
     <div class="level" id="sig-level">—</div>
@@ -583,13 +625,6 @@
     <div class="timeline" id="signals-timeline"></div>
   </div>
 
-  <!-- Allenamento / Pillole formative -->
-  <div id="pillole-section" style="margin-bottom: 48px; display:none;">
-    <div class="section-label">Allenamento</div>
-    <div id="pillola-current-wrap"></div>
-    <div id="pillole-archive-wrap" class="pillola-archive" style="margin-top: 20px;"></div>
-  </div>
-
   <!-- News + Events -->
   <div class="grid-2">
     <div class="card">
@@ -599,6 +634,19 @@
     <div class="card">
       <div class="section-label">Eventi in arrivo</div>
       <ul class="events-list" id="events-list"></ul>
+    </div>
+  </div>
+
+  </div> <!-- /tab-briefing -->
+
+  <!-- TAB: PILLOLE / ALLENAMENTO -->
+  <div class="tab-panel" id="tab-pillole" role="tabpanel">
+    <div id="pillole-section">
+      <div id="pillole-empty" class="empty-state" style="display:none;">
+        Le pillole formative arriveranno a partire dalla prima settimana di pubblicazione.
+      </div>
+      <div id="pillola-current-wrap"></div>
+      <div id="pillole-archive-wrap" class="pillola-archive" style="margin-top: 28px;"></div>
     </div>
   </div>
 
@@ -788,17 +836,26 @@ function escapeHtml(s) {
 }
 
 function renderPillole(d) {
-  const section = document.getElementById('pillole-section');
   const current = d.pillola_corrente;
   const archive = d.archivio_pillole || [];
+  const empty = document.getElementById('pillole-empty');
+  const curWrapEl = document.getElementById('pillola-current-wrap');
+  const arcWrapEl = document.getElementById('pillole-archive-wrap');
 
   if (!current && !archive.length) {
-    section.style.display = 'none';
+    empty.style.display = 'block';
+    curWrapEl.style.display = 'none';
+    arcWrapEl.style.display = 'none';
     return;
   }
-  section.style.display = 'block';
+  empty.style.display = 'none';
+  curWrapEl.style.display = 'block';
+  arcWrapEl.style.display = 'block';
 
   // Pillola corrente
+  // NB: i campi corpo/esercizio/riflessione contengono HTML volontario
+  // (strong, em, link a justetf) dal modulo Python pillole.py - non
+  // sono input utente, quindi NON facciamo escape.
   const curWrap = document.getElementById('pillola-current-wrap');
   if (current) {
     curWrap.innerHTML = `
@@ -807,18 +864,18 @@ function renderPillole(d) {
           <span>Pillola della settimana</span>
           <span class="tag">#${current.numero ?? current.settimana_corrente ?? '?'}</span>
         </div>
-        <h3>${escapeHtml(current.titolo)}</h3>
-        <div class="sub">${escapeHtml(current.sottotitolo || '')}</div>
-        <div class="body">${escapeHtml(current.corpo || '')}</div>
+        <h3>${current.titolo || ''}</h3>
+        <div class="sub">${current.sottotitolo || ''}</div>
+        <div class="body">${current.corpo || ''}</div>
         ${current.esercizio ? `
           <div class="box">
             <div class="lbl">Esercizio della settimana</div>
-            <div class="txt">${escapeHtml(current.esercizio)}</div>
+            <div class="txt">${current.esercizio}</div>
           </div>` : ''}
         ${current.riflessione ? `
           <div class="box reflect">
             <div class="lbl">Domanda da farti</div>
-            <div class="txt">${escapeHtml(current.riflessione)}</div>
+            <div class="txt">${current.riflessione}</div>
           </div>` : ''}
       </div>
     `;
@@ -842,16 +899,16 @@ function renderPillole(d) {
     <details>
       <summary>
         <span class="num">#${p.numero ?? '?'}</span>
-        <span class="arc-title">${escapeHtml(p.titolo)}</span>
+        <span class="arc-title">${p.titolo || ''}</span>
       </summary>
-      <div class="arc-body">${escapeHtml(p.corpo || '')}${p.esercizio ? `
+      <div class="arc-body">${p.corpo || ''}${p.esercizio ? `
         <div class="mini-box">
           <div class="lbl">Esercizio</div>
-          ${escapeHtml(p.esercizio)}
+          ${p.esercizio}
         </div>` : ''}${p.riflessione ? `
         <div class="mini-box">
           <div class="lbl">Domanda</div>
-          ${escapeHtml(p.riflessione)}
+          ${p.riflessione}
         </div>` : ''}
       </div>
     </details>
@@ -943,6 +1000,34 @@ function renderPerformanceChart(portfolio, benchmark) {
   });
 }
 
+function activateTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    const active = b.dataset.target === name;
+    b.classList.toggle('active', active);
+    b.setAttribute('aria-selected', active ? 'true' : 'false');
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => {
+    p.classList.toggle('active', p.id === 'tab-' + name);
+  });
+  // Aggiorna hash URL senza scrollare
+  if (history.replaceState) {
+    history.replaceState(null, '', '#' + name);
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function initTabs() {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => activateTab(btn.dataset.target));
+  });
+  // Deeplink: se l'URL ha #pillole o #briefing, apri quel tab
+  const initial = (location.hash || '').replace('#', '');
+  if (initial === 'pillole' || initial === 'briefing') {
+    activateTab(initial);
+  }
+}
+
+initTabs();
 checkAuth();
 </script>
 </body>
