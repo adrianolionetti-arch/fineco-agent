@@ -215,6 +215,38 @@
   }
   .signal-hero .detail p { font-size: 14px; line-height: 1.6; color: var(--ink); }
   .signal-hero .detail p.warn { color: var(--red); }
+  .signal-hero .signal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .signal-hero .action-plan {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+  }
+  .signal-hero .action-plan h4 {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .signal-hero .action-plan p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  @media (max-width: 640px) {
+    .signal-hero .action-plan { grid-template-columns: 1fr; gap: 16px; }
+  }
   .portfolio-note {
     font-size: 14px;
     color: var(--ink-dim);
@@ -750,7 +782,10 @@
 
   <!-- Signal hero -->
   <div id="signal-hero" class="signal-hero">
-    <div class="level" id="sig-level">—</div>
+    <div class="signal-head">
+      <div class="level" id="sig-level">—</div>
+      <div id="sig-importance"></div>
+    </div>
     <div class="summary serif" id="sig-summary">Caricamento...</div>
     <div id="sig-detail" class="detail" style="display:none;">
       <div>
@@ -762,6 +797,16 @@
         <h4>Rischio / Contro-argomento</h4>
         <p class="warn" id="sig-counter"></p>
         <p id="sig-amount" style="margin-top:12px;"></p>
+      </div>
+    </div>
+    <div id="sig-action-plan" class="action-plan" style="display:none;">
+      <div>
+        <h4>Cosa fare in pratica</h4>
+        <p id="sig-what-to-do"></p>
+      </div>
+      <div>
+        <h4>Cosa monitorare</h4>
+        <p id="sig-what-to-watch"></p>
       </div>
     </div>
     <div class="portfolio-note" id="portfolio-note"></div>
@@ -937,6 +982,19 @@ function render(d) {
     document.getElementById('sig-counter').textContent = b.signal_counter || '';
     if (b.signal_suggested_amount_eur) {
       document.getElementById('sig-amount').innerHTML = '<strong>Importo suggerito:</strong> €' + b.signal_suggested_amount_eur;
+    }
+    // Action plan (what_to_do + what_to_watch): mostra solo se almeno uno è popolato
+    if (b.signal_what_to_do || b.signal_what_to_watch) {
+      document.getElementById('sig-action-plan').style.display = 'grid';
+      document.getElementById('sig-what-to-do').textContent = b.signal_what_to_do || '—';
+      document.getElementById('sig-what-to-watch').textContent = b.signal_what_to_watch || '—';
+    }
+    // Pallini di importanza 1-5 nell'header del signal hero
+    const impEl = document.getElementById('sig-importance');
+    if (b.signal_importance) {
+      impEl.innerHTML = renderImportanceDots(b.signal_importance);
+    } else {
+      impEl.innerHTML = '';
     }
   }
   document.getElementById('portfolio-note').textContent = b.portfolio_note || '';
