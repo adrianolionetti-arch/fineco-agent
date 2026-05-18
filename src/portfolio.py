@@ -349,6 +349,19 @@ def fetch_asset_data(holding: dict) -> dict:
     if source_used == "fallback":
         note = f"Prezzo da fallback yfinance ({ticker_used})"
 
+    # Propaga la serie storica di chiusure per il grafico "andamento per
+    # singolo asset". Se l'asset è in valuta non-EUR (es. NVDA in USD),
+    # applico lo stesso fx rate a tutta la serie. Approssimazione ok perché
+    # il chart normalizza tutto a base 100: il rapporto tra prezzi resta
+    # identico anche con un singolo fx applicato a tutti.
+    price_series = primary_data.get("price_series") or []
+    if price_series and native_ccy != "EUR":
+        fx_factor = current_eur / current_native if current_native else 1
+        price_series = [
+            {"date": p["date"], "close": round(p["close"] * fx_factor, 4)}
+            for p in price_series
+        ]
+
     out = {
         "ticker": display,
         "current": round(current_eur, 2),
@@ -357,6 +370,7 @@ def fetch_asset_data(holding: dict) -> dict:
         "weekly_change_pct": round(primary_data["weekly_change_pct"], 2),
         "monthly_change_pct": round(primary_data["monthly_change_pct"], 2),
         "volume": primary_data.get("volume", 0),
+        "price_series": price_series,
         "_source": source_used,
         "_ticker_used": ticker_used,
     }
