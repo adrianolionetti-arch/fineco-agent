@@ -9,6 +9,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 
+DASHBOARD_URL = os.environ.get("DASHBOARD_URL", "")
+
 SIGNAL_STYLES = {
     "GREEN": {
         "emoji": "🟢",
@@ -77,63 +79,63 @@ def _render_signal_box(b: dict) -> str:
     """
 
 
-def _render_pillola_box(pillola: dict | None) -> str:
-    """Box HTML della pillola formativa, mostrato solo il lunedì."""
+def _render_dashboard_cta() -> str:
+    """Pulsante CTA verso la dashboard. Vuoto se DASHBOARD_URL non e' configurata."""
+    if not DASHBOARD_URL:
+        return ""
+    return f"""
+    <div style="text-align:center;margin:24px 0;">
+        <a href="{DASHBOARD_URL}" target="_blank"
+           style="display:inline-block;background:#1a1a2e;color:#d4a574;
+                  text-decoration:none;padding:14px 32px;border-radius:4px;
+                  font-size:13px;font-weight:600;letter-spacing:0.08em;
+                  text-transform:uppercase;
+                  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',monospace;">
+            Apri dashboard completa →
+        </a>
+    </div>
+    """
+
+
+def _render_pillola_box(b: dict) -> str:
+    """Sezione pillola formativa nell'email (solo il lunedi)."""
+    pillola = b.get("pillola_settimanale")
     if not pillola:
         return ""
 
-    # Trasforma il corpo da testo con doppio newline in paragrafi HTML
-    corpo_raw = pillola.get("corpo", "")
-    paragrafi = corpo_raw.split("\n\n")
-    corpo_html = "".join(
-        f'<p style="margin:12px 0;">{p.replace(chr(10), "<br>")}</p>'
-        for p in paragrafi
-    )
+    titolo = pillola.get("titolo", "")
+    sottotitolo = pillola.get("sottotitolo", "")
+    corpo = pillola.get("corpo", "").replace("\n\n", "</p><p style='margin:12px 0;'>")
+    esercizio = pillola.get("esercizio", "").replace("\n", "<br>")
+    riflessione = pillola.get("riflessione", "")
+    numero = pillola.get("numero", "")
 
     return f"""
-    <div style="background:#f3edff;padding:22px;border-radius:8px;
-                margin:24px 0;border-left:5px solid #6c4ab6;">
-        <div style="font-size:11px;font-weight:bold;color:#6c4ab6;
-                    text-transform:uppercase;letter-spacing:1px;">
-            📚 Pillola della settimana #{pillola.get("settimana_corrente", "?")}
+    <div style="background:#fefcf7;padding:24px;border-radius:8px;margin:32px 0;
+                border:1px solid #e8d9b8;">
+        <div style="font-size:11px;font-weight:600;color:#a08454;
+                    text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px;">
+            📚 Pillola della settimana #{numero}
         </div>
-        <div style="font-size:20px;font-weight:bold;margin-top:10px;color:#2a1f4f;
-                    font-family:Georgia, serif;line-height:1.3;">
-            {pillola.get("titolo", "")}
+        <h3 style="margin:0;font-size:22px;color:#1a1a2e;font-weight:700;line-height:1.3;">
+            {titolo}
+        </h3>
+        <p style="margin:4px 0 16px 0;font-size:14px;color:#888;font-style:italic;">
+            {sottotitolo}
+        </p>
+        <div style="font-size:14px;line-height:1.65;color:#333;">
+            <p style="margin:12px 0;">{corpo}</p>
         </div>
-        <div style="font-size:13px;color:#6c4ab6;font-style:italic;margin-top:4px;">
-            {pillola.get("sottotitolo", "")}
-        </div>
-
-        <div style="margin-top:16px;font-size:14.5px;line-height:1.6;color:#2a2a3a;">
-            {corpo_html}
-        </div>
-
-        <div style="margin-top:18px;padding:14px 16px;background:#fff;border-radius:6px;
-                    border-left:3px solid #2e7d32;">
-            <div style="font-size:12px;font-weight:bold;color:#2e7d32;
-                        text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">
-                🎯 Esercizio della settimana
+        <div style="background:#fff;padding:16px;border-radius:6px;margin-top:16px;
+                    border-left:3px solid #a08454;">
+            <div style="font-size:11px;font-weight:600;color:#a08454;
+                        text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">
+                Esercizio della settimana
             </div>
-            <div style="font-size:14px;line-height:1.6;color:#2a2a3a;">
-                {pillola.get("esercizio", "")}
-            </div>
+            <div style="font-size:14px;line-height:1.6;color:#333;">{esercizio}</div>
         </div>
-
-        <div style="margin-top:14px;padding:14px 16px;background:#fff;border-radius:6px;
-                    border-left:3px solid #f9a825;">
-            <div style="font-size:12px;font-weight:bold;color:#b07700;
-                        text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">
-                🤔 Domanda da farti
-            </div>
-            <div style="font-size:14px;line-height:1.6;color:#2a2a3a;font-style:italic;">
-                {pillola.get("riflessione", "")}
-            </div>
-        </div>
-
-        <div style="margin-top:14px;font-size:11px;color:#888;text-align:center;">
-            La pillola della prossima settimana arriverà lunedì.
-            Trovi tutto l'archivio nella sezione "Allenamento" della dashboard.
+        <div style="margin-top:14px;font-size:14px;color:#555;font-style:italic;">
+            🤔 {riflessione}
         </div>
     </div>
     """
@@ -154,7 +156,6 @@ def send_email(briefing: dict, portfolio_data: dict) -> bool:
     style = SIGNAL_STYLES.get(level, SIGNAL_STYLES["NONE"])
     subject = f"{style['subject_prefix']}Briefing Fineco — {today}"
 
-    # Tabella holdings
     holdings_rows = ""
     for h in portfolio_data.get("holdings", []):
         if "error" in h:
@@ -217,7 +218,7 @@ def send_email(briefing: dict, portfolio_data: dict) -> bool:
 
         {_render_signal_box(briefing)}
 
-        {_render_pillola_box(briefing.get("pillola_settimanale"))}
+        {_render_dashboard_cta()}
 
         {events_html}
 
@@ -238,6 +239,8 @@ def send_email(briefing: dict, portfolio_data: dict) -> bool:
             <tbody>{holdings_rows}</tbody>
         </table>
 
+        {_render_pillola_box(briefing)}
+
         <p style="margin-top:24px;font-size:13px;color:#555;font-style:italic;">
             {briefing.get('closing_note', '')}
         </p>
@@ -251,7 +254,6 @@ def send_email(briefing: dict, portfolio_data: dict) -> bool:
     </html>
     """
 
-    # Plain text fallback
     plain = f"""{subject}
 
 {briefing.get('summary', '')}
@@ -267,17 +269,11 @@ Azione: {briefing.get('signal_action')}
 Perché: {briefing.get('signal_reasoning')}
 Attenzione: {briefing.get('signal_counter')}
 """
-    # Plain text per pillola (solo se presente)
-    pillola = briefing.get("pillola_settimanale")
-    if pillola:
-        plain += f"""
-
-📚 PILLOLA DELLA SETTIMANA #{pillola.get('settimana_corrente', '?')}
-{pillola.get('titolo', '')}
-({pillola.get('sottotitolo', '')})
-
-Apri l'email in HTML per leggere il testo completo, l'esercizio e la domanda di riflessione.
-"""
+    if DASHBOARD_URL:
+        plain += f"\nDashboard completa: {DASHBOARD_URL}\n"
+    if briefing.get("pillola_settimanale"):
+        p = briefing["pillola_settimanale"]
+        plain += f"\n--- Pillola #{p.get('numero')}: {p.get('titolo')} ---\n{p.get('sottotitolo')}\n(apri in HTML per leggere il testo completo)\n"
     plain += f"\n{briefing.get('closing_note', '')}"
 
     msg = MIMEMultipart("alternative")
