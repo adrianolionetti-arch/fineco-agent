@@ -248,12 +248,22 @@ def generate_briefing(portfolio_data: dict, news: list, events: dict,
             cat_label = cat.replace("_", " ")
             uc += f"\n### {cat_label}\n"
             for w in items:
+                ucits_alts = w.get("ucits_equivalents") or []
+                ucits_str = f" [UCITS Fineco: {', '.join(ucits_alts)}]" if ucits_alts else ""
                 uc += (
-                    f"- {w['name']} ({w['display_ticker']}): {w['current']} {w['currency']}, "
+                    f"- {w['name']} ({w['display_ticker']}){ucits_str}: "
+                    f"{w['current']} {w['currency']}, "
                     f"oggi {w['daily_change_pct']:+.2f}%, "
                     f"settimana {w['weekly_change_pct']:+.2f}%, "
                     f"mese {w['monthly_change_pct']:+.2f}%\n"
                 )
+        uc += (
+            "\nIMPORTANTE: alcuni asset USA della watchlist (GLD, AGG, IEF, ecc.) sono "
+            "*proxy* per monitorare i prezzi via API. Adriano NON può comprare un ETF "
+            "USA su Fineco (KID UCITS mancante). Se suggerisci uno di questi, "
+            "DEVI esplicitare nel signal_what_to_do quale ETF UCITS comprare su Fineco "
+            "(es. 'invece di GLD su Fineco compra SGLD.MI o PHAU.MI, sono lo stesso oro fisico').\n"
+        )
 
     if events.get("earnings"):
         uc += "\n## Earnings imminenti (date in cui le aziende pubblicano i risultati)\n"

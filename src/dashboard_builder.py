@@ -256,6 +256,7 @@ def _sanitize_watchlist(watchlist: list) -> list:
             "daily_pct": w["daily_change_pct"],
             "weekly_pct": w["weekly_change_pct"],
             "monthly_pct": w["monthly_change_pct"],
+            "ucits_equivalents": w.get("ucits_equivalents") or [],
         })
     return out
 

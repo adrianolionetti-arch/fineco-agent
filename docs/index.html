@@ -450,6 +450,14 @@
     font-size: 14px;
     font-weight: 500;
   }
+  table.wl .ucits-hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    margin-top: 2px;
+    letter-spacing: 0.05em;
+    font-weight: 400;
+  }
   table.wl .ticker-col {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
@@ -1107,16 +1115,26 @@ function renderWatchlist(items) {
   });
 
   body.innerHTML = orderedCats.map(cat => {
-    const rows = groups[cat].map(w => `
-      <tr>
-        <td class="name-col">${w.name}</td>
-        <td class="ticker-col">${w.ticker}</td>
-        <td class="price-col">${w.current_price.toFixed(2)} ${w.currency}</td>
-        <td class="pct-col ${pctClass(w.daily_pct)}">${pctFmt(w.daily_pct)}</td>
-        <td class="pct-col ${pctClass(w.weekly_pct)}">${pctFmt(w.weekly_pct)}</td>
-        <td class="pct-col ${pctClass(w.monthly_pct)}">${pctFmt(w.monthly_pct)}</td>
-      </tr>
-    `).join('');
+    const rows = groups[cat].map(w => {
+      // Estrae il nome "pulito" rimuovendo l'eventuale "(proxy X · UCITS Fineco: Y)"
+      const cleanName = w.name.split(' (proxy')[0];
+      const ucitsHint = (w.ucits_equivalents && w.ucits_equivalents.length)
+        ? `<div class="ucits-hint">Fineco: ${w.ucits_equivalents.join(' o ')}</div>`
+        : '';
+      return `
+        <tr>
+          <td class="name-col">
+            ${cleanName}
+            ${ucitsHint}
+          </td>
+          <td class="ticker-col">${w.ticker}</td>
+          <td class="price-col">${w.current_price.toFixed(2)} ${w.currency}</td>
+          <td class="pct-col ${pctClass(w.daily_pct)}">${pctFmt(w.daily_pct)}</td>
+          <td class="pct-col ${pctClass(w.weekly_pct)}">${pctFmt(w.weekly_pct)}</td>
+          <td class="pct-col ${pctClass(w.monthly_pct)}">${pctFmt(w.monthly_pct)}</td>
+        </tr>
+      `;
+    }).join('');
     return `
       <div class="wl-group">
         <h4>${WL_CATEGORY_LABELS[cat] || cat}</h4>

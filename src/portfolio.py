@@ -91,68 +91,67 @@ PORTFOLIO = [
 
 WATCHLIST = [
     # === Titoli di stato e bond (sicurezza/decorrelazione) ===
-    # NB: primary_symbol usa .XETRA (Deutsche Börse) o .L (London) perché
-    # EODHD non copre bene Borsa Italiana (.MI restituisce 404). Lo stesso
-    # ETF UCITS è quotato su più borse: scegliamo quella con copertura EODHD.
-    # Il display_ticker resta .MI per coerenza con Fineco.
+    # NB: EODHD non copre Borsa Italiana e su Xetra molti ETF UCITS bond/oro
+    # tornano close='NA' (poco liquidi). Soluzione: monitoriamo i prezzi via
+    # ETF USA equivalenti su Twelve Data (alta correlazione con i UCITS,
+    # >0.99 per stesso indice). Il name esplicita quale UCITS comprare su
+    # Fineco. L'AI ne è informata via system prompt.
     {
-        "symbol": "IE00B7K1G870", "display_ticker": "IBGS.MI",
-        "primary_source": "eodhd", "primary_symbol": "IBGS.XETRA",
-        "primary_currency": "EUR", "fallback_yf": "IBGS.MI", "fallback_yf_2": "IBGS.L",
-        "fx_convert_from_primary": False, "quantity": 0,
-        "name": "iShares Italy Govt Bond (BTP)", "type": "etf_bond",
-        "currency": "EUR", "category": "bond_govt",
+        "symbol": "IEF", "display_ticker": "IEF",
+        "primary_source": "twelvedata", "primary_symbol": "IEF",
+        "primary_currency": "USD", "fallback_yf": "IEF", "fallback_yf_2": "IEF",
+        "fx_convert_from_primary": True, "quantity": 0,
+        "name": "Treasury USA 7-10Y (proxy IEF · UCITS Fineco: IBTL.MI)",
+        "type": "etf_bond", "currency": "EUR", "category": "bond_govt",
+        "ucits_equivalents": ["IBTL.MI"],
     },
     {
-        "symbol": "IE00B1FZS798", "display_ticker": "IBTL.MI",
-        "primary_source": "eodhd", "primary_symbol": "IBTL.XETRA",
-        "primary_currency": "EUR", "fallback_yf": "IBTL.L", "fallback_yf_2": "IBTL.MI",
-        "fx_convert_from_primary": False, "quantity": 0,
-        "name": "iShares Treasury USA 7-10Y", "type": "etf_bond",
-        "currency": "EUR", "category": "bond_govt",
+        "symbol": "GOVT", "display_ticker": "GOVT",
+        "primary_source": "twelvedata", "primary_symbol": "GOVT",
+        "primary_currency": "USD", "fallback_yf": "GOVT", "fallback_yf_2": "GOVT",
+        "fx_convert_from_primary": True, "quantity": 0,
+        "name": "Govt bond aggregato (proxy GOVT · UCITS Fineco: VAGF.MI, IBGL.MI)",
+        "type": "etf_bond", "currency": "EUR", "category": "bond_govt",
+        "ucits_equivalents": ["VAGF.MI", "IBGL.MI"],
     },
     {
-        "symbol": "IE00B1FZS681", "display_ticker": "IBGM.MI",
-        "primary_source": "eodhd", "primary_symbol": "IBGM.XETRA",
-        "primary_currency": "EUR", "fallback_yf": "IBGM.L", "fallback_yf_2": "IBGM.MI",
-        "fx_convert_from_primary": False, "quantity": 0,
-        "name": "iShares Germany Govt Bond (Bund)", "type": "etf_bond",
-        "currency": "EUR", "category": "bond_govt",
-    },
-    {
-        "symbol": "IE00BDBRDM35", "display_ticker": "AGGH.MI",
-        "primary_source": "eodhd", "primary_symbol": "AGGH.XETRA",
-        "primary_currency": "EUR", "fallback_yf": "AGGH.L", "fallback_yf_2": "AGGH.MI",
-        "fx_convert_from_primary": False, "quantity": 0,
-        "name": "iShares Global Aggregate Bond (EUR hedged)", "type": "etf_bond",
-        "currency": "EUR", "category": "bond_globale",
+        "symbol": "AGG", "display_ticker": "AGG",
+        "primary_source": "twelvedata", "primary_symbol": "AGG",
+        "primary_currency": "USD", "fallback_yf": "AGG", "fallback_yf_2": "AGG",
+        "fx_convert_from_primary": True, "quantity": 0,
+        "name": "Aggregate bond (proxy AGG · UCITS Fineco: AGGH.MI EUR hedged)",
+        "type": "etf_bond", "currency": "EUR", "category": "bond_globale",
+        "ucits_equivalents": ["AGGH.MI"],
     },
     # === Oro fisico ===
     {
-        "symbol": "IE00B4ND3602", "display_ticker": "SGLD.MI",
-        "primary_source": "eodhd", "primary_symbol": "SGLD.L",
-        "primary_currency": "USD", "fallback_yf": "SGLD.MI", "fallback_yf_2": "SGLD.L",
+        "symbol": "GLD", "display_ticker": "GLD",
+        "primary_source": "twelvedata", "primary_symbol": "GLD",
+        "primary_currency": "USD", "fallback_yf": "GLD", "fallback_yf_2": "GLD",
         "fx_convert_from_primary": True, "quantity": 0,
-        "name": "iShares Physical Gold", "type": "etc_commodity",
-        "currency": "EUR", "category": "oro",
+        "name": "Oro fisico (proxy GLD · UCITS Fineco: SGLD.MI, PHAU.MI)",
+        "type": "etc_commodity", "currency": "EUR", "category": "oro",
+        "ucits_equivalents": ["SGLD.MI", "PHAU.MI"],
     },
     # === Emerging markets ===
     {
-        "symbol": "IE00BKM4GZ66", "display_ticker": "EIMI.MI",
-        "primary_source": "eodhd", "primary_symbol": "EIMI.XETRA",
-        "primary_currency": "EUR", "fallback_yf": "EIMI.MI", "fallback_yf_2": "EIMI.L",
-        "fx_convert_from_primary": False, "quantity": 0,
-        "name": "iShares MSCI Emerging Markets", "type": "etf_equity",
-        "currency": "EUR", "category": "azionario_em",
+        "symbol": "EEM", "display_ticker": "EEM",
+        "primary_source": "twelvedata", "primary_symbol": "EEM",
+        "primary_currency": "USD", "fallback_yf": "EEM", "fallback_yf_2": "EEM",
+        "fx_convert_from_primary": True, "quantity": 0,
+        "name": "Emerging Markets (proxy EEM · UCITS Fineco: EIMI.MI, VFEM.MI)",
+        "type": "etf_equity", "currency": "EUR", "category": "azionario_em",
+        "ucits_equivalents": ["EIMI.MI", "VFEM.MI"],
     },
     # === Settoriali difensivi ===
     {
-        "symbol": "IE00B43HR379", "display_ticker": "HEAL.MI",
-        "primary_source": "eodhd", "primary_symbol": "HEAL.XETRA",
-        "primary_currency": "EUR", "fallback_yf": "HEAL.MI", "fallback_yf_2": "HEAL.L",
-        "fx_convert_from_primary": False, "quantity": 0,
-        "name": "iShares Healthcare Innovation", "type": "etf_equity",
-        "currency": "EUR", "category": "settoriale_healthcare",
+        "symbol": "XLV", "display_ticker": "XLV",
+        "primary_source": "twelvedata", "primary_symbol": "XLV",
+        "primary_currency": "USD", "fallback_yf": "XLV", "fallback_yf_2": "XLV",
+        "fx_convert_from_primary": True, "quantity": 0,
+        "name": "Healthcare USA (proxy XLV · UCITS Fineco: HEAL.MI, IHCU.MI)",
+        "type": "etf_equity", "currency": "EUR", "category": "settoriale_healthcare",
+        "ucits_equivalents": ["HEAL.MI", "IHCU.MI"],
     },
     {
         "symbol": "DE000A0F5UJ7", "display_ticker": "EXV1.MI",
