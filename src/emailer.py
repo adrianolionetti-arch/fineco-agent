@@ -56,9 +56,54 @@ def _render_signal_box(b: dict) -> str:
     reasoning = b.get("signal_reasoning") or ""
     counter = b.get("signal_counter") or ""
     amount = b.get("signal_suggested_amount_eur")
+    what_to_do = b.get("signal_what_to_do") or ""
+    what_to_watch = b.get("signal_what_to_watch") or ""
+    importance = b.get("signal_importance")
+
+    # Pallini di priorità 1-5
+    importance_html = ""
+    if importance:
+        dots = ""
+        for i in range(1, 6):
+            color = style["border"] if i <= int(importance) else "#ccc"
+            dots += f'<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:{color};margin-right:3px;"></span>'
+        importance_html = (
+            f'<div style="margin-top:8px;font-size:11px;color:#666;">'
+            f'<span style="margin-right:8px;text-transform:uppercase;letter-spacing:0.1em;">Priorità</span>'
+            f'{dots}'
+            f'<span style="margin-left:8px;">{importance}/5</span>'
+            f'</div>'
+        )
+
     amount_line = ""
     if amount:
         amount_line = f'<p style="margin:8px 0;"><strong>Importo suggerito:</strong> €{amount}</p>'
+
+    # Action plan: due colonne in tabella per max compatibilità email
+    action_plan_html = ""
+    if what_to_do or what_to_watch:
+        action_plan_html = f"""
+        <table cellpadding="0" cellspacing="0" border="0" width="100%"
+               style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(0,0,0,0.1);">
+            <tr>
+                <td valign="top" style="width:50%;padding-right:12px;font-size:13px;line-height:1.55;">
+                    <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;
+                                color:{style['border']};font-weight:600;margin-bottom:6px;">
+                        Cosa fare in pratica
+                    </div>
+                    {what_to_do}
+                </td>
+                <td valign="top" style="width:50%;padding-left:12px;font-size:13px;line-height:1.55;
+                                        border-left:1px solid rgba(0,0,0,0.08);">
+                    <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;
+                                color:{style['border']};font-weight:600;margin-bottom:6px;">
+                        Cosa monitorare
+                    </div>
+                    {what_to_watch}
+                </td>
+            </tr>
+        </table>
+        """
 
     return f"""
     <div style="background:{style['bg']};padding:18px;border-radius:8px;
@@ -70,11 +115,13 @@ def _render_signal_box(b: dict) -> str:
         <div style="font-size:18px;font-weight:bold;margin-top:8px;color:#1a1a2e;">
             {asset}: {action}
         </div>
+        {importance_html}
         <div style="margin-top:12px;font-size:14px;line-height:1.5;">
             <p style="margin:8px 0;"><strong>Perché:</strong> {reasoning}</p>
             <p style="margin:8px 0;color:#b71c1c;"><strong>Attenzione:</strong> {counter}</p>
             {amount_line}
         </div>
+        {action_plan_html}
     </div>
     """
 
@@ -97,52 +144,41 @@ def _render_dashboard_cta() -> str:
     """
 
 
-def _render_pillola_box(b: dict) -> str:
-    """Sezione pillola formativa nell'email (solo il lunedi)."""
+def _render_pillola_teaser(b: dict) -> str:
+    """Teaser breve della pillola (solo il lunedì) con link alla dashboard.
+    Il contenuto completo della pillola sta nel tab 'Allenamento' della
+    dashboard — qui solo un richiamo per non appesantire l'email."""
     pillola = b.get("pillola_settimanale")
     if not pillola:
         return ""
 
     titolo = pillola.get("titolo", "")
-    sottotitolo = pillola.get("sottotitolo", "")
-    corpo = pillola.get("corpo", "").replace("\n\n", "</p><p style='margin:12px 0;'>")
-    esercizio = pillola.get("esercizio", "").replace("\n", "<br>")
-    riflessione = pillola.get("riflessione", "")
     numero = pillola.get("numero", "")
+    link = DASHBOARD_URL + "#pillole" if DASHBOARD_URL else "#"
 
     return f"""
-    <div style="background:#fefcf7;padding:24px;border-radius:8px;margin:32px 0;
-                border:1px solid #e8d9b8;">
+    <div style="background:#fafafa;padding:18px;border-radius:8px;margin:24px 0;
+                border-left:3px solid #a08454;">
         <div style="font-size:11px;font-weight:600;color:#a08454;
-                    text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px;">
+                    text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">
             📚 Pillola della settimana #{numero}
         </div>
-        <h3 style="margin:0;font-size:22px;color:#1a1a2e;font-weight:700;line-height:1.3;">
+        <div style="font-size:16px;color:#1a1a2e;font-weight:600;margin-bottom:10px;">
             {titolo}
-        </h3>
-        <p style="margin:4px 0 16px 0;font-size:14px;color:#888;font-style:italic;">
-            {sottotitolo}
-        </p>
-        <div style="font-size:14px;line-height:1.65;color:#333;">
-            <p style="margin:12px 0;">{corpo}</p>
         </div>
-        <div style="background:#fff;padding:16px;border-radius:6px;margin-top:16px;
-                    border-left:3px solid #a08454;">
-            <div style="font-size:11px;font-weight:600;color:#a08454;
-                        text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">
-                Esercizio della settimana
-            </div>
-            <div style="font-size:14px;line-height:1.6;color:#333;">{esercizio}</div>
-        </div>
-        <div style="margin-top:14px;font-size:14px;color:#555;font-style:italic;">
-            🤔 {riflessione}
-        </div>
+        <a href="{link}" style="font-size:13px;color:#a08454;text-decoration:underline;">
+            Leggi la pillola completa in dashboard →
+        </a>
     </div>
     """
 
 
 def send_email(briefing: dict, portfolio_data: dict) -> bool:
     """Invia email con briefing strutturato."""
+    if os.environ.get("SKIP_EMAIL"):
+        print("  → Email saltata (SKIP_EMAIL impostato — tipico per dispatch manuale)")
+        return True
+
     gmail_user = os.environ.get("GMAIL_USER")
     gmail_pass = os.environ.get("GMAIL_APP_PASSWORD")
     recipient = os.environ.get("RECIPIENT_EMAIL", gmail_user)
@@ -239,7 +275,7 @@ def send_email(briefing: dict, portfolio_data: dict) -> bool:
             <tbody>{holdings_rows}</tbody>
         </table>
 
-        {_render_pillola_box(briefing)}
+        {_render_pillola_teaser(briefing)}
 
         <p style="margin-top:24px;font-size:13px;color:#555;font-style:italic;">
             {briefing.get('closing_note', '')}
@@ -266,14 +302,19 @@ Segnale: {level}
         plain += f"""
 Asset: {briefing.get('signal_asset')}
 Azione: {briefing.get('signal_action')}
+Priorità: {briefing.get('signal_importance') or '—'}/5
 Perché: {briefing.get('signal_reasoning')}
 Attenzione: {briefing.get('signal_counter')}
 """
+        if briefing.get("signal_what_to_do"):
+            plain += f"\nCosa fare in pratica: {briefing['signal_what_to_do']}\n"
+        if briefing.get("signal_what_to_watch"):
+            plain += f"\nCosa monitorare: {briefing['signal_what_to_watch']}\n"
     if DASHBOARD_URL:
         plain += f"\nDashboard completa: {DASHBOARD_URL}\n"
     if briefing.get("pillola_settimanale"):
         p = briefing["pillola_settimanale"]
-        plain += f"\n--- Pillola #{p.get('numero')}: {p.get('titolo')} ---\n{p.get('sottotitolo')}\n(apri in HTML per leggere il testo completo)\n"
+        plain += f"\nPillola della settimana #{p.get('numero')}: {p.get('titolo')} — leggila in dashboard.\n"
     plain += f"\n{briefing.get('closing_note', '')}"
 
     msg = MIMEMultipart("alternative")

@@ -12,19 +12,22 @@
 <style>
   :root {
     --bg: #0f0e0c;
-    --bg-card: #161513;
-    --bg-elevated: #1d1b18;
-    --ink: #e8e4d9;
-    --ink-dim: #9a958a;
-    --ink-muted: #625d54;
-    --accent: #d4a574;
-    --rule: #2a2824;
-    --green: #7ab380;
-    --green-bg: #1a2e1f;
+    --bg-card: #15140f;   /* leggermente più scuro per "flat" su scuro */
+    --bg-elevated: #1a1814;
+    --ink: #ece8dd;
+    --ink-dim: #9d988c;
+    --ink-muted: #5f5a52;
+    --accent: #d4a574;     /* oro principale */
+    --accent-2: #8aa9c9;   /* blu polvere — bond / titoli di stato */
+    --accent-3: #b890d4;   /* viola morbido — formazione / pillole */
+    --accent-4: #d49c7a;   /* terracotta — settori non-tech */
+    --rule: #25231e;
+    --green: #82b888;
+    --green-bg: #14241a;
     --yellow: #d4a574;
-    --yellow-bg: #2e241a;
+    --yellow-bg: #251c12;
     --red: #c47a6f;
-    --red-bg: #2e1c1a;
+    --red-bg: #2a1715;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -80,7 +83,7 @@
   #gate .err { color: var(--red); font-size: 13px; margin-top: 12px; min-height: 18px; }
 
   /* Layout */
-  .wrap { max-width: 1180px; margin: 0 auto; padding: 40px 28px 80px; display: none; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 56px 32px 96px; display: none; }
   .wrap.visible { display: block; }
 
   /* Header */
@@ -88,16 +91,16 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 48px;
-    padding-bottom: 20px;
+    margin-bottom: 64px;
+    padding-bottom: 28px;
     border-bottom: 1px solid var(--rule);
   }
   header h1 {
     font-family: 'Fraunces', serif;
     font-weight: 400;
-    font-size: 38px;
-    letter-spacing: -0.02em;
-    line-height: 1;
+    font-size: 56px;
+    letter-spacing: -0.025em;
+    line-height: 0.95;
   }
   header h1 em {
     font-style: italic;
@@ -110,7 +113,11 @@
     color: var(--ink-dim);
     font-family: 'JetBrains Mono', monospace;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
+  }
+  @media (max-width: 640px) {
+    header h1 { font-size: 38px; }
+    .wrap { padding: 32px 20px 60px; }
   }
 
   /* Tabs navigation */
@@ -146,24 +153,37 @@
     .tab-btn { padding: 12px 14px; font-size: 11px; letter-spacing: 0.08em; }
   }
 
-  /* Section headers */
+  /* Section headers — più grandi e arieggiati */
   .section-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--ink-muted);
-    margin-bottom: 14px;
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 22px;
+    letter-spacing: -0.01em;
     display: flex;
-    align-items: center;
-    gap: 10px;
+    align-items: baseline;
+    gap: 14px;
   }
   .section-label::before {
     content: '';
     display: inline-block;
-    width: 4px; height: 4px;
+    width: 24px; height: 1px;
     background: var(--accent);
-    border-radius: 50%;
+    transform: translateY(-6px);
+  }
+  /* Varianti colore per le sezioni "secondarie" */
+  .section-label.bond::before { background: var(--accent-2); }
+  .section-label.formazione::before { background: var(--accent-3); }
+  .section-label.diversificazione::before { background: var(--accent-4); }
+  /* Sottolabel mono piccolo per dettagli inline */
+  .micro-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
   }
 
   /* Signal hero */
@@ -258,13 +278,20 @@
   }
 
   /* Grid */
-  .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 32px; margin-bottom: 48px; }
+  .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 32px; margin-bottom: 72px; }
   @media (max-width: 800px) { .grid-2 { grid-template-columns: 1fr; } }
 
+  /* Card mantengono lo styling per i grafici, ma con più padding e
+     border invece che background, così sembrano "frame" leggeri */
   .card {
-    background: var(--bg-card);
-    padding: 28px;
+    background: transparent;
+    border: 1px solid var(--rule);
+    padding: 32px;
     border-radius: 2px;
+  }
+  /* Sezione flat: niente frame, solo spazio attorno */
+  .section-flat {
+    margin-bottom: 64px;
   }
 
   /* Row con label sezione + totale a destra */
@@ -757,7 +784,7 @@
   <div class="tab-panel active" id="tab-briefing" role="tabpanel">
 
   <!-- Portafoglio (in cima per accesso rapido) -->
-  <div class="card" style="margin-bottom:32px;">
+  <section class="section-flat">
     <div class="section-label-row">
       <div class="section-label" style="margin-bottom:0;">Portafoglio</div>
       <div class="total-value">
@@ -778,7 +805,7 @@
       </thead>
       <tbody id="holdings-body"></tbody>
     </table>
-  </div>
+  </section>
 
   <!-- Signal hero -->
   <div id="signal-hero" class="signal-hero">
@@ -847,45 +874,49 @@
   </div>
 
   <!-- Watchlist (asset monitorati, non posseduti) -->
-  <div class="card" style="margin-bottom:48px;" id="watchlist-card">
-    <div class="section-label">Watchlist</div>
-    <p style="font-size:12px; color:var(--ink-dim); margin-bottom:16px; line-height:1.6;">
-      Asset che <strong>non possiedi</strong> ma che l'agente monitora ogni giorno. Se vede un'occasione, può proporne uno come segnale del giorno. Raggruppati per categoria.
+  <section class="section-flat" id="watchlist-card">
+    <div class="section-label diversificazione">Watchlist</div>
+    <p style="font-size:13px; color:var(--ink-dim); margin-bottom:24px; line-height:1.7; max-width:780px;">
+      Asset che <strong>non possiedi</strong> ma che l'agente monitora ogni giorno. Se vede un'occasione, può proporne uno come segnale. Raggruppati per categoria.
     </p>
     <div id="watchlist-body"></div>
-  </div>
+  </section>
 
   <!-- Timeline segnali -->
-  <div style="margin-bottom: 48px;">
-    <div class="section-label">Cronologia Segnali</div>
+  <section class="section-flat">
+    <div class="section-label">Cronologia segnali</div>
     <div class="timeline" id="signals-timeline"></div>
-  </div>
+  </section>
 
   <!-- Eventi e contesto di mercato -->
-  <div class="card" style="margin-bottom: 48px;">
+  <section class="section-flat">
     <div class="section-label">Eventi e contesto di mercato</div>
-    <ul class="events-list" id="events-list"></ul>
-    <p style="font-size:12px; color:var(--ink-dim); margin-top:14px; line-height:1.6;">
-      Mix di <strong>date in calendario</strong> (trimestrali, dividendi) e <strong>contesto macro</strong> che l'AI ha ritenuto rilevante per le tue posizioni (tassi, banche centrali, attese di mercato).
+    <p style="font-size:13px; color:var(--ink-dim); margin-bottom:24px; line-height:1.7; max-width:780px;">
+      Mix di <strong>date in calendario</strong> (trimestrali, dividendi) e <strong>contesto macro</strong> che l'AI ha ritenuto rilevante per le tue posizioni.
     </p>
-  </div>
+    <ul class="events-list" id="events-list"></ul>
+  </section>
 
   </div> <!-- /tab-briefing -->
 
   <!-- TAB: PILLOLE / ALLENAMENTO -->
   <div class="tab-panel" id="tab-pillole" role="tabpanel">
-    <div id="pillole-section">
+    <section class="section-flat" id="pillole-section">
+      <div class="section-label formazione">Allenamento</div>
+      <p style="font-size:13px; color:var(--ink-dim); margin-bottom:24px; line-height:1.7; max-width:780px;">
+        Una pillola formativa a settimana per costruire le basi di investimento. Niente fretta, una alla volta. Le precedenti sono consultabili nel menu a sinistra.
+      </p>
       <div id="pillole-empty" class="empty-state" style="display:none;">
         Le pillole formative arriveranno a partire dalla prima settimana di pubblicazione.
       </div>
       <div class="pillole-layout" id="pillole-layout">
         <aside class="pillole-aside">
-          <div class="aside-label">Archivio pillole</div>
+          <div class="aside-label">Archivio</div>
           <ul class="pillole-nav" id="pillole-list"></ul>
         </aside>
         <main id="pillole-content"></main>
       </div>
-    </div>
+    </section>
   </div>
 
   <footer>

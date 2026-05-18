@@ -58,6 +58,9 @@ jobs:
           EOD_API_KEY: ${{ secrets.EOD_API_KEY }}
           DASHBOARD_URL: ${{ secrets.DASHBOARD_URL }}
           CLAUDE_MODEL: ${{ inputs.model  || 'claude-sonnet-4-5' }}
+          # Email solo nei run schedulati. Nei dispatch manuali (debug/test)
+          # generiamo dashboard e log ma non spammiamo la inbox.
+          SKIP_EMAIL: ${{ github.event_name == 'workflow_dispatch' && '1' || '' }}
         run: python src/main.py
 
       - name: Inject dashboard password hash
