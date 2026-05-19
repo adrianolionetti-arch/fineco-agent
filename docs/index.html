@@ -345,13 +345,40 @@
   table.holdings .name { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 500; }
   table.holdings .ticker { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-muted); margin-top: 2px; letter-spacing: 0.05em; }
   table.holdings .pct { font-family: 'JetBrains Mono', monospace; font-weight: 500; text-align: right; }
+  table.holdings .num-col { text-align: right; white-space: nowrap; }
+  table.holdings th.num-col { text-align: right; }
   .pos { color: var(--green); }
   .neg { color: var(--red); }
   .zero { color: var(--ink-muted); }
 
   /* Chart containers */
   .chart-wrap { position: relative; height: 280px; margin-top: 8px; }
-  .chart-wrap.tall { height: 320px; }
+  .chart-wrap.tall { height: 340px; }
+
+  /* Switcher per il chart "singolo asset" */
+  .asset-switcher { display: flex; gap: 6px; flex-wrap: wrap; }
+  .asset-switcher button {
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: 6px 12px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .asset-switcher button:hover {
+    border-color: var(--ink-muted);
+    color: var(--ink);
+  }
+  .asset-switcher button.active {
+    background: var(--accent);
+    color: #1a1a18;
+    border-color: var(--accent);
+  }
 
   /* Backtest stats */
   .stats-grid {
@@ -385,8 +412,8 @@
     display: block;
   }
 
-  /* Signals timeline - layout a card 2 colonne */
-  .timeline { display: flex; flex-direction: column; gap: 16px; }
+  /* Signals timeline - accordion */
+  .timeline { display: flex; flex-direction: column; gap: 10px; }
   .sig-card {
     background: var(--bg-card);
     border-left: 2px solid var(--ink-muted);
@@ -395,15 +422,35 @@
   }
   .sig-card.green { border-left-color: var(--green); }
   .sig-card.yellow { border-left-color: var(--yellow); }
+  .sig-card > summary {
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+  }
+  .sig-card > summary::-webkit-details-marker { display: none; }
   .sig-card .head {
     padding: 14px 20px;
-    background: rgba(0,0,0,0.15);
+    background: transparent;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 12px;
+    transition: background 0.15s;
   }
+  .sig-card .head:hover { background: rgba(255,255,255,0.02); }
+  .sig-card[open] .head {
+    background: rgba(0,0,0,0.18);
+    border-bottom: 1px solid var(--rule);
+  }
+  .sig-card .head::after {
+    content: '+';
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    color: var(--ink-muted);
+    flex-shrink: 0;
+  }
+  .sig-card[open] .head::after { content: '−'; color: var(--accent); }
   .sig-card .head-left {
     display: flex;
     gap: 12px;
@@ -505,63 +552,125 @@
     }
   }
 
-  /* Watchlist */
-  .wl-group { margin-top: 18px; }
-  .wl-group:first-child { margin-top: 0; }
-  .wl-group h4 {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    color: var(--accent);
-    margin-bottom: 8px;
-    padding-bottom: 6px;
+  /* Watchlist - card grid */
+  .wl-group { margin-bottom: 40px; }
+  .wl-group:last-child { margin-bottom: 0; }
+  .wl-group-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
     border-bottom: 1px solid var(--rule);
   }
-  table.wl {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
-  table.wl td {
-    padding: 9px 6px;
-    border-bottom: 1px solid var(--rule);
-  }
-  table.wl tr:last-child td { border-bottom: none; }
-  table.wl .name-col {
+  .wl-group-header h4 {
     font-family: 'Fraunces', serif;
-    font-size: 14px;
-    font-weight: 500;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 18px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
   }
-  table.wl .ucits-hint {
+  .wl-group-header .count {
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
-    color: var(--accent);
-    margin-top: 2px;
-    letter-spacing: 0.05em;
-    font-weight: 400;
-  }
-  table.wl .ticker-col {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
     color: var(--ink-muted);
   }
-  table.wl .price-col {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--ink-dim);
-    text-align: right;
+  .wl-group-header::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--cat-color, var(--accent));
+    transform: translateY(-2px);
   }
-  table.wl .pct-col {
-    font-family: 'JetBrains Mono', monospace;
+  /* Color theming per categoria */
+  .wl-group.cat-bond_govt { --cat-color: var(--accent-2); }
+  .wl-group.cat-bond_globale { --cat-color: var(--accent-2); }
+  .wl-group.cat-oro { --cat-color: var(--accent); }
+  .wl-group.cat-azionario_em { --cat-color: var(--accent-4); }
+  .wl-group.cat-settoriale_healthcare { --cat-color: var(--green); }
+  .wl-group.cat-settoriale_banche { --cat-color: var(--accent-4); }
+  .wl-group.cat-azione_tech_usa { --cat-color: var(--accent); }
+  .wl-group.cat-azione_banche_usa { --cat-color: var(--accent-4); }
+  .wl-group.cat-azione_holding_diversificata { --cat-color: var(--accent-3); }
+  .wl-group.cat-azione_healthcare_usa { --cat-color: var(--green); }
+
+  .wl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .wl-item {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    padding: 16px 18px;
+    border-radius: 2px;
+    transition: border-color 0.2s;
+  }
+  .wl-item:hover { border-color: var(--ink-muted); }
+  .wl-item .wl-name {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
     font-weight: 500;
-    text-align: right;
-    width: 70px;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 8px;
   }
-  @media (max-width: 640px) {
-    table.wl td:nth-child(2) { display: none; }
-    table.wl td:nth-child(4) { display: none; }
+  .wl-item .wl-fineco {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--cat-color, var(--accent));
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+  }
+  .wl-item .wl-fineco .lbl {
+    color: var(--ink-muted);
+    margin-right: 6px;
+  }
+  .wl-item .wl-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .wl-item .wl-price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .wl-item .wl-daily {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .wl-item .wl-stats {
+    display: flex;
+    gap: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+  .wl-item .wl-stats .stat-label {
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 9px;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .wl-item .wl-proxy-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--rule);
+    letter-spacing: 0.05em;
   }
 
   /* News */
@@ -733,10 +842,12 @@
     .signal-hero .summary { font-size: 20px; }
     .signal-hero .detail { grid-template-columns: 1fr; gap: 16px; }
     .stats-grid { grid-template-columns: 1fr 1fr; }
-    /* Mobile: nascondo Qty (col 2), 7g (col 5), 30g (col 6). Restano Asset/Valore/Oggi. */
+    /* Mobile: nascondo Qty (2), P.carico (3), P.mercato (4), Oggi (7).
+       Restano: Titolo / Valore / Var €/%. */
     table.holdings th:nth-child(2), table.holdings td:nth-child(2),
-    table.holdings th:nth-child(5), table.holdings td:nth-child(5),
-    table.holdings th:nth-child(6), table.holdings td:nth-child(6) { display: none; }
+    table.holdings th:nth-child(3), table.holdings td:nth-child(3),
+    table.holdings th:nth-child(4), table.holdings td:nth-child(4),
+    table.holdings th:nth-child(7), table.holdings td:nth-child(7) { display: none; }
     .sig-item { grid-template-columns: 1fr; }
     .sig-item .perf, .sig-item .perf-lbl { text-align: left; }
   }
@@ -795,12 +906,13 @@
     <table class="holdings">
       <thead>
         <tr>
-          <th>Asset</th>
-          <th class="pct" style="text-align:right;">Quantità</th>
-          <th class="pct" style="text-align:right;">Valore (€)</th>
-          <th class="pct" style="text-align:right;">Oggi</th>
-          <th class="pct" style="text-align:right;">7 giorni</th>
-          <th class="pct" style="text-align:right;">30 giorni</th>
+          <th>Titolo</th>
+          <th class="pct num-col">Qty</th>
+          <th class="pct num-col">P. carico</th>
+          <th class="pct num-col">P. mercato</th>
+          <th class="pct num-col">Valore</th>
+          <th class="pct num-col">Var € / %</th>
+          <th class="pct num-col">Oggi</th>
         </tr>
       </thead>
       <tbody id="holdings-body"></tbody>
@@ -850,13 +962,18 @@
         La linea oro è il tuo portafoglio, la linea verde tratteggiata è il benchmark mondiale (VWCE — l'ETF del mondo intero). Entrambi partono da <strong>100</strong> nel primo giorno tracciato: un valore di <strong>102</strong> significa +2%, un valore di <strong>98</strong> significa −2%. Serve per capire se il tuo portafoglio sta facendo meglio o peggio del mercato globale.
       </p>
 
-      <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--rule);">
-        <div class="section-label">Andamento per singolo asset</div>
-        <div class="chart-wrap tall">
+      <div style="margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--rule);">
+        <div class="section-label-row">
+          <div class="section-label" style="margin-bottom:0;">Andamento per singolo asset</div>
+          <div class="asset-switcher" id="asset-switcher">
+            <!-- bottoni inseriti dal JS -->
+          </div>
+        </div>
+        <div class="chart-wrap tall" style="margin-top:18px;">
           <canvas id="chart-assets"></canvas>
         </div>
-        <p style="font-size:12px; color:var(--ink-dim); margin-top:14px; line-height:1.6;">
-          Una linea per ciascuno dei tuoi titoli (NVIDIA, VWCE, EQAC). Anche qui ogni linea parte da <strong>100</strong> al primo giorno disponibile, così puoi confrontare i movimenti pur avendo prezzi unitari molto diversi (NVIDIA ≈ €193, VWCE ≈ €159, EQAC ≈ €427). Passa il mouse per vedere il prezzo reale del giorno.
+        <p style="font-size:13px; color:var(--ink-dim); margin-top:14px; line-height:1.7;">
+          Andamento del prezzo di un singolo asset (clic sui bottoni qui sopra per cambiare). Asse Y in euro: vedi direttamente quanto vale una quota giorno per giorno.
         </p>
       </div>
     </div>
@@ -1039,26 +1156,40 @@ function render(d) {
     });
   }
 
-  // Holdings
+  // Holdings (layout stile Fineco)
   const tbody = document.getElementById('holdings-body');
+  const fmtEur = (v) => v != null
+    ? '€' + v.toLocaleString('it-IT', {minimumFractionDigits: 2, maximumFractionDigits: 2})
+    : '—';
+  const fmtUnit = (v) => v != null ? v.toFixed(2) : '—';
+
   tbody.innerHTML = (d.holdings || []).map(h => {
     const qty = h.quantity != null ? h.quantity : '—';
-    const val = h.position_value != null
-      ? '€' + h.position_value.toLocaleString('it-IT', {minimumFractionDigits: 2, maximumFractionDigits: 2})
-      : '—';
+    // Variazione assoluta € e percentuale (vs prezzo di carico)
+    let varCell = '<div class="zero">—</div>';
+    if (h.margin_pct != null && h.margin_eur != null && h.gain_loss_total != null) {
+      const cls = pctClass(h.margin_pct);
+      const sign = h.gain_loss_total >= 0 ? '+' : '';
+      const signPct = h.margin_pct >= 0 ? '+' : '';
+      varCell = `
+        <div class="${cls}" style="font-weight:600;">${sign}€${Math.abs(h.gain_loss_total).toLocaleString('it-IT', {minimumFractionDigits:2, maximumFractionDigits:2})}</div>
+        <div class="${cls}" style="font-size:11px;opacity:0.85;">${signPct}${h.margin_pct.toFixed(2)}%</div>
+      `;
+    }
     return `
       <tr>
         <td>
           <div class="name-cell">
             <span class="name">${h.name}</span>
-            <span class="ticker">${h.ticker} · ${h.type.replace('_', ' ')} · ${h.current_price.toFixed(2)} ${h.currency}</span>
+            <span class="ticker">${h.ticker} · ${h.type.replace('_', ' ')}</span>
           </div>
         </td>
-        <td class="pct" style="color:var(--ink-dim);">${qty}</td>
-        <td class="pct" style="color:var(--ink);">${val}</td>
-        <td class="pct ${pctClass(h.daily_pct)}">${pctFmt(h.daily_pct)}</td>
-        <td class="pct ${pctClass(h.weekly_pct)}">${pctFmt(h.weekly_pct)}</td>
-        <td class="pct ${pctClass(h.monthly_pct)}">${pctFmt(h.monthly_pct)}</td>
+        <td class="pct num-col" style="color:var(--ink-dim);">${qty}</td>
+        <td class="pct num-col" style="color:var(--ink-dim);">${fmtUnit(h.avg_cost_price)}</td>
+        <td class="pct num-col" style="color:var(--ink);font-weight:500;">${fmtUnit(h.current_price)}</td>
+        <td class="pct num-col" style="color:var(--ink);">${fmtEur(h.position_value)}</td>
+        <td class="pct num-col">${varCell}</td>
+        <td class="pct num-col ${pctClass(h.daily_pct)}">${pctFmt(h.daily_pct)}</td>
       </tr>
     `;
   }).join('');
@@ -1088,7 +1219,7 @@ function render(d) {
   if (!signals.length) {
     tl.innerHTML = '<div class="empty-state">Nessun segnale ancora registrato. Il diario si popolerà nei prossimi giorni.</div>';
   } else {
-    tl.innerHTML = signals.map(renderSignalCard).join('');
+    tl.innerHTML = signals.map((s, i) => renderSignalCard(s, i)).join('');
   }
 
   // Events: combina API (date precise) + AI (contesto macro)
@@ -1250,49 +1381,65 @@ function renderWatchlist(items) {
   });
 
   const orderedCats = WL_CATEGORY_ORDER.filter(c => groups[c]);
-  // Aggiungi eventuali categorie non previste alla fine
   Object.keys(groups).forEach(c => {
     if (!orderedCats.includes(c)) orderedCats.push(c);
   });
 
   body.innerHTML = orderedCats.map(cat => {
-    const rows = groups[cat].map(w => {
-      // Estrae il nome "pulito" rimuovendo l'eventuale "(proxy X · UCITS Fineco: Y)"
+    const cards = groups[cat].map(w => {
+      // Pulizia nomi: tolgo "(proxy X · UCITS Fineco: Y)" dal display name
       const cleanName = w.name.split(' (proxy')[0];
-      const ucitsHint = (w.ucits_equivalents && w.ucits_equivalents.length)
-        ? `<div class="ucits-hint">Fineco: ${w.ucits_equivalents.join(' o ')}</div>`
+      const hasUcitsAlt = w.ucits_equivalents && w.ucits_equivalents.length;
+      // Box "Compra su Fineco" — mostra UCITS se esiste, altrimenti il ticker stesso
+      const finecoLine = hasUcitsAlt
+        ? `<div class="wl-fineco"><span class="lbl">Fineco</span>${w.ucits_equivalents.join(' o ')}</div>`
+        : `<div class="wl-fineco"><span class="lbl">Ticker</span>${w.ticker}</div>`;
+      // Proxy note solo se c'è una sostituzione (ticker dashboard != ticker Fineco)
+      const proxyNote = hasUcitsAlt
+        ? `<div class="wl-proxy-note">Prezzo monitorato via ${w.ticker} (proxy USA)</div>`
         : '';
+      const sign = w.daily_pct >= 0 ? '+' : '';
       return `
-        <tr>
-          <td class="name-col">
-            ${cleanName}
-            ${ucitsHint}
-          </td>
-          <td class="ticker-col">${w.ticker}</td>
-          <td class="price-col">${w.current_price.toFixed(2)} ${w.currency}</td>
-          <td class="pct-col ${pctClass(w.daily_pct)}">${pctFmt(w.daily_pct)}</td>
-          <td class="pct-col ${pctClass(w.weekly_pct)}">${pctFmt(w.weekly_pct)}</td>
-          <td class="pct-col ${pctClass(w.monthly_pct)}">${pctFmt(w.monthly_pct)}</td>
-        </tr>
+        <div class="wl-item">
+          <div class="wl-name">${cleanName}</div>
+          ${finecoLine}
+          <div class="wl-price-row">
+            <span class="wl-price">${w.current_price.toFixed(2)} ${w.currency}</span>
+            <span class="wl-daily ${pctClass(w.daily_pct)}">${sign}${w.daily_pct.toFixed(2)}% oggi</span>
+          </div>
+          <div class="wl-stats">
+            <div>
+              <span class="stat-label">7 giorni</span>
+              <span class="${pctClass(w.weekly_pct)}">${pctFmt(w.weekly_pct)}</span>
+            </div>
+            <div>
+              <span class="stat-label">30 giorni</span>
+              <span class="${pctClass(w.monthly_pct)}">${pctFmt(w.monthly_pct)}</span>
+            </div>
+          </div>
+          ${proxyNote}
+        </div>
       `;
     }).join('');
     return `
-      <div class="wl-group">
-        <h4>${WL_CATEGORY_LABELS[cat] || cat}</h4>
-        <table class="wl"><tbody>${rows}</tbody></table>
+      <div class="wl-group cat-${cat}">
+        <div class="wl-group-header">
+          <h4>${WL_CATEGORY_LABELS[cat] || cat}</h4>
+          <span class="count">${groups[cat].length} ${groups[cat].length === 1 ? 'asset' : 'asset'}</span>
+        </div>
+        <div class="wl-grid">${cards}</div>
       </div>
     `;
   }).join('');
 }
 
-function renderSignalCard(s) {
+function renderSignalCard(s, idx) {
   const lvl = (s.level || 'NONE').toLowerCase();
   const perfHtml = s.performance_pct !== null && s.performance_pct !== undefined
     ? `<span class="perf ${pctClass(s.performance_pct)}">${pctFmt(s.performance_pct)} da allora</span>`
     : `<span class="perf zero">— in attesa</span>`;
   const importanceHtml = renderImportanceDots(s.importance);
 
-  // Pane sinistro: cosa dice l'agente
   const leftPane = `
     <div class="pane">
       <div class="pane-label">Cosa dice l'agente</div>
@@ -1302,7 +1449,6 @@ function renderSignalCard(s) {
     </div>
   `;
 
-  // Pane destro: cosa fare in pratica
   let rightContent = '';
   if (s.what_to_do || s.what_to_watch) {
     rightContent = `
@@ -1319,73 +1465,93 @@ function renderSignalCard(s) {
     </div>
   `;
 
+  // Solo il primo segnale (più recente) è espanso per default
+  const isOpen = idx === 0 ? 'open' : '';
+
   return `
-    <div class="sig-card ${lvl}">
-      <div class="head">
-        <div class="head-left">
-          <span class="date">${s.date}</span>
-          <span class="lvl-tag">${s.level}</span>
-          <span class="tkr">${s.ticker || ''}</span>
-          ${importanceHtml}
+    <details class="sig-card ${lvl}" ${isOpen}>
+      <summary>
+        <div class="head">
+          <div class="head-left">
+            <span class="date">${s.date}</span>
+            <span class="lvl-tag">${s.level}</span>
+            <span class="tkr">${s.ticker || ''}</span>
+            ${importanceHtml}
+          </div>
+          ${perfHtml}
         </div>
-        ${perfHtml}
-      </div>
+      </summary>
       <div class="body">
         ${leftPane}
         ${rightPane}
       </div>
-    </div>
+    </details>
   `;
 }
 
-// Palette per le linee dei 3 asset (tonalità calde coordinate)
-const ASSET_COLORS = ['#d4a574', '#7ab380', '#c47a6f', '#9a8fb8', '#b8a87a'];
+// Stato del chart "singolo asset"
+let _holdingsForChart = [];
+let _assetChartCurrent = null;
 
 function renderAssetsChart(holdings) {
-  const ctx = document.getElementById('chart-assets').getContext('2d');
-  // Filtra solo holding con price_history non vuoto
-  const series = holdings
-    .filter(h => h.price_history && h.price_history.length >= 2)
-    .map((h, i) => {
-      const first = h.price_history[0].close;
-      const points = h.price_history.map(p => ({
-        x: p.date,
-        y: (p.close / first) * 100,
-        rawPrice: p.close,
-        currency: h.currency,
-      }));
-      return {
-        label: `${h.name} (${h.ticker})`,
-        data: points,
-        borderColor: ASSET_COLORS[i % ASSET_COLORS.length],
-        backgroundColor: 'transparent',
-        borderWidth: 2,
-        fill: false,
-        tension: 0.25,
-        pointRadius: 0,
-        pointHoverRadius: 4,
-      };
-    });
+  _holdingsForChart = (holdings || []).filter(
+    h => h.price_history && h.price_history.length >= 2
+  );
+  if (!_holdingsForChart.length) {
+    document.getElementById('asset-switcher').innerHTML = '';
+    return;
+  }
 
-  // Distrugge istanza precedente se esiste
+  // Bottoni switcher
+  const sw = document.getElementById('asset-switcher');
+  sw.innerHTML = _holdingsForChart.map((h, i) =>
+    `<button data-idx="${i}" class="${i === 0 ? 'active' : ''}">${h.ticker}</button>`
+  ).join('');
+  sw.querySelectorAll('button').forEach(b => {
+    b.addEventListener('click', () => {
+      sw.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      drawAssetChart(_holdingsForChart[parseInt(b.dataset.idx, 10)]);
+    });
+  });
+
+  drawAssetChart(_holdingsForChart[0]);
+}
+
+function drawAssetChart(h) {
+  const ctx = document.getElementById('chart-assets').getContext('2d');
+  const points = h.price_history.map(p => ({ x: p.date, y: p.close }));
+  const first = h.price_history[0].close;
+  const last = h.price_history[h.price_history.length - 1].close;
+  const totalPct = ((last - first) / first) * 100;
+  const isPositive = totalPct >= 0;
+  const lineColor = isPositive ? '#82b888' : '#c47a6f';
+  const fillColor = isPositive ? 'rgba(130,184,136,0.08)' : 'rgba(196,122,111,0.08)';
+
   if (window._assetsChart) { window._assetsChart.destroy(); }
 
   window._assetsChart = new Chart(ctx, {
     type: 'line',
-    data: { datasets: series },
+    data: {
+      datasets: [{
+        label: `${h.name} (${h.ticker})`,
+        data: points,
+        borderColor: lineColor,
+        backgroundColor: fillColor,
+        borderWidth: 2,
+        fill: true,
+        tension: 0.25,
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: lineColor,
+      }],
+    },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       interaction: { mode: 'index', intersect: false },
       plugins: {
-        legend: {
-          labels: {
-            color: '#9a958a',
-            font: { family: 'JetBrains Mono', size: 11 },
-            boxWidth: 20,
-            boxHeight: 2,
-          },
-        },
+        legend: { display: false },
         tooltip: {
           backgroundColor: '#1d1b18',
           titleColor: '#e8e4d9',
@@ -1394,13 +1560,14 @@ function renderAssetsChart(holdings) {
           borderWidth: 1,
           titleFont: { family: 'JetBrains Mono', size: 11 },
           bodyFont: { family: 'JetBrains Mono', size: 12 },
-          padding: 10,
+          padding: 12,
           callbacks: {
+            title: (items) => items[0].raw.x,
             label: (ctx) => {
-              const pt = ctx.raw;
-              const pctChange = (pt.y - 100).toFixed(2);
-              const sign = pctChange >= 0 ? '+' : '';
-              return ` ${ctx.dataset.label}: ${pt.rawPrice.toFixed(2)} ${pt.currency} (${sign}${pctChange}%)`;
+              const v = ctx.raw.y;
+              const variation = ((v - first) / first) * 100;
+              const sign = variation >= 0 ? '+' : '';
+              return ` €${v.toFixed(2)}   ${sign}${variation.toFixed(2)}%`;
             },
           },
         },
@@ -1408,7 +1575,7 @@ function renderAssetsChart(holdings) {
       scales: {
         x: {
           type: 'category',
-          grid: { color: 'rgba(42, 40, 36, 0.5)' },
+          grid: { color: 'rgba(42, 40, 36, 0.4)', drawBorder: false },
           ticks: {
             color: '#625d54',
             font: { family: 'JetBrains Mono', size: 10 },
@@ -1416,11 +1583,11 @@ function renderAssetsChart(holdings) {
           },
         },
         y: {
-          grid: { color: 'rgba(42, 40, 36, 0.5)' },
+          grid: { color: 'rgba(42, 40, 36, 0.4)', drawBorder: false },
           ticks: {
             color: '#625d54',
             font: { family: 'JetBrains Mono', size: 10 },
-            callback: (v) => v.toFixed(0),
+            callback: (v) => '€' + v.toFixed(0),
           },
         },
       },

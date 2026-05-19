@@ -281,15 +281,31 @@ def build_dashboard_data(portfolio_data: dict, briefing: dict, news: list, event
         if price_series:
             price_series = price_series[-60:]
         quantity = h.get("quantity", 0)
-        position_value = round(h.get("current", 0) * quantity, 2)
+        current_price = h.get("current", 0)
+        position_value = round(current_price * quantity, 2)
+        # Performance vs prezzo medio di carico (stile Fineco):
+        # variazione assoluta in €, variazione %, e P/L totale sulla posizione.
+        avg_cost = h.get("avg_cost_price")
+        margin_pct = None
+        margin_eur = None
+        gain_loss_total = None
+        if avg_cost and avg_cost > 0:
+            margin_pct = round(((current_price - avg_cost) / avg_cost) * 100, 2)
+            margin_eur = round(current_price - avg_cost, 2)
+            gain_loss_total = round((current_price - avg_cost) * quantity, 2)
+
         holdings_public.append({
             "name": h["name"],
             "ticker": h["ticker"],
             "type": h.get("type", "unknown"),
             "currency": h["currency"],
-            "current_price": h["current"],
+            "current_price": current_price,
             "quantity": quantity,
             "position_value": position_value,
+            "avg_cost_price": avg_cost,
+            "margin_eur": margin_eur,         # variazione € sul prezzo unitario
+            "margin_pct": margin_pct,         # variazione % vs carico
+            "gain_loss_total": gain_loss_total,  # P/L totale sulla posizione
             "daily_pct": h["daily_change_pct"],
             "weekly_pct": h["weekly_change_pct"],
             "monthly_pct": h["monthly_change_pct"],

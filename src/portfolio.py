@@ -42,6 +42,9 @@ PORTFOLIO = [
         "fallback_yf_2": "NVDA",
         "fx_convert_from_primary": True,
         "quantity": 1,
+        # Prezzo medio di carico (in EUR, da Fineco): permette di calcolare
+        # il margine assoluto e la perf % "totale" come fa il broker.
+        "avg_cost_price": 160.71,
         "name": "NVIDIA",
         "type": "stock",
         "currency": "EUR",
@@ -59,6 +62,7 @@ PORTFOLIO = [
         "fallback_yf_2": "VWCE.DE",
         "fx_convert_from_primary": False,
         "quantity": 10,
+        "avg_cost_price": 149.70,
         "name": "Vanguard FTSE All-World",
         "type": "etf_equity",
         "currency": "EUR",
@@ -75,6 +79,7 @@ PORTFOLIO = [
         "fallback_yf_2": "EQQB.DE",
         "fx_convert_from_primary": False,
         "quantity": 1,
+        "avg_cost_price": 368.36,
         "name": "Invesco EQQQ Nasdaq-100 (Acc)",
         "type": "etf_equity",
         "currency": "EUR",
