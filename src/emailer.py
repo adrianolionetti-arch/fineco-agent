@@ -144,6 +144,34 @@ def _render_dashboard_cta() -> str:
     """
 
 
+def _render_micro_tip(b: dict) -> str:
+    """Banda micro-tip giornaliero — sempre presente.
+    Snack formativo breve che affianca la pillola settimanale del lunedì."""
+    tip = b.get("micro_tip")
+    if not tip:
+        return ""
+
+    termine = tip.get("termine", "")
+    definizione = tip.get("definizione", "")
+    categoria = (tip.get("categoria") or "").replace("_", " ")
+
+    return f"""
+    <div style="background:#f7f5fb;padding:14px 18px;border-radius:6px;margin:16px 0;
+                border-left:3px solid #b890d4;">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.12em;
+                    color:#8a6db0;font-weight:600;margin-bottom:4px;">
+            💡 Tip del giorno · {categoria}
+        </div>
+        <div style="font-size:15px;color:#1a1a2e;font-weight:600;margin-bottom:6px;">
+            {termine}
+        </div>
+        <div style="font-size:13px;color:#444;line-height:1.55;">
+            {definizione}
+        </div>
+    </div>
+    """
+
+
 def _render_pillola_teaser(b: dict) -> str:
     """Teaser breve della pillola (solo il lunedì) con link alla dashboard.
     Il contenuto completo della pillola sta nel tab 'Allenamento' della
@@ -252,6 +280,8 @@ def send_email(briefing: dict, portfolio_data: dict) -> bool:
 
         <p style="font-size:14px;color:#444;">{briefing.get('portfolio_note', '')}</p>
 
+        {_render_micro_tip(briefing)}
+
         {_render_signal_box(briefing)}
 
         {_render_dashboard_cta()}
@@ -310,6 +340,9 @@ Attenzione: {briefing.get('signal_counter')}
             plain += f"\nCosa fare in pratica: {briefing['signal_what_to_do']}\n"
         if briefing.get("signal_what_to_watch"):
             plain += f"\nCosa monitorare: {briefing['signal_what_to_watch']}\n"
+    if briefing.get("micro_tip"):
+        t = briefing["micro_tip"]
+        plain += f"\n💡 Tip del giorno — {t.get('termine')}: {t.get('definizione')}\n"
     if DASHBOARD_URL:
         plain += f"\nDashboard completa: {DASHBOARD_URL}\n"
     if briefing.get("pillola_settimanale"):

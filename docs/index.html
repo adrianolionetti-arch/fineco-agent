@@ -294,6 +294,41 @@
     margin-bottom: 64px;
   }
 
+  /* Micro-tip banda */
+  .micro-tip {
+    background: rgba(184, 144, 212, 0.06);
+    border-left: 2px solid var(--accent-3);
+    border-radius: 2px;
+    padding: 14px 20px;
+    margin-bottom: 40px;
+  }
+  .micro-tip-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .micro-tip-icon { font-size: 14px; }
+  .micro-tip-label { color: var(--accent-3); font-weight: 600; }
+  .micro-tip-category {
+    color: var(--ink-muted);
+    margin-left: auto;
+    font-size: 9px;
+  }
+  .micro-tip-body { font-size: 14px; line-height: 1.6; color: var(--ink); }
+  .micro-tip-term {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--ink);
+    margin-right: 8px;
+  }
+  .micro-tip-def { color: var(--ink-dim); }
+
   /* Row con label sezione + totale a destra */
   .section-label-row {
     display: flex;
@@ -894,6 +929,19 @@
   <!-- TAB: BRIEFING -->
   <div class="tab-panel active" id="tab-briefing" role="tabpanel">
 
+  <!-- Micro-tip giornaliero -->
+  <div id="micro-tip" class="micro-tip" style="display:none;">
+    <div class="micro-tip-head">
+      <span class="micro-tip-icon">💡</span>
+      <span class="micro-tip-label">Tip del giorno</span>
+      <span class="micro-tip-category" id="micro-tip-cat"></span>
+    </div>
+    <div class="micro-tip-body">
+      <span class="micro-tip-term" id="micro-tip-term"></span>
+      <span class="micro-tip-def" id="micro-tip-def"></span>
+    </div>
+  </div>
+
   <!-- Portafoglio (in cima per accesso rapido) -->
   <section class="section-flat">
     <div class="section-label-row">
@@ -1147,6 +1195,18 @@ function render(d) {
   }
   document.getElementById('portfolio-note').textContent = b.portfolio_note || '';
   document.getElementById('model-used').textContent = b.model_used || '—';
+
+  // Micro-tip del giorno
+  const tip = d.micro_tip;
+  const tipEl = document.getElementById('micro-tip');
+  if (tip && tip.termine) {
+    tipEl.style.display = 'block';
+    document.getElementById('micro-tip-term').textContent = tip.termine + ' —';
+    document.getElementById('micro-tip-def').textContent = tip.definizione || '';
+    document.getElementById('micro-tip-cat').textContent = (tip.categoria || '').replace('_', ' ');
+  } else {
+    tipEl.style.display = 'none';
+  }
 
   // Totale portafoglio in header
   const totalEl = document.getElementById('total-value');

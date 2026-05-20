@@ -13,6 +13,7 @@ from emailer import send_email
 from journal import log_signal, read_journal_stats
 from dashboard_builder import build_dashboard_data
 from pillole import get_pillola_della_settimana
+from micro_tip import get_micro_tip_del_giorno
 
 
 def main():
@@ -57,6 +58,11 @@ def main():
         print(f"  → Pillola della settimana {pillola['settimana_corrente']}: "
               f"{pillola['titolo']}")
         briefing["pillola_settimanale"] = pillola
+
+    # Micro-tip giornaliero (sempre presente)
+    micro_tip = get_micro_tip_del_giorno()
+    briefing["micro_tip"] = micro_tip
+    print(f"  → Micro-tip del giorno: {micro_tip['termine']}")
 
     print("\n[6/8] Salvataggio nel diario segnali...")
     # Combina portfolio + watchlist per il match prezzo nel log (un segnale

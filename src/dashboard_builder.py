@@ -360,6 +360,8 @@ def build_dashboard_data(portfolio_data: dict, briefing: dict, news: list, event
         # Tappa 4: pillole formative
         "pillola_corrente": pillola_corrente,
         "archivio_pillole": archivio_pillole,
+        # Micro-tip giornaliero
+        "micro_tip": briefing.get("micro_tip"),
     }
 
     with open(DASHBOARD_JSON, "w", encoding="utf-8") as f:
