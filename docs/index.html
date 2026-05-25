@@ -869,6 +869,139 @@
   }
   .empty-state { padding: 40px; text-align: center; color: var(--ink-muted); font-style: italic; }
 
+  /* === Quiz weekend === */
+  .quiz-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .quiz-stat {
+    padding: 16px;
+    background: var(--bg-card);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .quiz-stat-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .quiz-stat-lbl {
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .quiz-card {
+    padding: 28px;
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--rule);
+  }
+  .quiz-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+  }
+  .quiz-id {
+    font-family: 'JetBrains Mono', monospace;
+    padding: 3px 8px;
+    background: var(--bg);
+    border-radius: 4px;
+  }
+  .quiz-question {
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .quiz-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 18px;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink);
+    transition: all 0.15s ease;
+  }
+  .quiz-option:hover:not(:disabled) {
+    border-color: var(--accent-3);
+    background: var(--bg-card);
+  }
+  .quiz-option:disabled { cursor: default; opacity: 0.6; }
+  .quiz-option-letter {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .quiz-option.selected {
+    border-color: var(--accent-3);
+    background: rgba(184, 144, 212, 0.08);
+  }
+  .quiz-option.selected .quiz-option-letter {
+    background: var(--accent-3);
+    color: white;
+  }
+  .quiz-feedback {
+    margin-top: 22px;
+    padding: 16px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .quiz-feedback.success {
+    background: rgba(184, 144, 212, 0.1);
+    border: 1px solid var(--accent-3);
+    color: var(--ink);
+  }
+  .quiz-feedback.info {
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    color: var(--ink-dim);
+  }
+  .quiz-feedback.error {
+    background: rgba(255, 100, 100, 0.08);
+    border: 1px solid rgba(255, 100, 100, 0.3);
+    color: var(--ink);
+  }
+
+  @media (max-width: 640px) {
+    .quiz-stats { grid-template-columns: 1fr 1fr; }
+    .quiz-card { padding: 20px; }
+    .quiz-question { font-size: 18px; }
+  }
+
   /* Mobile */
   @media (max-width: 640px) {
     header { flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -1066,6 +1199,27 @@
 
   <!-- TAB: PILLOLE / ALLENAMENTO -->
   <div class="tab-panel" id="tab-pillole" role="tabpanel">
+
+    <!-- Quiz del weekend -->
+    <section class="section-flat" id="quiz-section" style="display:none;">
+      <div class="section-label formazione">Esercizio del weekend</div>
+      <div id="quiz-stats" class="quiz-stats">
+        <div class="quiz-stat"><span class="quiz-stat-val" id="quiz-points">—</span><span class="quiz-stat-lbl">Punti</span></div>
+        <div class="quiz-stat"><span class="quiz-stat-val" id="quiz-streak">—</span><span class="quiz-stat-lbl">Streak corrente</span></div>
+        <div class="quiz-stat"><span class="quiz-stat-val" id="quiz-progress">—</span><span class="quiz-stat-lbl">Progresso Livello 1</span></div>
+        <div class="quiz-stat"><span class="quiz-stat-val" id="quiz-badge">—</span><span class="quiz-stat-lbl">Badge</span></div>
+      </div>
+      <div id="quiz-card" class="quiz-card">
+        <div class="quiz-meta">
+          <span class="quiz-id" id="quiz-id">—</span>
+          <span class="quiz-topic" id="quiz-topic">—</span>
+        </div>
+        <div class="quiz-question serif" id="quiz-question">Caricamento esercizio…</div>
+        <div class="quiz-options" id="quiz-options"></div>
+        <div class="quiz-feedback" id="quiz-feedback" style="display:none;"></div>
+      </div>
+    </section>
+
     <section class="section-flat" id="pillole-section">
       <div class="section-label formazione">Allenamento</div>
       <p style="font-size:13px; color:var(--ink-dim); margin-bottom:24px; line-height:1.7; max-width:780px;">
@@ -1137,6 +1291,163 @@ async function loadDashboard() {
     render(d);
   } catch (e) {
     document.getElementById('sig-summary').textContent = 'Errore caricamento dati. Riprova più tardi.';
+    console.error(e);
+  }
+  loadQuiz();
+}
+
+// === QUIZ WEEKEND ===
+const QUIZ_WORKER_URL = 'https://fineco-quiz.adriano-lionetti.workers.dev';
+const QUIZ_TOKEN = '7618fc8b158d49e621f1d388df7d78bcb77e6dd55b7f4ce957db224913c217f6';
+const QUIZ_REPO_RAW = 'https://raw.githubusercontent.com/adrianolionetti-arch/fineco-agent/main';
+
+function getExerciseIdFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const ex = params.get('ex');
+  if (ex && /^L\d+-E\d{2}$/.test(ex)) return ex;
+  return null;
+}
+
+function badgeForPoints(p) {
+  if (p >= 500) return '🦉 Saggio';
+  if (p >= 300) return '🎯 Trader razionale';
+  if (p >= 150) return '📈 Investitore informato';
+  if (p >= 50) return '📘 Risparmiatore';
+  return '🌱 Apprendista';
+}
+
+async function loadQuiz() {
+  const section = document.getElementById('quiz-section');
+  const exId = getExerciseIdFromUrl();
+
+  // Carica sempre lo stato (per il widget riepilogo), anche senza ?ex=
+  let progress = null;
+  try {
+    const r = await fetch(QUIZ_REPO_RAW + '/data/learning_progress.json?t=' + Date.now());
+    if (r.ok) progress = await r.json();
+  } catch (e) { /* ok, file potrebbe non esistere ancora */ }
+
+  if (!exId && !progress) {
+    section.style.display = 'none';
+    return;
+  }
+
+  section.style.display = 'block';
+
+  // Widget stats
+  if (progress) {
+    const s = progress.stats || {};
+    document.getElementById('quiz-points').textContent = s.total_points || 0;
+    document.getElementById('quiz-streak').textContent = s.current_streak ? '🔥 ' + s.current_streak : '—';
+    const attempted = s.exercises_attempted || 0;
+    document.getElementById('quiz-progress').textContent = attempted + '/15';
+    document.getElementById('quiz-badge').textContent = badgeForPoints(s.total_points || 0);
+  }
+
+  if (!exId) {
+    document.getElementById('quiz-card').style.display = 'none';
+    return;
+  }
+
+  // Carica l'esercizio dal JSON del livello (per ora solo L1)
+  let exercise = null;
+  try {
+    const r = await fetch(QUIZ_REPO_RAW + '/esercizi/livello_1_basi.json?t=' + Date.now());
+    if (r.ok) {
+      const data = await r.json();
+      exercise = (data.exercises || []).find(e => e.id === exId);
+    }
+  } catch (e) { console.error('Errore caricamento esercizi:', e); }
+
+  if (!exercise) {
+    document.getElementById('quiz-question').textContent = 'Esercizio non trovato: ' + exId;
+    return;
+  }
+
+  // Popola domanda
+  document.getElementById('quiz-id').textContent = exercise.id;
+  document.getElementById('quiz-topic').textContent = exercise.topic;
+  document.getElementById('quiz-question').textContent = exercise.question;
+
+  // Controlla se ha già risposto (chiamata al Worker)
+  let alreadyAnswered = null;
+  try {
+    const r = await fetch(QUIZ_WORKER_URL + '/answer/' + exId, {
+      headers: { 'X-Quiz-Token': QUIZ_TOKEN }
+    });
+    if (r.ok) alreadyAnswered = await r.json();
+  } catch (e) { /* offline, mostra comunque le opzioni */ }
+
+  renderQuizOptions(exercise, alreadyAnswered);
+}
+
+function renderQuizOptions(exercise, alreadyAnswered) {
+  const optionsContainer = document.getElementById('quiz-options');
+  const feedback = document.getElementById('quiz-feedback');
+  optionsContainer.innerHTML = '';
+
+  ['A', 'B', 'C', 'D'].forEach(letter => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.dataset.answer = letter;
+    btn.innerHTML = '<span class="quiz-option-letter">' + letter + '</span><span>' + exercise.options[letter] + '</span>';
+    if (alreadyAnswered) {
+      btn.disabled = true;
+      if (alreadyAnswered.answer === letter) btn.classList.add('selected');
+    } else {
+      btn.addEventListener('click', () => submitAnswer(exercise.id, letter, btn));
+    }
+    optionsContainer.appendChild(btn);
+  });
+
+  if (alreadyAnswered) {
+    const dt = new Date(alreadyAnswered.answered_at);
+    feedback.className = 'quiz-feedback info';
+    feedback.style.display = 'block';
+    feedback.innerHTML = '✓ Hai già risposto <strong>' + alreadyAnswered.answer + '</strong> il ' +
+      dt.toLocaleDateString('it-IT', {day:'numeric', month:'long'}) +
+      ' alle ' + dt.toLocaleTimeString('it-IT', {hour:'2-digit', minute:'2-digit'}) +
+      '. La soluzione completa arriva domenica mattina via email.';
+  } else {
+    feedback.style.display = 'none';
+  }
+}
+
+async function submitAnswer(exerciseId, answer, clickedBtn) {
+  document.querySelectorAll('.quiz-option').forEach(b => {
+    b.disabled = true;
+    b.classList.remove('selected');
+  });
+  clickedBtn.classList.add('selected');
+
+  const feedback = document.getElementById('quiz-feedback');
+  feedback.className = 'quiz-feedback info';
+  feedback.style.display = 'block';
+  feedback.textContent = 'Invio in corso…';
+
+  try {
+    const r = await fetch(QUIZ_WORKER_URL + '/answer', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Quiz-Token': QUIZ_TOKEN
+      },
+      body: JSON.stringify({ exercise_id: exerciseId, answer })
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    if (data.already_answered) {
+      feedback.className = 'quiz-feedback info';
+      feedback.innerHTML = '✓ Avevi già risposto <strong>' + data.previous_answer + '</strong>. La risposta non è stata sovrascritta.';
+    } else {
+      feedback.className = 'quiz-feedback success';
+      feedback.innerHTML = '✓ <strong>Risposta registrata!</strong> La soluzione completa arriva domenica mattina via email.';
+    }
+  } catch (e) {
+    feedback.className = 'quiz-feedback error';
+    feedback.textContent = 'Errore nell\'invio. Riprova tra qualche istante o controlla la connessione.';
+    document.querySelectorAll('.quiz-option').forEach(b => { b.disabled = false; });
+    clickedBtn.classList.remove('selected');
     console.error(e);
   }
 }

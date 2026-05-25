@@ -1,0 +1,38 @@
+{
+  "user": "adriano",
+  "created_at": "2026-05-25",
+  "last_updated": "2026-05-25",
+  "current_level": 1,
+  "last_exercise_sent": null,
+  "last_exercise_date": null,
+  "stats": {
+    "total_points": 0,
+    "current_streak": 0,
+    "longest_streak": 0,
+    "exercises_attempted": 0,
+    "exercises_correct": 0,
+    "exercises_missed": 0
+  },
+  "badges_earned": [],
+  "badge_thresholds": {
+    "apprendista": 0,
+    "risparmiatore_consapevole": 50,
+    "investitore_informato": 150,
+    "trader_razionale": 300,
+    "saggio_della_finanza": 500
+  },
+  "history": [],
+  "_history_entry_schema": {
+    "exercise_id": "L1-E05",
+    "topic": "Inflazione",
+    "sent_at": "2026-06-06T07:30:00Z",
+    "answered_at": "2026-06-06T09:12:14Z",
+    "user_answer": "B",
+    "correct_answer": "B",
+    "is_correct": true,
+    "points_earned": 10,
+    "streak_bonus": 0,
+    "level_completion_bonus": 0,
+    "notes": "Sample entry — shape only, not real data"
+  }
+}

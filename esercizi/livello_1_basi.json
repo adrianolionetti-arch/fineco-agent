@@ -1,0 +1,186 @@
+{
+  "level": 1,
+  "title": "Le basi",
+  "exercises": [
+    {
+      "id": "L1-E01",
+      "topic": "Cosa è un'azione",
+      "question": "Hai comprato 1 azione NVIDIA a €180. Cosa possiedi esattamente?",
+      "options": {
+        "A": "Un prestito che NVIDIA ti restituirà con interessi",
+        "B": "Una piccolissima frazione di proprietà dell'azienda NVIDIA",
+        "C": "Una promessa di Fineco che ti pagherà €180 quando vendi",
+        "D": "Una quota di un fondo che contiene NVIDIA e altre aziende"
+      },
+      "correct": "B"
+    },
+    {
+      "id": "L1-E02",
+      "topic": "Azione singola vs ETF",
+      "question": "Vuoi investire €500 nel mercato azionario USA. Hai due opzioni: comprare €500 di una sola azione (Apple) o €500 di un ETF S&P 500. Quale frase è FALSA?",
+      "options": {
+        "A": "Con l'ETF se Apple va male, le altre 499 aziende possono compensare",
+        "B": "Con la singola azione il rendimento potenziale è più alto ma anche il rischio",
+        "C": "L'ETF ha commissioni di gestione annue (TER, anche se piccole)",
+        "D": "Con l'ETF possiedi le azioni delle 500 aziende direttamente"
+      },
+      "correct": "D"
+    },
+    {
+      "id": "L1-E03",
+      "topic": "Commissioni e operazioni piccole",
+      "question": "Fineco ti addebita €2.95 per ogni acquisto. Vuoi comprare €100 di un ETF. Quanto pesa la commissione?",
+      "options": {
+        "A": "Lo 0.30%, trascurabile",
+        "B": "Il 2.95%, già 'perdi' il 2.95% prima ancora di iniziare",
+        "C": "Niente, perché le commissioni si pagano solo sulle azioni",
+        "D": "Dipende dal prezzo dell'ETF al momento dell'acquisto"
+      },
+      "correct": "B"
+    },
+    {
+      "id": "L1-E04",
+      "topic": "Orizzonte temporale",
+      "question": "Hai €3000 messi da parte per un anticipo casa fra 18 mesi. Cosa fai?",
+      "options": {
+        "A": "Li investi tutti in un ETF azionario mondiale (VWCE)",
+        "B": "Li lasci sul conto corrente o conto deposito, non in borsa",
+        "C": "Metà azioni e metà obbligazioni per bilanciare",
+        "D": "Compri Bitcoin, in 18 mesi può raddoppiare"
+      },
+      "correct": "B"
+    },
+    {
+      "id": "L1-E05",
+      "topic": "Inflazione",
+      "question": "Lasci €1000 fermi sul conto corrente per 5 anni. L'inflazione media è del 3% all'anno. Quanto valgono in potere d'acquisto reale dopo 5 anni?",
+      "options": {
+        "A": "€1000, esattamente come prima",
+        "B": "Circa €862, hai perso circa il 14% in potere d'acquisto",
+        "C": "Circa €1150, perché la banca aggiunge gli interessi",
+        "D": "Circa €1500, perché l'inflazione fa salire il valore dei soldi"
+      },
+      "correct": "B"
+    },
+    {
+      "id": "L1-E06",
+      "topic": "PAC e dollar cost averaging",
+      "question": "Imposti un PAC mensile da €100 su VWCE per 6 mesi. Prezzo nei sei mesi: €100, €120, €80, €90, €110, €100. Cosa succede?",
+      "options": {
+        "A": "Compri sempre €100 quindi compri più quote quando il prezzo è basso e meno quote quando è alto",
+        "B": "Il prezzo medio di carico è esattamente la media dei sei prezzi: €100",
+        "C": "Il PAC garantisce sempre un guadagno, è il suo vantaggio principale",
+        "D": "Il PAC funziona solo se il mercato sale costantemente"
+      },
+      "correct": "A"
+    },
+    {
+      "id": "L1-E07",
+      "topic": "Regola d'oro rischio/rendimento",
+      "question": "Un sito di trading ti promette: 'Strategia garantita, rendimento del 15% annuo, rischio bassissimo'. Cosa pensi?",
+      "options": {
+        "A": "Interessante, vale la pena provare con una piccola somma",
+        "B": "È una promessa impossibile: rendimento alto e rischio basso non coesistono",
+        "C": "Dipende dalle recensioni: se sono positive può essere genuino",
+        "D": "Probabilmente è un fondo a gestione attiva sofisticato"
+      },
+      "correct": "B"
+    },
+    {
+      "id": "L1-E08",
+      "topic": "Diversificazione vera",
+      "question": "Hai €2000 e investi così: €500 NVIDIA, €500 Apple, €500 Microsoft, €500 Google. Sei diversificato?",
+      "options": {
+        "A": "Sì, hai 4 aziende diverse, quindi rischio distribuito",
+        "B": "No, sono tutte tech USA: se crolla il settore tech crollano tutte insieme",
+        "C": "Sì, sono tutte aziende grandi e solide",
+        "D": "Dipende dal momento di acquisto"
+      },
+      "correct": "B"
+    },
+    {
+      "id": "L1-E09",
+      "topic": "Benchmark come metro",
+      "question": "Dopo 1 anno il tuo portafoglio ha reso +5%. Poi scopri che VWCE nello stesso anno ha reso +12%. Cosa dovresti pensare?",
+      "options": {
+        "A": "Sono in guadagno, va bene così",
+        "B": "Ho fatto peggio del benchmark di 7 punti: devo chiedermi perché",
+        "C": "VWCE ha avuto fortuna, il mio approccio è migliore nel lungo periodo",
+        "D": "Devo subito vendere tutto e comprare VWCE"
+      },
+      "correct": "B"
+    },
+    {
+      "id": "L1-E10",
+      "topic": "Volatilità vs rischio",
+      "question": "NVIDIA è molto volatile, un ETF obbligazionario poco volatile. Quale affermazione è corretta?",
+      "options": {
+        "A": "NVIDIA è oggettivamente più rischiosa per chiunque",
+        "B": "L'ETF obbligazionario è sempre la scelta migliore per principianti",
+        "C": "La volatilità è 'rischio percepito di breve'. Su 10 anni il rischio reale è perdita permanente di capitale, non i salti settimanali",
+        "D": "Volatilità e rendimento atteso non hanno relazione"
+      },
+      "correct": "C"
+    },
+    {
+      "id": "L1-E11",
+      "topic": "FOMO",
+      "question": "Leggi che Bitcoin è salito del 60% nell'ultimo mese. Amici stanno guadagnando. Stai pensando di comprare. Cosa dovresti dirti?",
+      "options": {
+        "A": "Se sale così, sale ancora: meglio entrare subito",
+        "B": "Tutti ne parlano = momento perfetto, trend solido",
+        "C": "Quando lo vedono tutti è quasi sempre tardi. Quello che senti è FOMO, non analisi",
+        "D": "Compro poco e metto subito stop-loss"
+      },
+      "correct": "C"
+    },
+    {
+      "id": "L1-E12",
+      "topic": "Conto deposito vs investimento",
+      "question": "Conto deposito al 3.5% annuo netto vs ETF azionario mondiale (7% medio storico lordo). Quale frase è FALSA?",
+      "options": {
+        "A": "Il conto deposito ha rischio quasi nullo ma batte l'inflazione di poco",
+        "B": "L'ETF azionario nel lungo periodo rende di più ma può perdere 30-40% in crisi",
+        "C": "Il conto deposito è un investimento: il 3.5% è 'rendimento'",
+        "D": "Per soldi a 12-18 mesi il conto deposito è razionale; per soldi a 10+ anni l'ETF è razionale"
+      },
+      "correct": "C"
+    },
+    {
+      "id": "L1-E13",
+      "topic": "Hit rate e valore atteso",
+      "question": "L'agente ti ha dato 10 segnali Verdi: 6 in guadagno (hit rate 60%), 4 in perdita. Cosa devi controllare ancora?",
+      "options": {
+        "A": "Hit rate 60% è ottimo, basta così",
+        "B": "Devo controllare anche l'ENTITÀ di guadagni vs perdite: se +2% medio vs -8% medio, sono in perdita totale",
+        "C": "Hit rate 60% significa che statisticamente sicuramente guadagnerò",
+        "D": "Devo aumentare il capitale per amplificare i guadagni"
+      },
+      "correct": "B"
+    },
+    {
+      "id": "L1-E14",
+      "topic": "Earnings e consensus",
+      "question": "NVIDIA pubblica earnings con utili +50%. Il giorno dopo il titolo crolla del 7%. Come è possibile?",
+      "options": {
+        "A": "Il mercato è impazzito, non ha senso",
+        "B": "Le aspettative erano per +60%, quindi +50% è una 'delusione' rispetto al consensus",
+        "C": "Gli utili in realtà non contano, conta solo il sentiment",
+        "D": "È sicuramente manipolazione di mercato"
+      },
+      "correct": "B"
+    },
+    {
+      "id": "L1-E15",
+      "topic": "Caso pratico finale",
+      "question": "Adriano ha €2000, profilo medio/basso, orizzonte 10+ anni, vuole iniziare. Quale strategia è la più razionale?",
+      "options": {
+        "A": "€2000 di una sola azione tech promettente per massimizzare il rendimento",
+        "B": "PAC mensile €100-150 su VWCE + €500-700 sul conto deposito come cuscinetto",
+        "C": "Divide €2000 in 8 ETF settoriali per diversificare",
+        "D": "Aspetta il prossimo crollo del mercato (-20%) per entrare al momento giusto"
+      },
+      "correct": "B"
+    }
+  ]
+}

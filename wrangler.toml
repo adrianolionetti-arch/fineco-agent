@@ -1,0 +1,13 @@
+name = "fineco-quiz"
+main = "worker/quiz-receiver.js"
+compatibility_date = "2026-05-25"
+
+# KV namespace per salvare le risposte del quiz weekend.
+# L'ID viene popolato dopo il primo `npx wrangler kv namespace create QUIZ_KV`.
+[[kv_namespaces]]
+binding = "QUIZ_KV"
+id = "79c8b3c98e99402abd45b43f2f8c3b66"
+
+# QUIZ_TOKEN è un segreto: viene impostato con
+#   npx wrangler secret put QUIZ_TOKEN
+# NON va in questo file.
