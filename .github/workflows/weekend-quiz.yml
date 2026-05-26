@@ -1,0 +1,85 @@
+name: Weekend Quiz
+
+on:
+  schedule:
+    # 07:30 UTC = 09:30 ora italiana (estate). Sabato → domanda, Domenica → soluzione.
+    - cron: '30 7 * * 6'  # Sabato
+    - cron: '30 7 * * 0'  # Domenica
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Modalità (saturday=domanda, sunday=soluzione)'
+        required: true
+        default: 'saturday'
+        type: choice
+        options:
+          - saturday
+          - sunday
+
+permissions:
+  contents: write
+
+concurrency:
+  group: 'weekend-quiz'
+  cancel-in-progress: false
+
+jobs:
+  quiz:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Determine mode
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "value=${{ inputs.mode }}" >> "$GITHUB_OUTPUT"
+          else
+            # Schedule: scegli in base al giorno della settimana (UTC).
+            # 6 = sabato, 0 = domenica
+            DOW=$(date -u +%u)
+            if [ "$DOW" = "6" ]; then
+              echo "value=saturday" >> "$GITHUB_OUTPUT"
+            else
+              echo "value=sunday" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
+      - name: Run weekend quiz
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+          DASHBOARD_URL: ${{ secrets.DASHBOARD_URL }}
+          QUIZ_WORKER_URL: https://fineco-quiz.adriano-lionetti.workers.dev
+          QUIZ_TOKEN: ${{ secrets.QUIZ_TOKEN }}
+          # Manual dispatch: non spammare l'inbox durante i test.
+          SKIP_EMAIL: ${{ github.event_name == 'workflow_dispatch' && '1' || '' }}
+        run: python src/weekend_quiz.py --mode ${{ steps.mode.outputs.value }}
+
+      - name: Commit learning progress
+        run: |
+          git config user.name "fineco-agent-bot"
+          git config user.email "bot@noreply.local"
+          git add data/learning_progress.json || true
+          if git diff --staged --quiet; then
+            echo "Nessun cambiamento nel progress"
+            exit 0
+          fi
+          git commit -m "chore: update learning_progress $(date -u +%Y-%m-%d) (${{ steps.mode.outputs.value }})"
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "Push completato al tentativo $attempt"
+              exit 0
+            fi
+            echo "Push respinto, rebase e riprovo..."
+            git pull --rebase --autostash origin main || true
+          done
+          echo "::warning::Push fallito dopo 3 tentativi"
