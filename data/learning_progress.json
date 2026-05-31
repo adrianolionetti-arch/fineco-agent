@@ -1,17 +1,17 @@
 {
   "user": "adriano",
   "created_at": "2026-05-25",
-  "last_updated": "2026-05-30T09:28:25.090570+00:00",
+  "last_updated": "2026-05-31T10:01:08.492011+00:00",
   "current_level": 1,
   "last_exercise_sent": "L1-E02",
   "last_exercise_date": "2026-05-30T09:28:25.090570+00:00",
   "stats": {
     "total_points": 10,
-    "current_streak": 1,
+    "current_streak": 0,
     "longest_streak": 1,
     "exercises_attempted": 1,
     "exercises_correct": 1,
-    "exercises_missed": 0
+    "exercises_missed": 1
   },
   "badges_earned": [],
   "badge_thresholds": {
@@ -31,6 +31,18 @@
       "correct_answer": "B",
       "is_correct": true,
       "points_earned": 10,
+      "streak_bonus": 0,
+      "level_completion_bonus": 0
+    },
+    {
+      "exercise_id": "L1-E02",
+      "topic": "Azione singola vs ETF",
+      "sent_at": "2026-05-30T09:28:25.090570+00:00",
+      "answered_at": null,
+      "user_answer": null,
+      "correct_answer": "D",
+      "is_correct": null,
+      "points_earned": 0,
       "streak_bonus": 0,
       "level_completion_bonus": 0
     }
