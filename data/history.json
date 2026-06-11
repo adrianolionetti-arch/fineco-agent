@@ -492,5 +492,30 @@
       }
     ],
     "cumulative_index": 98.73
+  },
+  {
+    "date": "2026-06-11",
+    "daily_change_pct": 0.19,
+    "holdings_snapshot": [
+      {
+        "ticker": "1NVDA.MI",
+        "daily_pct": -3.73,
+        "weekly_pct": -6.67,
+        "monthly_pct": -4.22
+      },
+      {
+        "ticker": "VWCE.MI",
+        "daily_pct": 0.46,
+        "weekly_pct": -2.99,
+        "monthly_pct": 0.06
+      },
+      {
+        "ticker": "EQAC.MI",
+        "daily_pct": 0.78,
+        "weekly_pct": -5.68,
+        "monthly_pct": -0.3
+      }
+    ],
+    "cumulative_index": 98.92
   }
 ]
