@@ -108,7 +108,13 @@ def _get_earnings_eodhd(ticker: str, days_ahead: int = 14) -> list:
         with urllib.request.urlopen(req, timeout=15) as r:
             data = json.loads(r.read().decode("utf-8"))
     except Exception as e:
-        print(f"[WARN] EODHD earnings {ticker}: {e}")
+        # 403 = il calendario earnings NON è incluso nel piano EODHD di questa chiave
+        # (non è un token scaduto). È atteso: lo segnaliamo una volta sola, senza
+        # spammare WARN, e passiamo al fallback yfinance.
+        if getattr(e, "code", None) == 403:
+            print(f"  [earnings] EODHD calendar non nel piano (403) → fallback yfinance per {ticker}")
+        else:
+            print(f"[WARN] EODHD earnings {ticker}: {e}")
         return []
 
     earnings = (data or {}).get("earnings") or []
