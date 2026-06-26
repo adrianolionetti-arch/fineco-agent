@@ -84,6 +84,24 @@ PORTFOLIO = [
         "type": "etf_equity",
         "currency": "EUR",
     },
+    {
+        # iShares Core Global Aggregate Bond UCITS ETF EUR Hedged (Acc)
+        # ISIN IE00BDBRDM35. Ticker Milano AGGH, ticker Xetra EUNA (stesso ETF).
+        # Acquistato 26/06/2026: prima posizione obbligazionaria del portafoglio.
+        "symbol": "IE00BDBRDM35",
+        "display_ticker": "AGGH.MI",
+        "primary_source": "eodhd",
+        "primary_symbol": "EUNA.XETRA",
+        "primary_currency": "EUR",
+        "fallback_yf": "AGGH.MI",
+        "fallback_yf_2": "EUNA.DE",
+        "fx_convert_from_primary": False,
+        "quantity": 54,
+        "avg_cost_price": 4.9545,
+        "name": "iShares Core Global Aggregate Bond (EUR Hedged)",
+        "type": "etf_bond",
+        "currency": "EUR",
+    },
 ]
 
 
