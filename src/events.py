@@ -69,14 +69,21 @@ def get_macro_calendar(days_ahead: int = 21) -> list:
             if today <= dobj <= cutoff:
                 days_to = (dobj - today).days
                 when = "oggi" if days_to == 0 else f"tra {days_to} giorni"
+                # Giorno della settimana corretto, calcolato qui: il modello NON
+                # deve dedurlo da solo (sbaglia, es. "venerdì" per un giovedì).
+                giorni = ["lunedì", "martedì", "mercoledì", "giovedì",
+                          "venerdì", "sabato", "domenica"]
+                giorno = giorni[dobj.weekday()]
                 out.append({
                     "type": "macro",
                     "date": dobj.isoformat(),
                     "days_until": days_to,
-                    "description": f"{label} - {when} ({dobj.strftime('%d/%m/%Y')})",
+                    "description": f"{label} - {when}, {giorno} {dobj.strftime('%d/%m/%Y')}",
                 })
                 break  # solo la prossima per ogni release
     out.sort(key=lambda x: x["date"])
+    print(f"  [macro] FRED: {len(out)} eventi nei prossimi {days_ahead}gg"
+          + (": " + "; ".join(e["description"] for e in out) if out else " (nessuno / chiave assente)"))
     return out
 
 

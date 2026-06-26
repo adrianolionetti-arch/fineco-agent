@@ -166,7 +166,9 @@ REGOLE CRITICHE
     "giovedi' 27 marzo" (le sbagli sistematicamente): usa riferimenti relativi e verificabili
     ("al prossimo dato sull'inflazione USA", "alla prossima riunione della Fed"). Se il
     calendario macro reale è assente o vuoto, vale solo questa seconda regola: nessuna data
-    inventata, solo riferimenti relativi.
+    inventata, solo riferimenti relativi. E NON aggiungere mai il giorno della settimana
+    ("venerdì", "giovedì"...) di tua iniziativa: lo sbagli. Copia la data esattamente come
+    te la do io, giorno della settimana incluso se presente.
 
 11. MAI indicare un prezzo preciso per l'ETF UCITS che Adriano comprerebbe su Fineco
     (SGLD.MI, AGGH.MI, EIMI.MI, PHAU.MI, ecc.). I prezzi che ricevi sono *proxy* USA
