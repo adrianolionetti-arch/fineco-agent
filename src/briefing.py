@@ -160,6 +160,21 @@ REGOLE CRITICHE
    Se e' un asset di watchlist, signal_action sara' tipicamente "valuta ingresso/accumulo".
    Se e' un asset del portfolio, puo' essere "considera incremento" o "considera alleggerimento".
 
+10. DATE: usa SOLO date che ti vengono fornite nei DATI DI OGGI - cioe' le date di earnings
+    e la sezione "Calendario macro REALE (via FRED)". Quelle sono verificate: citale con la
+    data esatta. Per QUALSIASI altro evento futuro NON inventare MAI una data precisa tipo
+    "giovedi' 27 marzo" (le sbagli sistematicamente): usa riferimenti relativi e verificabili
+    ("al prossimo dato sull'inflazione USA", "alla prossima riunione della Fed"). Se il
+    calendario macro reale è assente o vuoto, vale solo questa seconda regola: nessuna data
+    inventata, solo riferimenti relativi.
+
+11. MAI indicare un prezzo preciso per l'ETF UCITS che Adriano comprerebbe su Fineco
+    (SGLD.MI, AGGH.MI, EIMI.MI, PHAU.MI, ecc.). I prezzi che ricevi sono *proxy* USA
+    (GLD, AGG, EEM...) e NON coincidono col prezzo dello strumento UCITS comprabile su
+    Fineco: confonderli ti fa dare cifre sbagliate. Puoi citare la VARIAZIONE percentuale
+    del proxy ("l'oro ha perso ~15% nel mese"), ma per il prezzo d'acquisto scrivi SEMPRE
+    "controlla il prezzo reale (ask) su Fineco prima di comprare" - mai un numero inventato.
+
 ==============================
 OUTPUT FORMAT
 ==============================
@@ -181,12 +196,18 @@ Rispondi SEMPRE in JSON valido con questa struttura esatta:
   "closing_note": "1 riga finale. Se hai dato un segnale, ricorda esplicitamente che la decisione e' di Adriano"
 }
 
-Per signal_importance usa questa scala:
-- 1: marginale, può aspettare settimane
-- 2: da tenere d'occhio nei prossimi 7-14 giorni
-- 3: rilevante, controllare ogni 2-3 giorni
-- 4: importante, monitoraggio quotidiano consigliato
-- 5: urgente, decisione entro 1-2 giorni (eventi catalizzatori imminenti)
+Per signal_importance valuta QUANTO è forte e azionabile lo spunto, in modo INDIPENDENTE
+dal livello del segnale. NON far coincidere automaticamente YELLOW con 2: è l'errore da
+evitare. Pesa fattori OGGETTIVI: quanto è grande il movimento di prezzo, quanto lo spunto
+migliora davvero la diversificazione del portafoglio, se Adriano ha la liquidità per agire
+ora (~75-300€), quanto è vicino e concreto un evento che può cambiare le carte.
+- 1: spunto debole o solo teorico; nessun motivo concreto per muoversi ORA (o manca la liquidità)
+- 2: spunto reale ma con almeno un freno serio (timing molto incerto, o liquidità scarsa)
+- 3: spunto solido, più fattori a favore, fattibile a breve con la liquidità disponibile
+- 4: occasione forte E fattibile ora, conviene valutarla davvero nei prossimi giorni
+- 5: raro, convergenza eccezionale + evento imminente
+Un segnale YELLOW può stare ovunque tra 1 e 3 a seconda di questi fattori; un 4-5
+di norma accompagna un GREEN. Distribuisci i voti, non usare sempre lo stesso numero.
 Se signal_level=NONE allora signal_importance=1.
 
 Tono: amichevole ma onesto. Mai hype, mai emoji, mai esclamativi tipo "Ottima notizia!".
@@ -269,6 +290,24 @@ def generate_briefing(portfolio_data: dict, news: list, events: dict,
         uc += "\n## Earnings imminenti (date in cui le aziende pubblicano i risultati)\n"
         for e in events["earnings"]:
             uc += f"- {e['description']} (data: {e['date']})\n"
+
+    if events.get("macro_calendar"):
+        uc += (
+            "\n## Calendario macro REALE (date verificate via FRED — QUESTE puoi citarle)\n"
+            "Queste date sono reali e verificate. Se parli di uno di questi eventi, USA "
+            "la data esatta qui sotto. NON arrotondare e NON inventarne altre.\n"
+        )
+        for m in events["macro_calendar"]:
+            uc += f"- {m['description']}\n"
+
+    if events.get("macro_hints"):
+        uc += (
+            "\n## Pattern macro ricorrenti (solo se il calendario reale qui sopra è vuoto)\n"
+            "ATTENZIONE: questi sono SCHEMI ricorrenti, NON date esatte. Non citarli mai\n"
+            "come date precise. Servono solo per riferimenti relativi (es. 'primo venerdì\n"
+            "del mese esce il report sul lavoro').\n"
+            f"{events['macro_hints']}\n"
+        )
 
     uc += "\n## News ultime 24h (top 10 per rilevanza)\n"
     for n in news[:10]:

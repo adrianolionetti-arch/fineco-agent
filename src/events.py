@@ -14,6 +14,70 @@ import yfinance as yf
 from datetime import datetime, timedelta, timezone
 
 EOD_API_KEY = os.environ.get("EOD_API_KEY", "")
+FRED_API_KEY = os.environ.get("FRED_API_KEY", "")
+
+# Release ID FRED dei dati macro USA che muovono davvero i mercati.
+# (gli ID si trovano su https://fred.stlouisfed.org/releases)
+FRED_RELEASES = {
+    10: "Inflazione USA - CPI (indice prezzi al consumo)",
+    21: "Reddito e spese USA - include l'indice prezzi PCE (quello che la Fed guarda di piu')",
+    50: "Report sul lavoro USA (Employment Situation / Non-Farm Payrolls)",
+    46: "Prezzi alla produzione USA - PPI",
+}
+
+
+def get_macro_calendar(days_ahead: int = 21) -> list:
+    """Prossime date di rilascio REALI dei dati macro USA chiave, via FRED.
+    Per ogni release prende la prossima data futura entro la finestra.
+    Restituisce [] se la chiave manca o la chiamata fallisce (degrada pulito,
+    l'agente non si rompe e il prompt torna a vietare le date inventate)."""
+    if not FRED_API_KEY:
+        return []
+    today = datetime.now(timezone.utc).date()
+    cutoff = today + timedelta(days=days_ahead)
+    out = []
+    for rid, label in FRED_RELEASES.items():
+        qs = urllib.parse.urlencode({
+            "release_id": rid,
+            "api_key": FRED_API_KEY,
+            "file_type": "json",
+            # include anche le date programmate per cui non c'e' ancora il dato:
+            # e' cosi' che FRED espone il calendario FUTURO dei rilasci.
+            "include_release_dates_with_no_data": "true",
+            "sort_order": "asc",
+            "realtime_start": today.isoformat(),
+            "realtime_end": cutoff.isoformat(),
+        })
+        url = f"https://api.stlouisfed.org/fred/release/dates?{qs}"
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "fineco-agent"})
+            with urllib.request.urlopen(req, timeout=15) as r:
+                data = json.loads(r.read().decode("utf-8"))
+        except Exception as e:
+            print(f"[WARN] FRED release {rid}: {e}")
+            continue
+        # Prendi la prossima data >= oggi entro la finestra (filtra per VALORE
+        # della data, robusto a prescindere dalla semantica realtime di FRED).
+        for d in data.get("release_dates", []):
+            ds = d.get("date")
+            if not ds:
+                continue
+            try:
+                dobj = datetime.fromisoformat(ds).date()
+            except ValueError:
+                continue
+            if today <= dobj <= cutoff:
+                days_to = (dobj - today).days
+                when = "oggi" if days_to == 0 else f"tra {days_to} giorni"
+                out.append({
+                    "type": "macro",
+                    "date": dobj.isoformat(),
+                    "days_until": days_to,
+                    "description": f"{label} - {when} ({dobj.strftime('%d/%m/%Y')})",
+                })
+                break  # solo la prossima per ogni release
+    out.sort(key=lambda x: x["date"])
+    return out
 
 
 def _get_earnings_eodhd(ticker: str, days_ahead: int = 14) -> list:
@@ -134,6 +198,7 @@ Eventi macro da monitorare mensilmente (indicativi):
 def get_all_events(portfolio_tickers: list) -> dict:
     return {
         "earnings": get_upcoming_earnings(portfolio_tickers, days_ahead=14),
+        "macro_calendar": get_macro_calendar(days_ahead=21),
         "macro_hints": MACRO_HINTS.strip(),
     }
 
