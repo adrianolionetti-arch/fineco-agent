@@ -18,6 +18,14 @@ on:
           - 'claude-haiku-4-5'
           - 'claude-sonnet-4-5'
           - 'claude-opus-4-7'
+      force_email:
+        description: 'Manda email anche in dispatch manuale (1 = sì)'
+        required: false
+        default: ''
+        type: choice
+        options:
+          - ''
+          - '1'
 
 permissions:
   contents: write
@@ -61,7 +69,8 @@ jobs:
           CLAUDE_MODEL: ${{ inputs.model  || 'claude-sonnet-4-5' }}
           # Email solo nei run schedulati. Nei dispatch manuali (debug/test)
           # generiamo dashboard e log ma non spammiamo la inbox.
-          SKIP_EMAIL: ${{ github.event_name == 'workflow_dispatch' && '1' || '' }}
+          # Puoi forzare l'invio anche in dispatch manuale con force_email=1.
+          SKIP_EMAIL: ${{ (github.event_name == 'workflow_dispatch' && inputs.force_email != '1') && '1' || '' }}
         run: python src/main.py
 
       - name: Inject dashboard password hash
