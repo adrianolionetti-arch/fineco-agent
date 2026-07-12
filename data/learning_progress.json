@@ -1,16 +1,16 @@
 {
   "user": "adriano",
   "created_at": "2026-05-25",
-  "last_updated": "2026-07-11T09:03:47.522152+00:00",
+  "last_updated": "2026-07-12T09:27:49.592503+00:00",
   "current_level": 1,
   "last_exercise_sent": "L1-E07",
   "last_exercise_date": "2026-07-11T09:03:47.522152+00:00",
   "stats": {
-    "total_points": 50,
-    "current_streak": 4,
-    "longest_streak": 4,
-    "exercises_attempted": 5,
-    "exercises_correct": 5,
+    "total_points": 75,
+    "current_streak": 5,
+    "longest_streak": 5,
+    "exercises_attempted": 6,
+    "exercises_correct": 6,
     "exercises_missed": 1
   },
   "badges_earned": [],
@@ -92,6 +92,18 @@
       "is_correct": true,
       "points_earned": 10,
       "streak_bonus": 0,
+      "level_completion_bonus": 0
+    },
+    {
+      "exercise_id": "L1-E07",
+      "topic": "Regola d'oro rischio/rendimento",
+      "sent_at": "2026-07-11T09:03:47.522152+00:00",
+      "answered_at": "2026-07-11T11:36:59.830Z",
+      "user_answer": "B",
+      "correct_answer": "B",
+      "is_correct": true,
+      "points_earned": 10,
+      "streak_bonus": 15,
       "level_completion_bonus": 0
     }
   ],
