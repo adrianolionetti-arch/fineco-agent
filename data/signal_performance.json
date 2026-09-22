@@ -1,0 +1,39 @@
+{
+  "n": 29,
+  "avg_signal_pct": -0.413626705493308,
+  "avg_bench_pct": 1.9801569520152893,
+  "avg_alpha_pct": -2.3937836575085973,
+  "beat_count": 4,
+  "beat_rate": 0.13793103448275862,
+  "by_ticker": {
+    "EEM": {
+      "n": 3,
+      "avg_signal_pct": 3.957658596008947,
+      "avg_bench_pct": 2.5807290755489967,
+      "avg_alpha_pct": 1.37692952045995,
+      "beat_count": 2
+    },
+    "AAPL": {
+      "n": 1,
+      "avg_signal_pct": 11.816074250797781,
+      "avg_bench_pct": 3.162487154920801,
+      "avg_alpha_pct": 8.65358709587698,
+      "beat_count": 1
+    },
+    "GLD": {
+      "n": 16,
+      "avg_signal_pct": -2.174260550238524,
+      "avg_bench_pct": 1.8331979904721127,
+      "avg_alpha_pct": -4.007458540710638,
+      "beat_count": 1
+    },
+    "AGGH.MI": {
+      "n": 9,
+      "avg_signal_pct": -0.09956174381268539,
+      "avg_bench_pct": 1.9098565977024196,
+      "avg_alpha_pct": -2.009418341515105,
+      "beat_count": 0
+    }
+  },
+  "_generated_at": "2026-09-22T14:24:37.980667"
+}

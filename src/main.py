@@ -11,6 +11,7 @@ from events import get_all_events
 from briefing import generate_briefing
 from emailer import send_email
 from journal import log_signal, read_journal_stats
+from signal_gate import apply_gate
 from dashboard_builder import build_dashboard_data
 from pillole import get_pillola_della_settimana
 from micro_tip import get_micro_tip_del_giorno
@@ -43,6 +44,20 @@ def main():
 
     print("\n[5/8] Briefing AI strutturato...")
     briefing = generate_briefing(portfolio_data, news, events, watchlist=watchlist_data)
+    proposto = briefing.get("signal_level")
+
+    # Gate oggettivo: il livello proposto dall'AI viene verificato contro
+    # movimenti di prezzo misurabili e contro lo storico dei segnali recenti.
+    # Il gate puo' solo declassare, mai promuovere. Vedi src/signal_gate.py.
+    gate_holdings = portfolio_data["holdings"] + [
+        w for w in watchlist_data if "error" not in w
+    ]
+    apply_gate(briefing, gate_holdings, events=events)
+    for nota in briefing.get("_gate", {}).get("notes", []):
+        print(f"  → [gate] {nota}")
+    if briefing.get("signal_level") != proposto:
+        print(f"  → [gate] livello {proposto} → {briefing.get('signal_level')}")
+
     print(f"  → Segnale: {briefing.get('signal_level')}")
     if briefing.get("signal_level") in ("GREEN", "YELLOW"):
         print(f"  → Asset: {briefing.get('signal_asset')} "
@@ -68,9 +83,7 @@ def main():
     # Combina portfolio + watchlist per il match prezzo nel log (un segnale
     # su un asset di watchlist deve ancora trovare il prezzo per il journal).
     combined_data = dict(portfolio_data)
-    combined_data["holdings"] = portfolio_data["holdings"] + [
-        w for w in watchlist_data if "error" not in w
-    ]
+    combined_data["holdings"] = gate_holdings
     log_signal(briefing, combined_data)
     stats = read_journal_stats()
     print(f"  → Storico totale: {stats['total']} segnali {stats['by_level']}")

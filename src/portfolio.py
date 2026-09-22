@@ -61,8 +61,10 @@ PORTFOLIO = [
         "fallback_yf": "VWCE.MI",
         "fallback_yf_2": "VWCE.DE",
         "fx_convert_from_primary": False,
-        "quantity": 10,
-        "avg_cost_price": 149.70,
+        # Allineato al portafoglio Fineco reale del 2026-09-22 (era 10 @ 149.70:
+        # gli incrementi successivi non erano mai stati riportati nel codice).
+        "quantity": 16,
+        "avg_cost_price": 155.6475,
         "name": "Vanguard FTSE All-World",
         "type": "etf_equity",
         "currency": "EUR",
@@ -78,8 +80,9 @@ PORTFOLIO = [
         "fallback_yf": "EQAC.MI",
         "fallback_yf_2": "EQQB.DE",
         "fx_convert_from_primary": False,
-        "quantity": 1,
-        "avg_cost_price": 368.36,
+        # Allineato al portafoglio Fineco reale del 2026-09-22 (era 1 @ 368.36).
+        "quantity": 2,
+        "avg_cost_price": 397.845,
         "name": "Invesco EQQQ Nasdaq-100 (Acc)",
         "type": "etf_equity",
         "currency": "EUR",
@@ -458,6 +461,76 @@ def _get_fx_eur(from_ccy: str) -> Optional[float]:
     return None
 
 
+# --- Cache dell'ultimo prezzo valido -------------------------------------
+# TwelveData va regolarmente in 429 (rate limit) e yfinance e' diventato
+# instabile: il 2026-09-21 MSFT e' rimasto senza prezzo da entrambe le fonti e
+# il briefing ha semplicemente perso quel dato. Un prezzo di ieri, dichiarato
+# come tale, e' piu' utile di un buco. La cache vive in data/, che il workflow
+# committa a ogni run, quindi sopravvive tra esecuzioni su runner effimeri.
+
+PRICE_CACHE_PATH = "data/price_cache.json"
+CACHE_MAX_AGE_DAYS = 5      # oltre, il dato e' troppo vecchio per essere onesto
+
+
+def _cache_load() -> dict:
+    try:
+        with open(PRICE_CACHE_PATH, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
+def _cache_store(display: str, payload: dict) -> None:
+    cache = _cache_load()
+    cache[display] = {
+        "current": payload.get("current"),
+        "currency": payload.get("currency", "EUR"),
+        "daily_change_pct": payload.get("daily_change_pct"),
+        "weekly_change_pct": payload.get("weekly_change_pct"),
+        "monthly_change_pct": payload.get("monthly_change_pct"),
+        "cached_at": datetime.now().isoformat(),
+    }
+    try:
+        os.makedirs(os.path.dirname(PRICE_CACHE_PATH), exist_ok=True)
+        with open(PRICE_CACHE_PATH, "w", encoding="utf-8") as f:
+            json.dump(cache, f, indent=2, ensure_ascii=False)
+    except OSError as e:
+        log.warning("[%s] cache non scritta: %s", display, e)
+
+
+def _cache_recover(display: str, why: str) -> Optional[dict]:
+    """Ultimo prezzo noto, se abbastanza recente. Marcato come non fresco."""
+    entry = _cache_load().get(display)
+    if not entry or entry.get("current") is None:
+        return None
+    try:
+        age = (datetime.now() - datetime.fromisoformat(entry["cached_at"])).days
+    except (ValueError, KeyError):
+        return None
+    if age > CACHE_MAX_AGE_DAYS:
+        log.warning("[%s] cache troppo vecchia (%d giorni), scartata", display, age)
+        return None
+
+    quando = "di oggi" if age == 0 else ("di ieri" if age == 1 else f"di {age} giorni fa")
+    log.warning("[%s] tutte le fonti fallite, uso il prezzo in cache (%s)", display, quando)
+    return {
+        "ticker": display,
+        "current": entry["current"],
+        "currency": entry.get("currency", "EUR"),
+        "daily_change_pct": entry.get("daily_change_pct") or 0.0,
+        "weekly_change_pct": entry.get("weekly_change_pct") or 0.0,
+        "monthly_change_pct": entry.get("monthly_change_pct") or 0.0,
+        "volume": 0,
+        "price_series": [],
+        "_source": "cache",
+        "_ticker_used": display,
+        "_stale_days": age,
+        "note": (f"ATTENZIONE: prezzo non aggiornato, e' quello {quando} "
+                 f"(fonti live non disponibili: {why}). Non usarlo per decidere "
+                 f"un prezzo d'acquisto."),
+    }
+
+
 # --- Orchestratore per singola posizione ---------------------------------
 
 def fetch_asset_data(holding: dict) -> dict:
@@ -494,10 +567,14 @@ def fetch_asset_data(holding: dict) -> dict:
             ticker_used = holding["fallback_yf"]
 
         if "error" in yf_data:
+            why = (f"Primary: {primary_data['error']}. "
+                   f"Yfinance: {yf_data['error']}")
+            recovered = _cache_recover(display, why)
+            if recovered:
+                return recovered
             return {
                 "ticker": display,
-                "error": f"Tutte le fonti fallite. Primary: {primary_data['error']}. "
-                         f"Yfinance: {yf_data['error']}",
+                "error": f"Tutte le fonti fallite. {why}",
             }
 
         primary_data = yf_data
@@ -511,6 +588,9 @@ def fetch_asset_data(holding: dict) -> dict:
     elif holding.get("fx_convert_from_primary") or source_used == "fallback":
         fx = _get_fx_eur(native_ccy)
         if fx is None:
+            recovered = _cache_recover(display, f"cambio {native_ccy}->EUR non disponibile")
+            if recovered:
+                return recovered
             return {
                 "ticker": display,
                 "error": f"Cambio {native_ccy}->EUR non disponibile",
@@ -551,6 +631,8 @@ def fetch_asset_data(holding: dict) -> dict:
     }
     if note:
         out["note"] = note
+
+    _cache_store(display, out)
     return out
 
 

@@ -1,0 +1,61 @@
+name: Weekly Signal Performance
+
+# Ricalcola l'esito dei segnali recenti contro il benchmark VWCE e lo salva in
+# data/signal_performance.json. Il briefing quotidiano legge QUEL file e lo
+# inietta nel prompt, cosi' l'agente sa come sono andati i suoi consigli.
+#
+# Gira una volta a settimana e non ogni mattina di proposito: il calcolo scarica
+# una decina di serie storiche da yfinance, che e' la stessa fonte che manda in
+# 429 il briefing. Una volta a settimana e' abbastanza: il track record non
+# cambia significativamente da un giorno all'altro.
+
+on:
+  schedule:
+    - cron: '0 20 * * 0'   # domenica 20:00 UTC, fuori dagli orari degli altri job
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: 'weekly-performance'
+  cancel-in-progress: false
+
+jobs:
+  performance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Ricalcola performance segnali
+        run: python src/backtest.py --write-cache
+
+      - name: Commit cache performance
+        run: |
+          git config user.name "fineco-agent-bot"
+          git config user.email "bot@noreply.local"
+          git add data/signal_performance.json || true
+          if git diff --staged --quiet; then
+            echo "Nessun cambiamento nella performance"
+            exit 0
+          fi
+          git commit -m "chore: update signal performance $(date -u +%Y-%m-%d)"
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "Push completato al tentativo $attempt"
+              exit 0
+            fi
+            echo "Push respinto, rebase e riprovo..."
+            git pull --rebase --autostash origin main || true
+          done
+          echo "::warning::Push fallito dopo 3 tentativi"

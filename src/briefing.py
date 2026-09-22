@@ -10,16 +10,28 @@ import os
 import json
 import anthropic
 
+from backtest import summary_for_prompt
+
 # DEFAULT: Sonnet 4.6 - buon equilibrio tra qualita' del ragionamento e costo (~€0.30/mese).
 # Alternative:
-#   "claude-haiku-4-5"  -> piu' economico (~€0.10/mese), ragionamento piu' basilare
-#   "claude-opus-4-7"   -> top, per giornate critiche (~€0.50/mese)
-MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-4-5")
+#   "claude-haiku-4-5"  -> il piu' economico ($1/$5 per milione di token)
+#   "claude-sonnet-5"   -> via di mezzo ($2/$10)
+#   "claude-opus-5"     -> il piu' capace ($5/$25) - default dal 2026-09-22
+# Su questo agente il costo e' comunque marginale: ~6k token in / ~1.4k out per
+# run, 22 run al mese. Il ragionamento vale piu' del risparmio di due euro.
+MODEL = os.environ.get("CLAUDE_MODEL", "claude-opus-5")
 
 SYSTEM_PROMPT = """Stai parlando con Adriano, 38 anni, alle prime armi con gli investimenti.
 Sa leggere un grafico ma non conosce il gergo finanziario.
-Profilo di rischio medio/medio-basso. Portafoglio piccolo (~2000€ su Fineco):
-1 quota NVIDIA, ETF azionario globale (VWCE), ETF Nasdaq-100 (EQAC).
+Profilo di rischio medio/medio-basso. Portafoglio piccolo su Fineco, 4 posizioni
+(i valori esatti e aggiornati te li do ogni giorno nei DATI DI OGGI - usa QUELLI,
+non numeri che ricordi):
+- VWCE, ETF azionario globale: la posizione principale, circa due terzi del totale
+- EQAC, ETF Nasdaq-100: circa un quinto
+- AGGH, ETF obbligazionario globale EUR hedged: POSSEDUTO dal 26/06/2026, quota piccola
+- NVIDIA, 1 azione singola: quota piccola
+Ne risulta un portafoglio circa 93% azionario e 7% obbligazionario, molto concentrato
+su USA e tecnologia.
 
 ==============================
 COME DEVI SCRIVERE
@@ -138,14 +150,22 @@ REGOLE CRITICHE
    Spiegalo cosi': "comprare per soli 100€ vuol dire pagare 2,95€ di commissione - cioe' parti
    gia' col 3% di perdita prima ancora di iniziare. Meglio aspettare di avere piu' liquidita'."
 
-7. Quando parli del portafoglio di Adriano, ricordati che e' tutto azionario e molto sbilanciato
-   sul tech USA (NVIDIA + VWCE + EQAC si sovrappongono). NON suggerirgli mai di comprare
+7. Quando parli del portafoglio di Adriano, ricordati che e' per circa il 93% azionario e
+   molto sbilanciato sul tech USA: VWCE, EQAC e NVIDIA si sovrappongono (NVIDIA e' gia'
+   dentro sia VWCE che EQAC, quindi la sua esposizione reale a NVIDIA e' parecchio piu'
+   alta della singola azione che vede a portafoglio). NON suggerirgli mai di comprare
    altro NVIDIA, altro tech USA, altri ETF Nasdaq.
 
 8. PRIORITA' DI SUGGERIMENTO sulla watchlist: l'obiettivo e' DIVERSIFICARE.
+   ATTENZIONE - ERRORE STORICO DA NON RIPETERE: fino a settembre 2026 queste istruzioni
+   dicevano che AGGH "mancava completamente". E' FALSO: Adriano lo possiede dal 26/06/2026.
+   Il risultato e' che l'agente ha suggerito di comprare AGGH 14 volte in 4 mesi, sempre
+   con la stessa tesi, e tutte e 14 le volte ha fatto peggio del semplice tenere VWCE.
+   AGGH e' gia' in portafoglio: trattalo come una posizione da monitorare, NON come un
+   buco da riempire.
+
    Asset PREFERITI (alta priorita' se ci sono buone occasioni):
-   - bond_govt (BTP, Bund, Treasury): mancano completamente nel portafoglio
-   - bond_globale (AGGH): mancano completamente
+   - bond_govt (BTP, Bund, Treasury): governativi puri, questi si' che mancano
    - oro (SGLD): decorrelato, ottimo hedge inflazione
    - azionario_em (EIMI): VWCE e' 70% USA, gli emerging mancano
    - settoriali NON-tech (banche, healthcare): diversifica settorialmente
@@ -259,13 +279,21 @@ def generate_briefing(portfolio_data: dict, news: list, events: dict,
         if "error" in h:
             uc += f"- {h.get('name', h.get('ticker'))}: errore dati\n"
             continue
+        # Valore e peso della posizione: senza questi l'AI non puo' ragionare
+        # sulla concentrazione, che e' il vero problema di questo portafoglio.
+        qty = h.get("quantity") or 0
+        val = (h.get("current") or 0) * qty
+        tot = portfolio_data.get("total_value_eur_approx") or 0
+        peso = f", peso {val / tot * 100:.1f}% del portafoglio" if tot else ""
         uc += (
             f"- {h['name']} ({h['ticker']}): {h['current']} {h['currency']}, "
             f"oggi {h['daily_change_pct']:+.2f}%, "
             f"settimana {h['weekly_change_pct']:+.2f}%, "
             f"mese {h['monthly_change_pct']:+.2f}%, "
-            f"qty {h['quantity']}\n"
+            f"qty {qty}, valore €{val:.2f}{peso}\n"
         )
+        if h.get("_source") == "cache":
+            uc += f"  ({h.get('note')})\n"
 
     if portfolio_data.get("alerts"):
         uc += "\n## Alert soglie automatiche\n"
@@ -333,6 +361,18 @@ def generate_briefing(portfolio_data: dict, news: list, events: dict,
     for n in news[:10]:
         uc += f"- [{n['source']}] {n['title']}\n"
 
+    # --- Come sono andati i consigli precedenti -------------------------
+    # Senza questo l'agente non ha modo di sapere che una sua tesi sta
+    # perdendo, e infatti l'ha ripetuta per mesi. Letto da cache su file.
+    perf = summary_for_prompt()
+    if perf:
+        uc += (
+            "\n## COME SONO ANDATI I TUOI SEGNALI PRECEDENTI\n"
+            "Questo e' il tuo track record reale, misurato contro l'alternativa di non\n"
+            "fare nulla e tenere VWCE. Leggilo prima di proporre qualsiasi cosa.\n"
+            f"{perf}\n"
+        )
+
     uc += ("\nProduci il briefing in JSON secondo le regole di sistema. "
            "Ricorda: linguaggio da amico che spiega, ogni termine tecnico va tradotto. "
            "Se NONE, va benissimo - non forzare segnali.")
@@ -341,16 +381,18 @@ def generate_briefing(portfolio_data: dict, news: list, events: dict,
     try:
         response = client.messages.create(
             model=MODEL,
-            # 2500 token output: 1500 erano sufficienti col vecchio schema (4 campi
-            # signal_*), ma con i 3 nuovi (what_to_do, what_to_watch, importance) +
-            # ragionamento più lungo sulla watchlist (15 asset extra) il JSON
-            # finiva troncato → "Unterminated string". 2500 dà margine abbondante
-            # senza incidere significativamente sui costi (~$0.03/run su Sonnet).
-            max_tokens=2500,
+            # Da 2500 a 8000 con il passaggio a Opus 5: su questo modello il
+            # ragionamento e' attivo di default e consuma token dello stesso
+            # budget di output. Con 2500 il JSON rischiava di troncarsi
+            # ("Unterminated string"), che era gia' successo col vecchio schema.
+            max_tokens=8000,
             system=SYSTEM_PROMPT,
             messages=[{"role": "user", "content": uc}],
         )
-        raw = response.content[0].text.strip()
+        # NON usare content[0]: su Opus 5 il primo blocco della risposta e' il
+        # ragionamento, non il testo. Va cercato il blocco di tipo "text".
+        raw = next((b.text for b in response.content
+                    if getattr(b, "type", None) == "text"), "").strip()
 
         # Ripulisci eventuali code fence
         if raw.startswith("```"):

@@ -116,13 +116,45 @@ Cambio modello: modifica `MODEL` in `src/briefing.py` o usa tendina override nel
 
 ## Sistema di segnali
 
-| Livello | Criterio | Frequenza attesa |
+| Livello | Criterio verificato in codice | Frequenza attesa |
 |---|---|---|
-| 🟢 GREEN | 3+ fattori convergenti oggettivi | 1-3/mese |
-| 🟡 YELLOW | Spunto interessante ma non decisivo | 3-8/mese |
-| ⚪ NONE | Giornata normale | Maggior parte dei giorni |
+| 🟢 GREEN | \|giorno\| ≥ 5% **oppure** \|settimana\| ≥ 8% | 1-3/mese |
+| 🟡 YELLOW | \|giorno\| ≥ 2% **oppure** \|settimana\| ≥ 3% **oppure** \|mese\| ≥ 5% | 3-8/mese |
+| ⚪ NONE | tutto il resto | Maggior parte dei giorni |
 
 Ogni segnale include sempre ragionamento, contro-argomento e rischio.
+
+### Il gate (`src/signal_gate.py`) — perché il livello non lo decide l'AI
+
+Da maggio a settembre 2026 l'agente ha emesso **97 segnali: 97 YELLOW, zero GREEN,
+zero NONE**. Il prompt chiedeva esplicitamente di usare NONE spesso e non è mai stato
+ascoltato. Stessa cosa per l'importanza: prima sempre 2/5, poi — dopo un fix che
+aggiungeva istruzioni al prompt — sempre 3/5.
+
+Un modello che deve scegliere fra "dire qualcosa" e "dire che non c'è niente da dire"
+sceglie sempre la prima. Quindi la soglia è uscita dal prompt ed è entrata nel codice:
+
+- l'AI **propone** un livello, il gate lo **verifica** contro il movimento di prezzo reale;
+- il gate può solo **declassare**, mai promuovere;
+- **anti-ripetizione**: stesso ticker già segnalato negli ultimi 10 giorni con il prezzo
+  fermo entro il 3% → NONE. Nasce dai 4 segnali identici su AGGH fra l'11 e il 21
+  settembre, col prezzo che oscillava fra 4,84 e 4,85;
+- l'**importanza** è calcolata da una funzione deterministica, non più dichiarata dall'AI.
+
+Le declassature finiscono nei log del workflow (`[gate] ...`), quindi sono sempre ispezionabili.
+
+Test: `python tests/test_signal_gate.py`
+
+### Feedback loop
+
+`data/signal_performance.json` contiene l'esito reale dei segnali recenti misurato
+**contro il benchmark VWCE**, e viene iniettato nel prompt del briefing. Senza questo
+l'agente non aveva modo di sapere che una sua tesi stava perdendo — e infatti l'ha
+ripetuta per mesi (14 segnali su AGGH, 0 volte meglio del non fare nulla).
+
+Il file è rigenerato ogni domenica dal workflow `weekly-performance.yml`, non a ogni
+briefing: il calcolo scarica una decina di serie storiche e la fonte è la stessa che
+manda in 429 il job quotidiano.
 
 ---
 
@@ -133,10 +165,23 @@ Il diario salva ogni segnale in `journal/signals.csv`. Per analisi approfondita 
 ```bash
 git pull
 pip install -r requirements.txt
-python src/backtest.py
+python src/backtest.py                  # report completo a schermo
+python src/backtest.py --write-cache    # aggiorna la cache letta dal briefing
 ```
 
-**Usa il diario onestamente**: dopo 2-3 mesi guarda i numeri. Se l'hit rate è <55% o la performance è sotto VWCE, sai che l'AI non ha edge su questi mercati e puoi tenerlo solo come radar informativo.
+Il confronto è sempre **segnale contro VWCE sugli stessi giorni**: in un mercato che sale,
+sale quasi tutto, quindi "il segnale ha guadagnato" non vuol dire niente da solo. L'unica
+domanda sensata è se abbia fatto meglio del non fare nulla.
+
+> **Bug corretto il 2026-09-22 — se leggi vecchi numeri, diffida.** La versione precedente
+> confrontava il prezzo salvato nel CSV (in **euro**) col prezzo attuale di yfinance (in
+> **dollari** per i ticker USA), sommando di fatto il tasso di cambio alla performance.
+> Dichiarava 83% di hit rate e +12,58% medio. A valuta coerente i numeri veri erano
+> +2,19% contro +3,11% del benchmark: **alfa −0,93%**, con solo 23 segnali su 60 capaci
+> di battere il semplice tenere VWCE.
+
+**Usa il diario onestamente**: se l'alfa resta negativo, l'AI non ha edge su questi mercati
+e va tenuta come radar informativo, non come consulente.
 
 ---
 
