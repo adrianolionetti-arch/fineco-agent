@@ -207,7 +207,25 @@ def run_saturday() -> int:
 
     ex = next_exercise(progress, exercises)
     if not ex:
-        print("Nessun esercizio rimanente nel Livello 1. Tracking aggiornato.")
+        # Livello 1 esaurito (15/15 inviati dal 2026-09-05). Invece di tacere
+        # come ha fatto per due weekend, ripropone un arretrato: cosi' il
+        # recupero copre anche sabato e domenica, quando il briefing non gira.
+        import quiz_recap
+        recap_html, recuperati = quiz_recap.run()
+        if recuperati:
+            print(f"Risposte recuperate: {', '.join(recuperati)}")
+        if not recap_html:
+            print("Nessun esercizio rimanente nel Livello 1 e nessun arretrato. "
+                  "Serve il Livello 2.")
+            return 0
+        html = (f"<html><body style=\"font-family:-apple-system,BlinkMacSystemFont,"
+                f"'Segoe UI',sans-serif;max-width:620px;margin:0 auto;padding:20px;\">"
+                f"<p style=\"font-size:14px;color:#444;\">Il Livello 1 e' finito, ma "
+                f"qualche esercizio e' rimasto senza risposta. Eccone uno.</p>"
+                f"{recap_html}</body></html>")
+        plain = ("Il Livello 1 e' finito, ma qualche esercizio e' rimasto senza "
+                 "risposta. Aprilo dalla dashboard per rispondere.")
+        send_email("🎓 Esercizio arretrato da recuperare", html, plain)
         return 0
 
     dashboard_url = os.environ.get("DASHBOARD_URL", "").rstrip("/")

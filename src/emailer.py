@@ -284,6 +284,8 @@ def send_email(briefing: dict, portfolio_data: dict) -> bool:
 
         {_render_signal_box(briefing)}
 
+        {briefing.get('quiz_recap_html', '')}
+
         {_render_dashboard_cta()}
 
         {events_html}

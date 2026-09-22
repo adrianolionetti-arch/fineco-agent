@@ -15,6 +15,7 @@ from signal_gate import apply_gate
 from dashboard_builder import build_dashboard_data
 from pillole import get_pillola_della_settimana
 from micro_tip import get_micro_tip_del_giorno
+import quiz_recap
 
 
 def main():
@@ -90,6 +91,16 @@ def main():
 
     print("\n[7/8] Build dashboard data...")
     build_dashboard_data(portfolio_data, briefing, news, events, watchlist=watchlist_data)
+
+    # Recupero esercizi arretrati: il quiz del weekend non veniva piu' aperto,
+    # quindi il promemoria viaggia sulla mail che invece viene letta ogni giorno.
+    # Riconcilia anche le risposte tardive lette dal Worker. Non blocca mai.
+    quiz_html, recuperati = quiz_recap.run()
+    briefing["quiz_recap_html"] = quiz_html
+    if recuperati:
+        print(f"  → Quiz: {len(recuperati)} risposta/e recuperata/e ({', '.join(recuperati)})")
+    if quiz_html:
+        print("  → Quiz: esercizio arretrato incluso nel briefing")
 
     print("\n[8/8] Invio email...")
     ok = send_email(briefing, portfolio_data)

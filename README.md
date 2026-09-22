@@ -145,6 +145,26 @@ Le declassature finiscono nei log del workflow (`[gate] ...`), quindi sono sempr
 
 Test: `python tests/test_signal_gate.py`
 
+### Recupero esercizi (`src/quiz_recap.py`)
+
+Il quiz del weekend si è fermato il 06/09/2026 perché il Livello 1 è finito (15/15
+inviati), ma il problema era arrivato prima: dal 1° agosto nessun esercizio riceveva
+più risposta. Sette sono rimasti in sospeso — non per disinteresse, ma perché l'email
+del sabato passava inosservata.
+
+Una seconda email dedicata avrebbe fatto la stessa fine. Il promemoria viaggia quindi
+**dentro il briefing quotidiano**, che invece viene aperto: un arretrato al giorno, a
+rotazione. Nel weekend, dove il briefing non gira, se ne occupa `weekend-quiz.yml`,
+che invece di tacere ripropone un arretrato.
+
+`reconcile()` interroga il Worker per **tutti** gli esercizi pendenti: `run_sunday()`
+guardava solo l'ultimo inviato, quindi una risposta data in ritardo a un esercizio
+vecchio non sarebbe mai stata registrata. I punti sul recupero sono pieni, il bonus
+streak no: quello premia la costanza settimanale.
+
+Quando i 7 arretrati saranno chiusi, servirà il **Livello 2** — oggi non esiste e
+`weekend_quiz.py` punta a `livello_1_basi.json` in modo fisso.
+
 ### Feedback loop
 
 `data/signal_performance.json` contiene l'esito reale dei segnali recenti misurato

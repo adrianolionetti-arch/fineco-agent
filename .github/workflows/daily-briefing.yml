@@ -9,15 +9,15 @@ on:
   workflow_dispatch:
     inputs:
       model:
-        description: 'Override modello Claude (vuoto = default Sonnet)'
+        description: 'Override modello Claude (vuoto = default Opus 5)'
         required: false
         default: ''
         type: choice
         options:
           - ''
           - 'claude-haiku-4-5'
-          - 'claude-sonnet-4-5'
-          - 'claude-opus-4-7'
+          - 'claude-sonnet-5'
+          - 'claude-opus-5'
       force_email:
         description: 'Manda email anche in dispatch manuale (1 = sì)'
         required: false
@@ -66,7 +66,9 @@ jobs:
           EOD_API_KEY: ${{ secrets.EOD_API_KEY }}
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
           DASHBOARD_URL: ${{ secrets.DASHBOARD_URL }}
-          CLAUDE_MODEL: ${{ inputs.model  || 'claude-sonnet-4-5' }}
+          QUIZ_WORKER_URL: https://fineco-quiz.adriano-lionetti.workers.dev
+          QUIZ_TOKEN: ${{ secrets.QUIZ_TOKEN }}
+          CLAUDE_MODEL: ${{ inputs.model  || 'claude-opus-5' }}
           # Email solo nei run schedulati. Nei dispatch manuali (debug/test)
           # generiamo dashboard e log ma non spammiamo la inbox.
           # Puoi forzare l'invio anche in dispatch manuale con force_email=1.
