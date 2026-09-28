@@ -126,6 +126,34 @@ def _render_signal_box(b: dict) -> str:
     """
 
 
+def _render_paper_teaser(b: dict) -> str:
+    """
+    Riga sul portafoglio parallelo. Mostra SOLO il conteggio: il contenuto delle
+    decisioni resta cifrato fino al verdetto mensile, altrimenti l'esperimento
+    perde senso.
+    """
+    paper = b.get("_paper") or {}
+    if paper.get("skipped") or not paper.get("azione_registrata"):
+        return ""
+    ops = paper.get("operazioni_questo_mese", 0)
+    quante = ("nessuna operazione finora" if ops == 0 else
+              f"{ops} operazione{'i' if ops > 1 else ''} finora")
+    return f"""
+    <div style="background:#f5f7fa;padding:12px 16px;border-radius:8px;margin:16px 0;
+                border-left:4px solid #5a3d8a;">
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;
+                    color:#5a3d8a;font-weight:600;margin-bottom:4px;">
+            Portafoglio parallelo
+        </div>
+        <div style="font-size:13px;color:#444;line-height:1.5;">
+            Decisione di oggi registrata e sigillata: questo mese {quante}.
+            Il contenuto resta coperto fino al verdetto del 1&deg; del mese,
+            cos&igrave; non ti influenza mentre decidi tu.
+        </div>
+    </div>
+    """
+
+
 def _render_dashboard_cta() -> str:
     """Pulsante CTA verso la dashboard. Vuoto se DASHBOARD_URL non e' configurata."""
     if not DASHBOARD_URL:
@@ -285,6 +313,8 @@ def send_email(briefing: dict, portfolio_data: dict) -> bool:
         {_render_signal_box(briefing)}
 
         {briefing.get('quiz_recap_html', '')}
+
+        {_render_paper_teaser(briefing)}
 
         {_render_dashboard_cta()}
 

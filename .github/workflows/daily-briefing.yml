@@ -68,6 +68,9 @@ jobs:
           DASHBOARD_URL: ${{ secrets.DASHBOARD_URL }}
           QUIZ_WORKER_URL: https://fineco-quiz.adriano-lionetti.workers.dev
           QUIZ_TOKEN: ${{ secrets.QUIZ_TOKEN }}
+          # Cifra il registro del portafoglio parallelo. Senza questo il
+          # paper viene saltato e il briefing prosegue normalmente.
+          PAPER_KEY: ${{ secrets.PAPER_KEY }}
           CLAUDE_MODEL: ${{ inputs.model  || 'claude-opus-5' }}
           # Email solo nei run schedulati. Nei dispatch manuali (debug/test)
           # generiamo dashboard e log ma non spammiamo la inbox.

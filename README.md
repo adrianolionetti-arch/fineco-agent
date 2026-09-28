@@ -165,6 +165,39 @@ streak no: quello premia la costanza settimanale.
 Quando i 7 arretrati saranno chiusi, servirà il **Livello 2** — oggi non esiste e
 `weekend_quiz.py` punta a `livello_1_basi.json` in modo fisso.
 
+### Portafoglio parallelo (`src/paper_portfolio.py`, `src/paper_runner.py`)
+
+Il briefing produceva consigli che finivano quasi sempre in "valuta", "monitora",
+"aspetta il dato di domani". Un consiglio che non si può sbagliare non si può nemmeno
+valutare. Da ottobre 2026 l'agente è costretto ogni giorno a **una scelta netta** —
+COMPRA tot, VENDI tot, oppure HOLD — su un portafoglio parallelo che parte da quello
+reale, con versamento virtuale di 500 €/mese e tetto a 15.000 €.
+
+Le regole che lo tengono onesto:
+
+| Regola | Perché |
+|---|---|
+| Decisioni **cifrate** (`data/paper_portfolio.enc`) | Se le vedesse durante il mese agirebbe di conseguenza, e a fine mese confronteremmo una strategia con se stessa |
+| Registro **append-only con hash concatenati** | Ogni decisione include l'hash della precedente: riscrivere il passato spezza la catena e si vede |
+| **Commissioni reali** (2,95 €) su ogni operazione | Una decisione che guadagna meno di quanto costa eseguirla è sbagliata |
+| Universo di soli **UCITS in euro comprabili su Fineco** | I proxy USA del briefing (GLD, EEM…) servono a leggere il mercato, non sono acquistabili |
+| Ordine minimo **200 €**, tranne le liquidazioni totali | Sotto i 200 € la commissione supera l'1,5%; ma da una posizione piccola si deve poter uscire |
+| Validazione **in codice**, non nel prompt | Un modello che si auto-certifica i fondi disponibili è lo stesso errore già fatto col livello dei segnali |
+
+Il verdetto arriva il primo del mese (`monthly-verdict.yml`) e confronta i **rendimenti
+time-weighted** di agente, portafoglio reale e VWCE. Il TWR è obbligatorio qui: il paper
+riceve 500 €/mese e confrontare i valori finali premierebbe chi versa di più, non chi
+decide meglio. Il TWR misura comunque il *cash drag*, cioè il costo di lasciare liquidità
+ferma mentre il mercato sale.
+
+> **Cosa un mese può dire, e cosa no.** Con ~22 giorni e poche operazioni la differenza
+> di rendimento è in larga parte rumore. Il primo mese misura il **processo**: quante
+> decisioni nette produce, quanto spesso sa stare fermo, se gli ordini erano eseguibili
+> col capitale disponibile. Il giudizio sulla performance ha senso dal terzo mese.
+
+Serve il secret `PAPER_KEY`. Se viene cancellato, il registro diventa illeggibile e
+l'esperimento riparte da zero. Test: `python tests/test_paper_portfolio.py`
+
 ### Feedback loop
 
 `data/signal_performance.json` contiene l'esito reale dei segnali recenti misurato

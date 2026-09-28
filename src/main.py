@@ -16,6 +16,7 @@ from dashboard_builder import build_dashboard_data
 from pillole import get_pillola_della_settimana
 from micro_tip import get_micro_tip_del_giorno
 import quiz_recap
+import paper_runner
 
 
 def main():
@@ -91,6 +92,21 @@ def main():
 
     print("\n[7/8] Build dashboard data...")
     build_dashboard_data(portfolio_data, briefing, news, events, watchlist=watchlist_data)
+
+    # Portafoglio parallelo: l'agente prende una decisione operativa netta e la
+    # registra cifrata. Il contenuto NON entra ne' nell'email ne' nella dashboard
+    # fino al verdetto di fine mese: se Adriano lo vedesse, agirebbe di conseguenza
+    # e a fine mese confronteremmo una strategia con se stessa.
+    paper = paper_runner.daily_run(portfolio_data, watchlist_data, events)
+    if paper.get("skipped"):
+        print(f"  → Paper: saltato ({paper['skipped']})")
+    else:
+        print(f"  → Paper: decisione registrata "
+              f"({paper['decisioni_totali']} totali, "
+              f"{paper['operazioni_questo_mese']} operazioni questo mese)")
+        if paper.get("versamento_oggi"):
+            print(f"  → Paper: versamento mensile di €{paper['versamento_oggi']:.2f}")
+    briefing["_paper"] = paper
 
     # Recupero esercizi arretrati: il quiz del weekend non veniva piu' aperto,
     # quindi il promemoria viaggia sulla mail che invece viene letta ogni giorno.
