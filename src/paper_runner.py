@@ -150,6 +150,16 @@ def daily_run(portfolio_data: dict, watchlist: list, events: dict) -> dict:
         if not os.environ.get("PAPER_KEY"):
             return {"skipped": "PAPER_KEY non configurata"}
 
+        # L'esperimento comincia il primo di ottobre. Prima di quella data il
+        # codice gira a vuoto: i giorni di rodaggio servivano a scoprire i bug,
+        # non devono finire nel registro ne' far scattare un versamento in
+        # anticipo (il paper riceve 500 EUR al mese, non 500 ogni volta che
+        # provo il workflow a fine settembre).
+        start = os.environ.get("PAPER_START_DATE", "2026-10-01")
+        oggi = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        if oggi < start:
+            return {"skipped": f"l'esperimento parte il {start}"}
+
         known = {h["ticker"]: h.get("current")
                  for h in portfolio_data.get("holdings", []) if h.get("ticker")}
         prices = fetch_universe_prices(known)
