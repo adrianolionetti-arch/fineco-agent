@@ -5,7 +5,7 @@
     "daily_change_pct": 1.68,
     "weekly_change_pct": 0.65,
     "monthly_change_pct": 1.71,
-    "cached_at": "2026-09-29T09:06:52.512330"
+    "cached_at": "2026-09-29T12:45:25.439404"
   },
   "VWCE.MI": {
     "current": 169.7,
@@ -37,7 +37,7 @@
     "daily_change_pct": -0.52,
     "weekly_change_pct": -1.78,
     "monthly_change_pct": -3.57,
-    "cached_at": "2026-09-29T09:06:56.646070"
+    "cached_at": "2026-09-29T12:46:19.288169"
   },
   "GOVT": {
     "current": 19.3,
@@ -45,7 +45,7 @@
     "daily_change_pct": -0.32,
     "weekly_change_pct": -1.22,
     "monthly_change_pct": -2.32,
-    "cached_at": "2026-09-29T09:06:57.036833"
+    "cached_at": "2026-09-29T12:46:21.497503"
   },
   "AGG": {
     "current": 83.4,
@@ -53,15 +53,15 @@
     "daily_change_pct": -0.49,
     "weekly_change_pct": -1.62,
     "monthly_change_pct": -2.67,
-    "cached_at": "2026-09-29T09:06:57.357215"
+    "cached_at": "2026-09-29T12:46:23.715160"
   },
   "GLD": {
-    "current": 332.98,
+    "current": 332.97,
     "currency": "EUR",
     "daily_change_pct": -3.94,
     "weekly_change_pct": -5.14,
     "monthly_change_pct": -6.8,
-    "cached_at": "2026-09-29T09:06:57.741816"
+    "cached_at": "2026-09-29T12:46:25.911471"
   },
   "EEM": {
     "current": 59.21,
@@ -88,28 +88,28 @@
     "cached_at": "2026-09-29T09:06:59.738592"
   },
   "MSFT": {
-    "current": 448.67,
+    "current": 448.72,
     "currency": "EUR",
     "daily_change_pct": -1.35,
     "weekly_change_pct": 1.52,
     "monthly_change_pct": 6.01,
-    "cached_at": "2026-09-29T09:07:01.636702"
+    "cached_at": "2026-09-29T12:47:21.014995"
   },
   "GOOGL": {
-    "current": 302.03,
+    "current": 302.02,
     "currency": "EUR",
     "daily_change_pct": -0.34,
     "weekly_change_pct": -3.44,
     "monthly_change_pct": -0.36,
-    "cached_at": "2026-09-29T09:07:02.093990"
+    "cached_at": "2026-09-29T12:47:23.209974"
   },
   "META": {
-    "current": 630.6,
+    "current": 630.57,
     "currency": "EUR",
     "daily_change_pct": -4.79,
     "weekly_change_pct": -3.46,
     "monthly_change_pct": 25.77,
-    "cached_at": "2026-09-29T09:07:02.529312"
+    "cached_at": "2026-09-29T12:47:25.489476"
   },
   "JPM": {
     "current": 296.6,
@@ -120,12 +120,12 @@
     "cached_at": "2026-09-29T09:07:03.075481"
   },
   "AAPL": {
-    "current": 298.2,
+    "current": 298.19,
     "currency": "EUR",
     "daily_change_pct": -0.78,
     "weekly_change_pct": -0.17,
     "monthly_change_pct": 10.74,
-    "cached_at": "2026-09-29T09:07:00.310058"
+    "cached_at": "2026-09-29T12:47:18.846182"
   },
   "BRK-B": {
     "current": 443.39,
@@ -136,11 +136,11 @@
     "cached_at": "2026-09-29T09:07:05.130725"
   },
   "UNH": {
-    "current": 332.99,
+    "current": 332.97,
     "currency": "EUR",
     "daily_change_pct": 0.33,
     "weekly_change_pct": 0.07,
     "monthly_change_pct": -4.5,
-    "cached_at": "2026-09-29T09:07:07.203738"
+    "cached_at": "2026-09-29T12:48:03.209573"
   }
 }
