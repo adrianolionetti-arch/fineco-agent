@@ -1182,6 +1182,66 @@
   .wrap.visible > *:nth-child(4) { animation-delay: 0.24s; }
   .wrap.visible > *:nth-child(5) { animation-delay: 0.32s; }
   .wrap.visible > *:nth-child(6) { animation-delay: 0.4s; }
+
+  /* === PORTAFOGLIO PARALLELO === */
+  .paper-seal {
+    background: linear-gradient(135deg, var(--bg-elevated), var(--bg-card));
+    border: 1px solid var(--rule); border-left: 3px solid var(--accent-2);
+    border-radius: 10px; padding: 22px 24px; margin-bottom: 22px;
+  }
+  .paper-seal-head { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .paper-seal-icon { font-size:18px; }
+  .paper-seal-title { font-size:15px; font-weight:600; color:var(--ink); }
+  .paper-seal-text { font-size:13px; line-height:1.6; color:var(--ink-dim); max-width:62ch; }
+  .paper-countdown {
+    margin-top:14px; font-family:'JetBrains Mono',monospace; font-size:12px;
+    color:var(--accent-2); letter-spacing:0.04em;
+  }
+  .paper-counters { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
+    gap:12px; margin-top:18px; }
+  .paper-counter { background:var(--bg); border:1px solid var(--rule); border-radius:8px;
+    padding:12px 14px; text-align:center; }
+  .paper-counter-num { font-family:'JetBrains Mono',monospace; font-size:22px;
+    color:var(--ink); line-height:1.1; }
+  .paper-counter-lbl { font-size:10px; text-transform:uppercase; letter-spacing:0.09em;
+    color:var(--ink-muted); margin-top:5px; }
+  .paper-rules { margin-top:20px; border-top:1px solid var(--rule); padding-top:16px; }
+  .paper-rule { font-size:12px; line-height:1.65; color:var(--ink-muted);
+    padding-left:16px; position:relative; margin-bottom:5px; }
+  .paper-rule::before { content:"—"; position:absolute; left:0; color:var(--accent-2); }
+  .paper-month { background:var(--bg-card); border:1px solid var(--rule);
+    border-radius:10px; padding:20px 22px; margin-bottom:18px; }
+  .paper-month-head { display:flex; justify-content:space-between; align-items:baseline;
+    flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+  .paper-month-title { font-size:16px; font-weight:600; color:var(--ink); }
+  .paper-month-sub { font-size:11px; color:var(--ink-muted);
+    font-family:'JetBrains Mono',monospace; }
+  .paper-bars { margin:14px 0 6px; }
+  .paper-bar-row { display:grid; grid-template-columns:150px 1fr 74px; align-items:center;
+    gap:10px; margin-bottom:9px; font-size:12px; }
+  .paper-bar-lbl { color:var(--ink-dim); }
+  .paper-bar-track { background:var(--bg); border-radius:3px; height:20px; position:relative;
+    overflow:hidden; border:1px solid var(--rule); }
+  .paper-bar-fill { position:absolute; top:0; bottom:0; border-radius:2px; }
+  .paper-bar-zero { position:absolute; top:0; bottom:0; width:1px;
+    background:var(--ink-muted); opacity:0.55; }
+  .paper-bar-val { font-family:'JetBrains Mono',monospace; text-align:right; }
+  .paper-ops { width:100%; border-collapse:collapse; margin-top:16px; font-size:12px; }
+  .paper-ops th { text-align:left; font-size:10px; text-transform:uppercase;
+    letter-spacing:0.08em; color:var(--ink-muted); padding:6px 8px;
+    border-bottom:1px solid var(--rule); font-weight:500; }
+  .paper-ops td { padding:9px 8px; border-bottom:1px solid var(--rule);
+    color:var(--ink-dim); vertical-align:top; }
+  .paper-ops .mono { font-family:'JetBrains Mono',monospace; color:var(--ink); }
+  .paper-act-buy { color:var(--green); font-weight:600; }
+  .paper-act-sell { color:var(--red); font-weight:600; }
+  .paper-note { font-size:11px; line-height:1.6; color:var(--ink-muted);
+    background:var(--bg); border-radius:8px; padding:12px 14px; margin-top:16px;
+    border-left:2px solid var(--rule); }
+  .paper-empty { text-align:center; padding:34px 20px; color:var(--ink-muted); font-size:13px; }
+  @media (max-width:560px) {
+    .paper-bar-row { grid-template-columns:96px 1fr 62px; font-size:11px; }
+  }
 </style>
 </head>
 <body>
@@ -1211,6 +1271,7 @@
   <nav class="tabs-nav" role="tablist">
     <button class="tab-btn active" data-target="briefing" role="tab" aria-selected="true">Briefing</button>
     <button class="tab-btn" data-target="pillole" role="tab" aria-selected="false">Allenamento</button>
+    <button class="tab-btn" data-target="paper" role="tab" aria-selected="false">Parallelo</button>
   </nav>
 
   <!-- TAB: BRIEFING -->
@@ -1391,6 +1452,12 @@
       </div>
     </section>
   </div>
+
+  <!-- TAB: PORTAFOGLIO PARALLELO -->
+  <div class="tab-panel" id="tab-paper" role="tabpanel">
+    <div id="paper-content"></div>
+  </div>
+
 
   <footer>
     Dashboard generata automaticamente · Non costituisce consulenza finanziaria<br>
@@ -1800,12 +1867,176 @@ function pctFmt(v) {
   return (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
 }
 
+
+// === PORTAFOGLIO PARALLELO ===
+// La dashboard NON puo' aprire il registro cifrato: legge solo cio' che il
+// backend ha deciso di rendere pubblico. Durante il mese sono conteggi, dopo
+// il verdetto e' il dettaglio completo.
+function esc(t) {
+  const d = document.createElement('div');
+  d.textContent = t == null ? '' : String(t);
+  return d.innerHTML;
+}
+
+function fmtPct(v) {
+  return (v === null || v === undefined) ? 'n/d' : (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
+}
+
+function giorniAlVerdetto() {
+  const oggi = new Date();
+  const prossimo = new Date(oggi.getFullYear(), oggi.getMonth() + 1, 1);
+  return Math.ceil((prossimo - oggi) / 86400000);
+}
+
+function renderPaperBars(m) {
+  const serie = [
+    { lbl: 'Agente', v: m.twr_paper, col: 'var(--accent-2)' },
+    { lbl: 'Il tuo portafoglio', v: m.twr_reale, col: 'var(--accent)' },
+    { lbl: 'VWCE, fermo', v: m.twr_benchmark, col: 'var(--ink-muted)' },
+  ];
+  const vals = serie.map(x => x.v).filter(v => v !== null && v !== undefined);
+  if (!vals.length) return '<div class="paper-note">Rendimenti non disponibili per questo mese.</div>';
+  const max = Math.max(...vals.map(Math.abs), 0.01);
+  const negativi = vals.some(v => v < 0);
+  const zero = negativi ? 50 : 0;          // percentuale dell'asse dove sta lo zero
+
+  const righe = serie.map(x => {
+    if (x.v === null || x.v === undefined) {
+      return `<div class="paper-bar-row"><div class="paper-bar-lbl">${x.lbl}</div>
+        <div class="paper-bar-track"></div><div class="paper-bar-val">n/d</div></div>`;
+    }
+    const larghezza = (Math.abs(x.v) / max) * (negativi ? 50 : 100);
+    const stile = x.v >= 0
+      ? `left:${zero}%; width:${larghezza}%; background:${x.col};`
+      : `right:${100 - zero}%; width:${larghezza}%; background:${x.col}; opacity:0.75;`;
+    return `<div class="paper-bar-row">
+      <div class="paper-bar-lbl">${x.lbl}</div>
+      <div class="paper-bar-track">
+        ${negativi ? '<div class="paper-bar-zero" style="left:50%"></div>' : ''}
+        <div class="paper-bar-fill" style="${stile}"></div>
+      </div>
+      <div class="paper-bar-val" style="color:${x.v >= 0 ? 'var(--green)' : 'var(--red)'}">${fmtPct(x.v)}</div>
+    </div>`;
+  }).join('');
+  return `<div class="paper-bars">${righe}</div>`;
+}
+
+function renderPaperMonth(m) {
+  const ops = (m.operazioni || []).length
+    ? m.operazioni.map(o => `<tr>
+        <td class="mono">${esc(o.date)}</td>
+        <td class="${o.action === 'BUY' ? 'paper-act-buy' : 'paper-act-sell'}">${esc(o.action)}</td>
+        <td class="mono">${esc(o.ticker)}</td>
+        <td class="mono" style="text-align:right">€${(o.amount_eur || 0).toFixed(2)}</td>
+        <td>${esc(o.rationale)}</td>
+      </tr>`).join('')
+    : `<tr><td colspan="5" style="color:var(--ink-muted);padding:14px 8px;">
+         Nessuna operazione: l'agente è rimasto fermo tutto il mese.</td></tr>`;
+
+  const dAgente = m.alfa_vs_reale;
+  const verdetto = (dAgente === null || dAgente === undefined) ? ''
+    : `<div class="paper-note"><strong style="color:var(--ink)">Differenza rispetto a te:
+       ${fmtPct(dAgente)}</strong>. ${dAgente >= 0
+         ? "L'agente ha fatto meglio del tuo portafoglio in questo mese."
+         : "Il tuo portafoglio ha fatto meglio dell'agente in questo mese."}
+       Con pochi giorni e poche operazioni questa differenza è in larga parte casuale:
+       conta il processo, non il singolo mese.</div>`;
+
+  return `<div class="paper-month">
+    <div class="paper-month-head">
+      <div class="paper-month-title">${esc(m.month)}</div>
+      <div class="paper-month-sub">${esc(m.start)} → ${esc(m.end)} · ${m.giorni} giorni ·
+        ${m.n_operazioni} operazioni · ${Math.round(m.quota_hold)}% fermo ·
+        €${(m.commissioni_eur || 0).toFixed(2)} commissioni</div>
+    </div>
+    ${renderPaperBars(m)}
+    <table class="paper-ops">
+      <thead><tr><th>Data</th><th>Mossa</th><th>Strumento</th>
+        <th style="text-align:right">Importo</th><th>Perché</th></tr></thead>
+      <tbody>${ops}</tbody>
+    </table>
+    ${verdetto}
+    <div style="font-size:10px;color:var(--ink-muted);margin-top:12px;">
+      ${m.integra ? '✓ registro integro: ogni decisione firmata con l\'hash della precedente'
+                  : '⚠ registro alterato dopo la scrittura'}
+    </div>
+  </div>`;
+}
+
+function renderPaper(paper) {
+  const el = document.getElementById('paper-content');
+  if (!el) return;
+
+  if (!paper || !paper.active) {
+    el.innerHTML = `<div class="paper-empty">
+      Il portafoglio parallelo parte il <strong>1° ottobre 2026</strong>.<br>
+      Da quel giorno l'agente prende una decisione operativa al giorno,
+      la sigilla, e il primo verdetto arriva il 1° novembre.
+    </div>`;
+    return;
+  }
+
+  const cur = paper.current_month || {};
+  const chiusi = paper.closed_months || [];
+  let html = '';
+
+  if (cur.sealed) {
+    html += `<div class="paper-seal">
+      <div class="paper-seal-head">
+        <span class="paper-seal-icon">🔒</span>
+        <span class="paper-seal-title">Busta sigillata — ${esc(cur.month || '')}</span>
+      </div>
+      <div class="paper-seal-text">
+        L'agente sta prendendo una decisione al giorno su un portafoglio parallelo
+        che parte dal tuo. Le decisioni sono cifrate e non sono visibili nemmeno qui:
+        se le vedessi durante il mese agiresti di conseguenza, e a fine mese
+        staremmo confrontando una strategia con se stessa invece che due strategie diverse.
+      </div>
+      <div class="paper-counters">
+        <div class="paper-counter">
+          <div class="paper-counter-num">${cur.days || 0}</div>
+          <div class="paper-counter-lbl">giorni decisi</div>
+        </div>
+        <div class="paper-counter">
+          <div class="paper-counter-num">${cur.operations || 0}</div>
+          <div class="paper-counter-lbl">operazioni</div>
+        </div>
+        <div class="paper-counter">
+          <div class="paper-counter-num">${cur.hold_days || 0}</div>
+          <div class="paper-counter-lbl">giorni fermo</div>
+        </div>
+      </div>
+      <div class="paper-countdown">Verdetto fra ${giorniAlVerdetto()} giorni</div>
+      <div class="paper-rules">
+        <div class="paper-rule">Parte dal tuo portafoglio reale, più 500 € al mese di versamento virtuale, tetto 15.000 €</div>
+        <div class="paper-rule">Ogni giorno una scelta netta: compra, vendi, o non fare nulla. Niente "valuta" o "aspetta domani"</div>
+        <div class="paper-rule">Commissioni reali di 2,95 € su ogni operazione, ordine minimo 200 €</div>
+        <div class="paper-rule">Solo strumenti che potresti comprare davvero su Fineco, in euro</div>
+        <div class="paper-rule">Registro immodificabile: ogni decisione è firmata con l'hash della precedente</div>
+        <div class="paper-rule">Il confronto usa il rendimento time-weighted, così i versamenti non falsano il risultato</div>
+      </div>
+    </div>`;
+  }
+
+  if (chiusi.length) {
+    html += `<div class="section-label" style="margin:22px 0 12px;">Mesi conclusi</div>`;
+    html += chiusi.map(renderPaperMonth).join('');
+  } else if (cur.sealed) {
+    html += `<div class="paper-empty">
+      Nessun mese concluso: il primo verdetto arriva il 1° del mese prossimo.
+    </div>`;
+  }
+
+  el.innerHTML = html;
+}
+
 function render(d) {
   // Header date
   const today = new Date();
   document.getElementById('today-date').textContent = today.toLocaleDateString('it-IT', {
     weekday: 'long', day: 'numeric', month: 'long'
   }).toUpperCase();
+  renderPaper(d.paper);
   if (d.generated_at) {
     const gen = new Date(d.generated_at);
     document.getElementById('gen-at').textContent = gen.toLocaleTimeString('it-IT', {hour:'2-digit', minute:'2-digit'});

@@ -1,0 +1,3660 @@
+{
+  "generated_at": "2026-09-29T09:05:15.607430+00:00",
+  "total_value_eur": 4092.93,
+  "briefing": {
+    "summary": "x",
+    "portfolio_note": null,
+    "events": [],
+    "signal_level": "NONE",
+    "signal_asset": null,
+    "signal_action": null,
+    "signal_reasoning": null,
+    "signal_counter": null,
+    "signal_suggested_amount_eur": null,
+    "signal_what_to_do": null,
+    "signal_what_to_watch": null,
+    "signal_importance": null,
+    "closing_note": null,
+    "model_used": null
+  },
+  "holdings": [
+    {
+      "name": "Vanguard",
+      "ticker": "VWCE.MI",
+      "type": "unknown",
+      "currency": "EUR",
+      "current_price": 170.15,
+      "quantity": 16,
+      "position_value": 2722.4,
+      "avg_cost_price": null,
+      "margin_eur": null,
+      "margin_pct": null,
+      "gain_loss_total": null,
+      "daily_pct": 1.0,
+      "weekly_pct": 0.2,
+      "monthly_pct": 0.5,
+      "price_history": []
+    }
+  ],
+  "portfolio_history": [
+    {
+      "date": "2026-05-13",
+      "daily_change_pct": 0.61,
+      "holdings_snapshot": [
+        {
+          "ticker": "NVDA",
+          "daily_pct": 0.61,
+          "weekly_pct": 12.36,
+          "monthly_pct": 26.59
+        },
+        {
+          "ticker": "EQQQ.MI",
+          "daily_pct": 0.0,
+          "weekly_pct": 0.0,
+          "monthly_pct": 0.0
+        }
+      ],
+      "cumulative_index": 100.61
+    },
+    {
+      "date": "2026-05-15",
+      "daily_change_pct": -1.14,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -3.11,
+          "weekly_pct": 6.14,
+          "monthly_pct": 28.59
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.98,
+          "weekly_pct": 0.82,
+          "monthly_pct": 5.1
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.81,
+          "weekly_pct": 1.93,
+          "monthly_pct": 12.56
+        }
+      ],
+      "cumulative_index": 99.46
+    },
+    {
+      "date": "2026-05-18",
+      "daily_change_pct": -0.83,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -1.33,
+          "weekly_pct": 1.31,
+          "monthly_pct": 24.83
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.63,
+          "weekly_pct": -0.11,
+          "monthly_pct": 3.11
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -1.37,
+          "weekly_pct": -0.19,
+          "monthly_pct": 9.77
+        }
+      ],
+      "cumulative_index": 98.64
+    },
+    {
+      "date": "2026-05-19",
+      "daily_change_pct": -0.01,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -1.33,
+          "weekly_pct": 1.31,
+          "monthly_pct": 24.83
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.16,
+          "weekly_pct": -0.11,
+          "monthly_pct": 3.11
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.06,
+          "weekly_pct": -0.19,
+          "monthly_pct": 9.77
+        }
+      ],
+      "cumulative_index": 98.63
+    },
+    {
+      "date": "2026-05-20",
+      "daily_change_pct": 0.54,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.77,
+          "weekly_pct": -0.08,
+          "monthly_pct": 21.16
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.52,
+          "weekly_pct": 0.79,
+          "monthly_pct": 3.48
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 1.22,
+          "weekly_pct": 0.79,
+          "monthly_pct": 9.95
+        }
+      ],
+      "cumulative_index": 99.16
+    },
+    {
+      "date": "2026-05-21",
+      "daily_change_pct": 0.28,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 1.3,
+          "weekly_pct": -1.05,
+          "monthly_pct": 21.51
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.18,
+          "weekly_pct": 0.39,
+          "monthly_pct": 4.72
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.21,
+          "weekly_pct": 0.84,
+          "monthly_pct": 11.22
+        }
+      ],
+      "cumulative_index": 99.44
+    },
+    {
+      "date": "2026-05-22",
+      "daily_change_pct": 0.42,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -1.77,
+          "weekly_pct": -6.88,
+          "monthly_pct": 16.37
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.55,
+          "weekly_pct": -0.68,
+          "monthly_pct": 4.26
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.9,
+          "weekly_pct": -0.94,
+          "monthly_pct": 9.82
+        }
+      ],
+      "cumulative_index": 99.86
+    },
+    {
+      "date": "2026-05-25",
+      "daily_change_pct": 0.44,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -1.9,
+          "weekly_pct": -4.43,
+          "monthly_pct": 13.74
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.72,
+          "weekly_pct": 2.74,
+          "monthly_pct": 5.98
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.41,
+          "weekly_pct": 3.27,
+          "monthly_pct": 10.45
+        }
+      ],
+      "cumulative_index": 100.29
+    },
+    {
+      "date": "2026-05-26",
+      "daily_change_pct": -0.07,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.86,
+          "weekly_pct": -3.97,
+          "monthly_pct": 8.64
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.12,
+          "weekly_pct": 2.77,
+          "monthly_pct": 5.92
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.46,
+          "weekly_pct": 4.15,
+          "monthly_pct": 11.12
+        }
+      ],
+      "cumulative_index": 100.22
+    },
+    {
+      "date": "2026-05-27",
+      "daily_change_pct": -0.32,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -1.05,
+          "weekly_pct": -3.63,
+          "monthly_pct": 6.9
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.23,
+          "weekly_pct": 1.53,
+          "monthly_pct": 6.1
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.35,
+          "weekly_pct": 2.08,
+          "monthly_pct": 11.79
+        }
+      ],
+      "cumulative_index": 99.9
+    },
+    {
+      "date": "2026-05-28",
+      "daily_change_pct": -0.01,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -1.05,
+          "weekly_pct": -3.63,
+          "monthly_pct": 6.9
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.02,
+          "weekly_pct": 1.53,
+          "monthly_pct": 6.1
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.32,
+          "weekly_pct": 2.08,
+          "monthly_pct": 11.79
+        }
+      ],
+      "cumulative_index": 99.89
+    },
+    {
+      "date": "2026-05-29",
+      "daily_change_pct": 0.47,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 0.78,
+          "weekly_pct": -4.13,
+          "monthly_pct": 8.02
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.45,
+          "weekly_pct": 1.81,
+          "monthly_pct": 6.33
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.41,
+          "weekly_pct": 3.08,
+          "monthly_pct": 11.65
+        }
+      ],
+      "cumulative_index": 100.36
+    },
+    {
+      "date": "2026-06-01",
+      "daily_change_pct": 0.39,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -1.45,
+          "weekly_pct": -3.81,
+          "monthly_pct": 4.69
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.55,
+          "weekly_pct": 0.95,
+          "monthly_pct": 5.98
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.55,
+          "weekly_pct": 1.76,
+          "monthly_pct": 11.83
+        }
+      ],
+      "cumulative_index": 100.75
+    },
+    {
+      "date": "2026-06-02",
+      "daily_change_pct": 0.61,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 6.26,
+          "weekly_pct": 4.19,
+          "monthly_pct": 11.04
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.13,
+          "weekly_pct": 0.7,
+          "monthly_pct": 6.06
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.06,
+          "weekly_pct": 2.29,
+          "monthly_pct": 11.2
+        }
+      ],
+      "cumulative_index": 101.37
+    },
+    {
+      "date": "2026-06-03",
+      "daily_change_pct": 0.04,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.69,
+          "weekly_pct": 3.7,
+          "monthly_pct": 11.48
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.0,
+          "weekly_pct": 1.41,
+          "monthly_pct": 5.71
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.5,
+          "weekly_pct": 2.19,
+          "monthly_pct": 10.03
+        }
+      ],
+      "cumulative_index": 101.41
+    },
+    {
+      "date": "2026-06-04",
+      "daily_change_pct": -1.01,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -3.62,
+          "weekly_pct": 1.01,
+          "monthly_pct": 6.05
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.69,
+          "weekly_pct": 1.2,
+          "monthly_pct": 3.85
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -1.11,
+          "weekly_pct": 2.68,
+          "monthly_pct": 8.86
+        }
+      ],
+      "cumulative_index": 100.39
+    },
+    {
+      "date": "2026-06-05",
+      "daily_change_pct": -0.36,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 1.82,
+          "weekly_pct": 2.06,
+          "monthly_pct": 9.53
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.49,
+          "weekly_pct": 0.6,
+          "monthly_pct": 3.68
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.83,
+          "weekly_pct": 0.87,
+          "monthly_pct": 6.96
+        }
+      ],
+      "cumulative_index": 100.02
+    },
+    {
+      "date": "2026-06-08",
+      "daily_change_pct": -1.31,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -6.2,
+          "weekly_pct": -2.86,
+          "monthly_pct": -1.52
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.74,
+          "weekly_pct": -0.49,
+          "monthly_pct": 2.67
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -1.42,
+          "weekly_pct": -1.14,
+          "monthly_pct": 4.02
+        }
+      ],
+      "cumulative_index": 98.71
+    },
+    {
+      "date": "2026-06-09",
+      "daily_change_pct": 0.32,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 1.73,
+          "weekly_pct": -7.01,
+          "monthly_pct": -3.68
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.21,
+          "weekly_pct": -1.44,
+          "monthly_pct": 1.85
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.17,
+          "weekly_pct": -2.4,
+          "monthly_pct": 2.91
+        }
+      ],
+      "cumulative_index": 99.03
+    },
+    {
+      "date": "2026-06-10",
+      "daily_change_pct": -0.3,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.22,
+          "weekly_pct": -6.57,
+          "monthly_pct": -2.34
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.29,
+          "weekly_pct": -3.26,
+          "monthly_pct": 1.62
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.35,
+          "weekly_pct": -5.18,
+          "monthly_pct": 1.7
+        }
+      ],
+      "cumulative_index": 98.73
+    },
+    {
+      "date": "2026-06-11",
+      "daily_change_pct": 0.19,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -3.73,
+          "weekly_pct": -6.67,
+          "monthly_pct": -4.22
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.46,
+          "weekly_pct": -2.99,
+          "monthly_pct": 0.06
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.78,
+          "weekly_pct": -5.68,
+          "monthly_pct": -0.3
+        }
+      ],
+      "cumulative_index": 98.92
+    },
+    {
+      "date": "2026-06-12",
+      "daily_change_pct": 1.63,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 2.22,
+          "weekly_pct": -6.31,
+          "monthly_pct": 2.66
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 1.44,
+          "weekly_pct": -2.59,
+          "monthly_pct": -0.91
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 2.07,
+          "weekly_pct": -4.32,
+          "monthly_pct": -1.45
+        }
+      ],
+      "cumulative_index": 100.53
+    },
+    {
+      "date": "2026-06-15",
+      "daily_change_pct": 1.04,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 0.16,
+          "weekly_pct": 0.04,
+          "monthly_pct": 3.4
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.98,
+          "weekly_pct": 0.06,
+          "monthly_pct": 1.89
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 1.63,
+          "weekly_pct": -0.16,
+          "monthly_pct": 1.89
+        }
+      ],
+      "cumulative_index": 101.58
+    },
+    {
+      "date": "2026-06-16",
+      "daily_change_pct": 0.41,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 3.54,
+          "weekly_pct": 1.83,
+          "monthly_pct": 7.04
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.05,
+          "weekly_pct": 1.88,
+          "monthly_pct": 3.89
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.43,
+          "weekly_pct": 2.72,
+          "monthly_pct": 5.91
+        }
+      ],
+      "cumulative_index": 101.99
+    },
+    {
+      "date": "2026-06-17",
+      "daily_change_pct": -0.21,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -2.37,
+          "weekly_pct": -0.37,
+          "monthly_pct": 5.55
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.09,
+          "weekly_pct": 2.92,
+          "monthly_pct": 3.77
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.46,
+          "weekly_pct": 4.47,
+          "monthly_pct": 5.42
+        }
+      ],
+      "cumulative_index": 101.78
+    },
+    {
+      "date": "2026-06-18",
+      "daily_change_pct": 0.57,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -1.33,
+          "weekly_pct": 2.11,
+          "monthly_pct": -1.53
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.57,
+          "weekly_pct": 3.39,
+          "monthly_pct": 3.05
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 1.32,
+          "weekly_pct": 4.47,
+          "monthly_pct": 3.28
+        }
+      ],
+      "cumulative_index": 102.36
+    },
+    {
+      "date": "2026-06-19",
+      "daily_change_pct": 0.16,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 2.95,
+          "weekly_pct": 2.84,
+          "monthly_pct": -0.38
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.15,
+          "weekly_pct": 3.7,
+          "monthly_pct": 3.46
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.18,
+          "weekly_pct": 5.45,
+          "monthly_pct": 4.91
+        }
+      ],
+      "cumulative_index": 102.52
+    },
+    {
+      "date": "2026-06-22",
+      "daily_change_pct": 0.59,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 2.95,
+          "weekly_pct": 2.84,
+          "monthly_pct": -0.38
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.39,
+          "weekly_pct": 1.83,
+          "monthly_pct": 2.36
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.36,
+          "weekly_pct": 3.26,
+          "monthly_pct": 3.72
+        }
+      ],
+      "cumulative_index": 103.13
+    },
+    {
+      "date": "2026-06-23",
+      "daily_change_pct": -1.63,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.97,
+          "weekly_pct": 1.69,
+          "monthly_pct": -3.04
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -1.58,
+          "weekly_pct": 0.87,
+          "monthly_pct": 2.0
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -2.09,
+          "weekly_pct": 0.69,
+          "monthly_pct": 3.26
+        }
+      ],
+      "cumulative_index": 101.45
+    },
+    {
+      "date": "2026-06-24",
+      "daily_change_pct": -0.11,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -4.13,
+          "weekly_pct": -5.84,
+          "monthly_pct": -8.84
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.2,
+          "weekly_pct": -0.15,
+          "monthly_pct": 0.82
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.34,
+          "weekly_pct": -0.62,
+          "monthly_pct": 0.6
+        }
+      ],
+      "cumulative_index": 101.34
+    },
+    {
+      "date": "2026-06-25",
+      "daily_change_pct": 0.25,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.52,
+          "weekly_pct": -4.05,
+          "monthly_pct": -9.87
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.11,
+          "weekly_pct": 0.1,
+          "monthly_pct": 1.6
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 1.06,
+          "weekly_pct": 0.05,
+          "monthly_pct": 1.22
+        }
+      ],
+      "cumulative_index": 101.59
+    },
+    {
+      "date": "2026-06-26",
+      "daily_change_pct": -0.32,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -1.03,
+          "weekly_pct": -8.05,
+          "monthly_pct": -17.82
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.3,
+          "weekly_pct": -1.05,
+          "monthly_pct": 0.33
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.36,
+          "weekly_pct": -2.98,
+          "monthly_pct": -1.11
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.03,
+          "weekly_pct": 0.61,
+          "monthly_pct": 0.43
+        }
+      ],
+      "cumulative_index": 101.27
+    },
+    {
+      "date": "2026-06-29",
+      "daily_change_pct": 0.08,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -1.64,
+          "weekly_pct": -8.62,
+          "monthly_pct": -18.33
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.13,
+          "weekly_pct": -1.05,
+          "monthly_pct": 0.33
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.6,
+          "weekly_pct": -2.98,
+          "monthly_pct": -1.11
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.04,
+          "weekly_pct": 0.61,
+          "monthly_pct": 0.43
+        }
+      ],
+      "cumulative_index": 101.35
+    },
+    {
+      "date": "2026-06-30",
+      "daily_change_pct": 0.86,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 1.27,
+          "weekly_pct": -6.56,
+          "monthly_pct": -13.47
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.82,
+          "weekly_pct": -1.57,
+          "monthly_pct": -0.29
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 1.39,
+          "weekly_pct": -2.51,
+          "monthly_pct": -1.58
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.02,
+          "weekly_pct": 0.53,
+          "monthly_pct": 0.78
+        }
+      ],
+      "cumulative_index": 102.22
+    },
+    {
+      "date": "2026-07-01",
+      "daily_change_pct": 0.21,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 2.63,
+          "weekly_pct": 0.02,
+          "monthly_pct": -10.0
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.02,
+          "weekly_pct": 0.79,
+          "monthly_pct": 0.21
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.23,
+          "weekly_pct": 1.86,
+          "monthly_pct": 0.28
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.26,
+          "weekly_pct": 0.29,
+          "monthly_pct": 0.34
+        }
+      ],
+      "cumulative_index": 102.43
+    },
+    {
+      "date": "2026-07-02",
+      "daily_change_pct": -0.77,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -1.25,
+          "weekly_pct": -0.71,
+          "monthly_pct": -10.44
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.66,
+          "weekly_pct": 0.69,
+          "monthly_pct": 1.1
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -1.36,
+          "weekly_pct": 1.66,
+          "monthly_pct": 0.22
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.19,
+          "weekly_pct": -0.24,
+          "monthly_pct": 0.49
+        }
+      ],
+      "cumulative_index": 101.64
+    },
+    {
+      "date": "2026-07-03",
+      "daily_change_pct": 0.19,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -1.39,
+          "weekly_pct": -0.46,
+          "monthly_pct": -12.82
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.35,
+          "weekly_pct": 0.48,
+          "monthly_pct": 0.72
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.34,
+          "weekly_pct": 0.09,
+          "monthly_pct": -1.24
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.09,
+          "weekly_pct": -0.32,
+          "monthly_pct": 0.27
+        }
+      ],
+      "cumulative_index": 101.84
+    },
+    {
+      "date": "2026-07-06",
+      "daily_change_pct": 0.06,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -1.39,
+          "weekly_pct": -0.46,
+          "monthly_pct": -12.82
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.19,
+          "weekly_pct": 1.33,
+          "monthly_pct": 2.17
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.1,
+          "weekly_pct": 0.89,
+          "monthly_pct": 0.91
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.11,
+          "weekly_pct": -0.48,
+          "monthly_pct": 0.43
+        }
+      ],
+      "cumulative_index": 101.9
+    },
+    {
+      "date": "2026-07-07",
+      "daily_change_pct": -1.2,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.79,
+          "weekly_pct": -1.04,
+          "monthly_pct": -10.73
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -1.07,
+          "weekly_pct": -0.24,
+          "monthly_pct": 3.34
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -2.48,
+          "weekly_pct": -3.52,
+          "monthly_pct": 2.04
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.2,
+          "weekly_pct": -0.53,
+          "monthly_pct": 0.36
+        }
+      ],
+      "cumulative_index": 100.68
+    },
+    {
+      "date": "2026-07-08",
+      "daily_change_pct": -0.28,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 3.65,
+          "weekly_pct": 2.01,
+          "monthly_pct": -5.0
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.63,
+          "weekly_pct": -1.3,
+          "monthly_pct": 2.85
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.44,
+          "weekly_pct": -4.01,
+          "monthly_pct": 2.0
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.47,
+          "weekly_pct": -0.78,
+          "monthly_pct": -0.15
+        }
+      ],
+      "cumulative_index": 100.39
+    },
+    {
+      "date": "2026-07-09",
+      "daily_change_pct": 0.87,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 3.65,
+          "weekly_pct": 2.01,
+          "monthly_pct": -5.0
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.48,
+          "weekly_pct": -1.3,
+          "monthly_pct": 2.85
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 1.64,
+          "weekly_pct": -4.01,
+          "monthly_pct": 2.0
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.11,
+          "weekly_pct": -0.78,
+          "monthly_pct": -0.15
+        }
+      ],
+      "cumulative_index": 101.27
+    },
+    {
+      "date": "2026-07-10",
+      "daily_change_pct": 0.01,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.66,
+          "weekly_pct": 2.63,
+          "monthly_pct": -4.62
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.11,
+          "weekly_pct": 0.35,
+          "monthly_pct": 3.76
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.15,
+          "weekly_pct": 0.52,
+          "monthly_pct": 3.75
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.14,
+          "weekly_pct": -0.5,
+          "monthly_pct": -0.07
+        }
+      ],
+      "cumulative_index": 101.28
+    },
+    {
+      "date": "2026-07-13",
+      "daily_change_pct": -0.06,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 4.03,
+          "weekly_pct": 8.28,
+          "monthly_pct": -1.54
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.35,
+          "weekly_pct": 0.16,
+          "monthly_pct": 2.27
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.65,
+          "weekly_pct": 0.41,
+          "monthly_pct": 1.48
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.11,
+          "weekly_pct": -0.33,
+          "monthly_pct": -0.18
+        }
+      ],
+      "cumulative_index": 101.22
+    },
+    {
+      "date": "2026-07-14",
+      "daily_change_pct": -0.65,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -3.52,
+          "weekly_pct": 4.08,
+          "monthly_pct": -3.6
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.51,
+          "weekly_pct": -0.49,
+          "monthly_pct": 0.72
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.34,
+          "weekly_pct": -0.95,
+          "monthly_pct": -1.63
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.09,
+          "weekly_pct": -0.58,
+          "monthly_pct": -0.68
+        }
+      ],
+      "cumulative_index": 100.56
+    },
+    {
+      "date": "2026-07-15",
+      "daily_change_pct": 0.45,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 4.06,
+          "weekly_pct": 7.55,
+          "monthly_pct": -5.6
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.19,
+          "weekly_pct": 0.51,
+          "monthly_pct": 0.91
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.33,
+          "weekly_pct": 1.8,
+          "monthly_pct": -0.57
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.21,
+          "weekly_pct": -0.17,
+          "monthly_pct": -0.53
+        }
+      ],
+      "cumulative_index": 101.01
+    },
+    {
+      "date": "2026-07-16",
+      "daily_change_pct": -0.52,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 0.33,
+          "weekly_pct": 4.11,
+          "monthly_pct": -4.63
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.64,
+          "weekly_pct": 1.23,
+          "monthly_pct": 0.7
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.67,
+          "weekly_pct": 1.54,
+          "monthly_pct": -0.86
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.12,
+          "weekly_pct": 0.27,
+          "monthly_pct": -0.49
+        }
+      ],
+      "cumulative_index": 100.49
+    },
+    {
+      "date": "2026-07-17",
+      "daily_change_pct": -1.43,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -2.4,
+          "weekly_pct": 2.28,
+          "monthly_pct": -3.42
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -1.4,
+          "weekly_pct": -0.06,
+          "monthly_pct": 0.0
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -2.12,
+          "weekly_pct": -1.53,
+          "monthly_pct": -3.11
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.15,
+          "weekly_pct": -0.12,
+          "monthly_pct": -0.69
+        }
+      ],
+      "cumulative_index": 99.05
+    },
+    {
+      "date": "2026-07-20",
+      "daily_change_pct": 0.05,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -2.21,
+          "weekly_pct": -3.86,
+          "monthly_pct": -7.25
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.2,
+          "weekly_pct": -1.59,
+          "monthly_pct": -1.17
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.48,
+          "weekly_pct": -3.96,
+          "monthly_pct": -5.62
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.04,
+          "weekly_pct": -0.08,
+          "monthly_pct": -0.29
+        }
+      ],
+      "cumulative_index": 99.1
+    },
+    {
+      "date": "2026-07-21",
+      "daily_change_pct": 0.26,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 0.23,
+          "weekly_pct": -0.12,
+          "monthly_pct": -0.89
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.21,
+          "weekly_pct": -0.97,
+          "monthly_pct": -1.12
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.59,
+          "weekly_pct": -2.26,
+          "monthly_pct": -4.51
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.01,
+          "weekly_pct": -0.01,
+          "monthly_pct": -0.51
+        }
+      ],
+      "cumulative_index": 99.36
+    },
+    {
+      "date": "2026-07-22",
+      "daily_change_pct": -0.13,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 1.97,
+          "weekly_pct": -2.13,
+          "monthly_pct": -0.65
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.25,
+          "weekly_pct": -0.31,
+          "monthly_pct": 0.74
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.64,
+          "weekly_pct": -1.52,
+          "monthly_pct": -1.48
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.02,
+          "weekly_pct": -0.35,
+          "monthly_pct": -0.76
+        }
+      ],
+      "cumulative_index": 99.23
+    },
+    {
+      "date": "2026-07-23",
+      "daily_change_pct": -0.28,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 2.3,
+          "weekly_pct": -0.21,
+          "monthly_pct": 1.86
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.37,
+          "weekly_pct": -0.24,
+          "monthly_pct": 0.36
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -1.08,
+          "weekly_pct": -0.78,
+          "monthly_pct": -1.68
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.18,
+          "weekly_pct": -0.44,
+          "monthly_pct": -1.19
+        }
+      ],
+      "cumulative_index": 98.95
+    },
+    {
+      "date": "2026-07-24",
+      "daily_change_pct": 0.05,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -1.56,
+          "weekly_pct": 0.66,
+          "monthly_pct": 4.16
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.2,
+          "weekly_pct": -1.27,
+          "monthly_pct": -0.51
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.13,
+          "weekly_pct": -2.34,
+          "monthly_pct": -3.25
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.13,
+          "weekly_pct": -0.64,
+          "monthly_pct": -1.56
+        }
+      ],
+      "cumulative_index": 99.0
+    },
+    {
+      "date": "2026-07-27",
+      "daily_change_pct": 0.43,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.92,
+          "weekly_pct": 1.99,
+          "monthly_pct": 0.96
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.56,
+          "weekly_pct": 0.48,
+          "monthly_pct": 0.35
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.67,
+          "weekly_pct": -0.33,
+          "monthly_pct": -3.04
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.14,
+          "weekly_pct": -0.39,
+          "monthly_pct": -1.28
+        }
+      ],
+      "cumulative_index": 99.42
+    },
+    {
+      "date": "2026-07-28",
+      "daily_change_pct": -0.36,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -4.99,
+          "weekly_pct": -3.33,
+          "monthly_pct": -4.23
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.04,
+          "weekly_pct": -0.5,
+          "monthly_pct": -0.05
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.02,
+          "weekly_pct": -3.07,
+          "monthly_pct": -5.07
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.1,
+          "weekly_pct": -0.11,
+          "monthly_pct": -1.15
+        }
+      ],
+      "cumulative_index": 99.07
+    },
+    {
+      "date": "2026-07-29",
+      "daily_change_pct": -0.21,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 0.25,
+          "weekly_pct": -4.96,
+          "monthly_pct": -7.27
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.18,
+          "weekly_pct": -0.82,
+          "monthly_pct": -0.87
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.59,
+          "weekly_pct": -4.24,
+          "monthly_pct": -7.37
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.11,
+          "weekly_pct": 0.23,
+          "monthly_pct": -0.82
+        }
+      ],
+      "cumulative_index": 98.86
+    },
+    {
+      "date": "2026-07-30",
+      "daily_change_pct": -0.82,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -3.55,
+          "weekly_pct": -10.4,
+          "monthly_pct": -8.39
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.64,
+          "weekly_pct": -1.81,
+          "monthly_pct": -2.13
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.88,
+          "weekly_pct": -5.55,
+          "monthly_pct": -8.65
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.1,
+          "weekly_pct": 0.02,
+          "monthly_pct": -0.92
+        }
+      ],
+      "cumulative_index": 98.05
+    },
+    {
+      "date": "2026-07-31",
+      "daily_change_pct": 1.41,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 2.65,
+          "weekly_pct": -6.57,
+          "monthly_pct": -4.7
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 1.35,
+          "weekly_pct": -0.82,
+          "monthly_pct": -1.79
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 1.96,
+          "weekly_pct": -2.81,
+          "monthly_pct": -6.06
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.07,
+          "weekly_pct": 0.31,
+          "monthly_pct": -0.94
+        }
+      ],
+      "cumulative_index": 99.43
+    },
+    {
+      "date": "2026-08-03",
+      "daily_change_pct": 0.92,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 2.93,
+          "weekly_pct": -2.94,
+          "monthly_pct": -4.72
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.77,
+          "weekly_pct": -0.8,
+          "monthly_pct": -1.76
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 1.07,
+          "weekly_pct": -2.01,
+          "monthly_pct": -5.82
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.29,
+          "weekly_pct": -0.24,
+          "monthly_pct": -1.04
+        }
+      ],
+      "cumulative_index": 100.34
+    },
+    {
+      "date": "2026-08-04",
+      "daily_change_pct": 0.68,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 2.93,
+          "weekly_pct": 5.15,
+          "monthly_pct": -0.96
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.48,
+          "weekly_pct": 1.07,
+          "monthly_pct": -0.9
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 1.0,
+          "weekly_pct": 1.69,
+          "monthly_pct": -4.58
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.1,
+          "weekly_pct": -0.01,
+          "monthly_pct": -0.7
+        }
+      ],
+      "cumulative_index": 101.03
+    },
+    {
+      "date": "2026-08-05",
+      "daily_change_pct": 0.51,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 2.56,
+          "weekly_pct": 7.58,
+          "monthly_pct": 5.95
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.33,
+          "weekly_pct": 2.3,
+          "monthly_pct": 1.65
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.58,
+          "weekly_pct": 4.88,
+          "monthly_pct": 0.69
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.07,
+          "weekly_pct": 0.04,
+          "monthly_pct": -0.24
+        }
+      ],
+      "cumulative_index": 101.54
+    },
+    {
+      "date": "2026-08-06",
+      "daily_change_pct": 0.01,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 3.43,
+          "weekly_pct": 15.37,
+          "monthly_pct": 10.16
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.11,
+          "weekly_pct": 3.47,
+          "monthly_pct": 2.6
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -1.0,
+          "weekly_pct": 6.67,
+          "monthly_pct": 1.51
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.0,
+          "weekly_pct": 0.39,
+          "monthly_pct": 0.24
+        }
+      ],
+      "cumulative_index": 101.55
+    },
+    {
+      "date": "2026-08-07",
+      "daily_change_pct": 0.02,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.1,
+          "weekly_pct": 12.28,
+          "monthly_pct": 11.88
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.06,
+          "weekly_pct": 3.59,
+          "monthly_pct": 1.38
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.03,
+          "weekly_pct": 5.47,
+          "monthly_pct": -1.43
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.14,
+          "weekly_pct": 0.27,
+          "monthly_pct": -0.17
+        }
+      ],
+      "cumulative_index": 101.57
+    },
+    {
+      "date": "2026-08-10",
+      "daily_change_pct": 0.32,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 2.27,
+          "weekly_pct": 11.56,
+          "monthly_pct": 16.32
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.12,
+          "weekly_pct": 3.33,
+          "monthly_pct": 1.35
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.44,
+          "weekly_pct": 5.34,
+          "monthly_pct": -1.19
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.02,
+          "weekly_pct": 0.56,
+          "monthly_pct": -0.15
+        }
+      ],
+      "cumulative_index": 101.9
+    },
+    {
+      "date": "2026-08-11",
+      "daily_change_pct": -0.18,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -2.86,
+          "weekly_pct": 5.28,
+          "monthly_pct": 11.58
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.02,
+          "weekly_pct": 2.05,
+          "monthly_pct": 1.63
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.1,
+          "weekly_pct": 3.08,
+          "monthly_pct": -0.69
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.05,
+          "weekly_pct": -0.04,
+          "monthly_pct": -0.17
+        }
+      ],
+      "cumulative_index": 101.71
+    },
+    {
+      "date": "2026-08-12",
+      "daily_change_pct": 0.06,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.02,
+          "weekly_pct": 2.62,
+          "monthly_pct": 8.7
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.0,
+          "weekly_pct": 0.56,
+          "monthly_pct": 1.7
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.33,
+          "weekly_pct": -0.07,
+          "monthly_pct": -1.16
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.06,
+          "weekly_pct": -0.31,
+          "monthly_pct": -0.38
+        }
+      ],
+      "cumulative_index": 101.78
+    },
+    {
+      "date": "2026-08-13",
+      "daily_change_pct": 0.44,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 3.03,
+          "weekly_pct": 2.22,
+          "monthly_pct": 13.42
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.25,
+          "weekly_pct": 0.45,
+          "monthly_pct": 1.81
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.32,
+          "weekly_pct": 0.14,
+          "monthly_pct": 0.1
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.0,
+          "weekly_pct": -0.23,
+          "monthly_pct": -0.26
+        }
+      ],
+      "cumulative_index": 102.22
+    },
+    {
+      "date": "2026-08-14",
+      "daily_change_pct": 0.03,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 0.54,
+          "weekly_pct": 2.88,
+          "monthly_pct": 15.64
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.0,
+          "weekly_pct": 1.06,
+          "monthly_pct": 2.51
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.0,
+          "weekly_pct": 1.95,
+          "monthly_pct": 2.06
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.14,
+          "weekly_pct": 0.13,
+          "monthly_pct": 0.07
+        }
+      ],
+      "cumulative_index": 102.25
+    },
+    {
+      "date": "2026-08-17",
+      "daily_change_pct": -0.45,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.06,
+          "weekly_pct": 0.54,
+          "monthly_pct": 15.14
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.44,
+          "weekly_pct": 0.3,
+          "monthly_pct": 3.29
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.75,
+          "weekly_pct": 0.62,
+          "monthly_pct": 3.53
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.33,
+          "weekly_pct": -0.26,
+          "monthly_pct": -0.34
+        }
+      ],
+      "cumulative_index": 101.79
+    },
+    {
+      "date": "2026-08-18",
+      "daily_change_pct": 0.16,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.07,
+          "weekly_pct": 3.43,
+          "monthly_pct": 14.26
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.11,
+          "weekly_pct": 0.34,
+          "monthly_pct": 2.97
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.59,
+          "weekly_pct": 1.34,
+          "monthly_pct": 2.97
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.07,
+          "weekly_pct": -0.07,
+          "monthly_pct": -0.23
+        }
+      ],
+      "cumulative_index": 101.96
+    },
+    {
+      "date": "2026-08-19",
+      "daily_change_pct": -0.53,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -2.34,
+          "weekly_pct": 1.03,
+          "monthly_pct": 7.65
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.0,
+          "weekly_pct": -0.94,
+          "monthly_pct": 1.07
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -2.1,
+          "weekly_pct": -0.54,
+          "monthly_pct": -0.17
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.0,
+          "weekly_pct": -0.2,
+          "monthly_pct": -0.23
+        }
+      ],
+      "cumulative_index": 101.42
+    },
+    {
+      "date": "2026-08-20",
+      "daily_change_pct": -0.36,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.99,
+          "weekly_pct": -2.91,
+          "monthly_pct": 7.29
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.24,
+          "weekly_pct": -1.36,
+          "monthly_pct": 0.67
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.75,
+          "weekly_pct": -1.85,
+          "monthly_pct": -0.97
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.0,
+          "weekly_pct": -0.05,
+          "monthly_pct": 0.13
+        }
+      ],
+      "cumulative_index": 101.05
+    },
+    {
+      "date": "2026-08-21",
+      "daily_change_pct": -0.21,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.33,
+          "weekly_pct": -3.75,
+          "monthly_pct": 2.79
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.0,
+          "weekly_pct": -2.33,
+          "monthly_pct": 1.41
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -1.03,
+          "weekly_pct": -3.99,
+          "monthly_pct": 0.34
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.16,
+          "weekly_pct": -0.43,
+          "monthly_pct": 0.28
+        }
+      ],
+      "cumulative_index": 100.84
+    },
+    {
+      "date": "2026-08-24",
+      "daily_change_pct": 0.23,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.98,
+          "weekly_pct": -4.64,
+          "monthly_pct": 5.5
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.39,
+          "weekly_pct": -1.53,
+          "monthly_pct": 1.23
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.34,
+          "weekly_pct": -2.94,
+          "monthly_pct": 0.82
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.08,
+          "weekly_pct": -0.17,
+          "monthly_pct": -0.12
+        }
+      ],
+      "cumulative_index": 101.07
+    },
+    {
+      "date": "2026-08-25",
+      "daily_change_pct": -0.59,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -2.91,
+          "weekly_pct": -7.35,
+          "monthly_pct": -1.57
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.41,
+          "weekly_pct": -2.03,
+          "monthly_pct": 1.38
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.8,
+          "weekly_pct": -4.28,
+          "monthly_pct": 1.69
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.18,
+          "weekly_pct": 0.07,
+          "monthly_pct": -0.05
+        }
+      ],
+      "cumulative_index": 100.47
+    },
+    {
+      "date": "2026-08-26",
+      "daily_change_pct": 0.19,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 2.19,
+          "weekly_pct": -3.04,
+          "monthly_pct": 0.26
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.0,
+          "weekly_pct": -0.36,
+          "monthly_pct": 1.54
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.0,
+          "weekly_pct": -1.8,
+          "monthly_pct": 2.37
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.31,
+          "weekly_pct": 0.52,
+          "monthly_pct": 0.05
+        }
+      ],
+      "cumulative_index": 100.67
+    },
+    {
+      "date": "2026-08-28",
+      "daily_change_pct": 0.42,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -4.13,
+          "weekly_pct": 1.79,
+          "monthly_pct": 7.51
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.84,
+          "weekly_pct": 1.35,
+          "monthly_pct": 3.42
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 1.1,
+          "weekly_pct": 2.0,
+          "monthly_pct": 4.94
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.14,
+          "weekly_pct": 0.14,
+          "monthly_pct": 0.27
+        }
+      ],
+      "cumulative_index": 101.09
+    },
+    {
+      "date": "2026-08-31",
+      "daily_change_pct": -0.99,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -4.57,
+          "weekly_pct": 1.32,
+          "monthly_pct": 7.02
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.65,
+          "weekly_pct": 1.35,
+          "monthly_pct": 3.42
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -1.21,
+          "weekly_pct": 2.0,
+          "monthly_pct": 4.94
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.22,
+          "weekly_pct": 0.14,
+          "monthly_pct": 0.27
+        }
+      ],
+      "cumulative_index": 100.09
+    },
+    {
+      "date": "2026-09-01",
+      "daily_change_pct": -0.07,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 1.48,
+          "weekly_pct": 5.9,
+          "monthly_pct": 6.51
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.14,
+          "weekly_pct": 0.63,
+          "monthly_pct": 0.94
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.44,
+          "weekly_pct": 1.42,
+          "monthly_pct": 1.42
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.12,
+          "weekly_pct": -0.31,
+          "monthly_pct": -0.36
+        }
+      ],
+      "cumulative_index": 100.02
+    },
+    {
+      "date": "2026-09-02",
+      "daily_change_pct": -0.63,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -1.51,
+          "weekly_pct": 2.06,
+          "monthly_pct": 2.54
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.58,
+          "weekly_pct": 0.19,
+          "monthly_pct": -0.55
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.65,
+          "weekly_pct": 0.65,
+          "monthly_pct": -1.76
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.33,
+          "weekly_pct": -0.6,
+          "monthly_pct": -0.59
+        }
+      ],
+      "cumulative_index": 99.39
+    },
+    {
+      "date": "2026-09-03",
+      "daily_change_pct": 0.11,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 3.21,
+          "weekly_pct": 7.04,
+          "monthly_pct": 7.5
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.14,
+          "weekly_pct": 0.17,
+          "monthly_pct": -0.73
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.31,
+          "weekly_pct": 0.4,
+          "monthly_pct": -2.25
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.09,
+          "weekly_pct": -0.67,
+          "monthly_pct": -0.83
+        }
+      ],
+      "cumulative_index": 99.5
+    },
+    {
+      "date": "2026-09-04",
+      "daily_change_pct": 0.33,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 1.8,
+          "weekly_pct": 0.21,
+          "monthly_pct": 10.45
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.15,
+          "weekly_pct": 0.55,
+          "monthly_pct": 0.13
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.58,
+          "weekly_pct": 0.15,
+          "monthly_pct": -0.75
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.01,
+          "weekly_pct": -0.37,
+          "monthly_pct": -0.46
+        }
+      ],
+      "cumulative_index": 99.82
+    },
+    {
+      "date": "2026-09-07",
+      "daily_change_pct": 0.02,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 0.84,
+          "weekly_pct": 5.89,
+          "monthly_pct": 17.23
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.07,
+          "weekly_pct": -0.39,
+          "monthly_pct": -0.3
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.13,
+          "weekly_pct": -0.96,
+          "monthly_pct": -1.33
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.18,
+          "weekly_pct": -0.14,
+          "monthly_pct": -0.43
+        }
+      ],
+      "cumulative_index": 99.84
+    },
+    {
+      "date": "2026-09-08",
+      "daily_change_pct": 0.06,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 0.84,
+          "weekly_pct": 5.89,
+          "monthly_pct": 17.23
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.05,
+          "weekly_pct": 0.67,
+          "monthly_pct": -0.42
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.18,
+          "weekly_pct": 0.66,
+          "monthly_pct": -0.97
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.03,
+          "weekly_pct": -0.05,
+          "monthly_pct": -0.36
+        }
+      ],
+      "cumulative_index": 99.9
+    },
+    {
+      "date": "2026-09-09",
+      "daily_change_pct": -0.81,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -2.01,
+          "weekly_pct": 2.24,
+          "monthly_pct": 14.58
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.76,
+          "weekly_pct": 0.58,
+          "monthly_pct": -0.53
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.82,
+          "weekly_pct": 1.02,
+          "monthly_pct": -0.68
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.27,
+          "weekly_pct": 0.07,
+          "monthly_pct": -0.21
+        }
+      ],
+      "cumulative_index": 99.1
+    },
+    {
+      "date": "2026-09-11",
+      "daily_change_pct": 0.37,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -2.37,
+          "weekly_pct": -2.7,
+          "monthly_pct": 11.96
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.68,
+          "weekly_pct": -1.67,
+          "monthly_pct": -2.57
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.6,
+          "weekly_pct": -0.92,
+          "monthly_pct": -3.55
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.05,
+          "weekly_pct": -0.75,
+          "monthly_pct": -1.33
+        }
+      ],
+      "cumulative_index": 99.46
+    },
+    {
+      "date": "2026-09-14",
+      "daily_change_pct": -0.61,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.03,
+          "weekly_pct": -4.45,
+          "monthly_pct": 8.74
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.52,
+          "weekly_pct": -0.61,
+          "monthly_pct": -1.2
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -1.43,
+          "weekly_pct": 0.08,
+          "monthly_pct": -1.86
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.28,
+          "weekly_pct": -0.81,
+          "monthly_pct": -0.98
+        }
+      ],
+      "cumulative_index": 98.86
+    },
+    {
+      "date": "2026-09-15",
+      "daily_change_pct": -0.4,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -3.36,
+          "weekly_pct": -8.42,
+          "monthly_pct": 2.09
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.2,
+          "weekly_pct": -0.93,
+          "monthly_pct": -1.68
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.0,
+          "weekly_pct": -0.75,
+          "monthly_pct": -3.01
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.27,
+          "weekly_pct": -0.73,
+          "monthly_pct": -1.01
+        }
+      ],
+      "cumulative_index": 98.46
+    },
+    {
+      "date": "2026-09-16",
+      "daily_change_pct": 0.46,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 0.57,
+          "weekly_pct": -6.01,
+          "monthly_pct": 0.11
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.53,
+          "weekly_pct": -1.32,
+          "monthly_pct": -0.92
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.37,
+          "weekly_pct": -1.31,
+          "monthly_pct": -1.46
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.11,
+          "weekly_pct": -1.05,
+          "monthly_pct": -1.06
+        }
+      ],
+      "cumulative_index": 98.91
+    },
+    {
+      "date": "2026-09-17",
+      "daily_change_pct": 0.56,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 0.82,
+          "weekly_pct": -4.37,
+          "monthly_pct": -2.43
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.55,
+          "weekly_pct": 0.05,
+          "monthly_pct": -0.12
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.89,
+          "weekly_pct": 0.05,
+          "monthly_pct": 0.07
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.1,
+          "weekly_pct": -0.38,
+          "monthly_pct": -1.06
+        }
+      ],
+      "cumulative_index": 99.47
+    },
+    {
+      "date": "2026-09-18",
+      "daily_change_pct": 0.31,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 2.54,
+          "weekly_pct": 0.45,
+          "monthly_pct": 0.16
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.05,
+          "weekly_pct": 1.45,
+          "monthly_pct": 1.21
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.59,
+          "weekly_pct": 1.98,
+          "monthly_pct": 2.44
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.14,
+          "weekly_pct": 0.14,
+          "monthly_pct": -0.77
+        }
+      ],
+      "cumulative_index": 99.77
+    },
+    {
+      "date": "2026-09-21",
+      "daily_change_pct": 1.05,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 1.34,
+          "weekly_pct": 1.82,
+          "monthly_pct": -0.75
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 1.01,
+          "weekly_pct": 0.17,
+          "monthly_pct": 0.51
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 1.52,
+          "weekly_pct": 1.21,
+          "monthly_pct": 2.33
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": 0.31,
+          "weekly_pct": -0.18,
+          "monthly_pct": -0.99
+        }
+      ],
+      "cumulative_index": 100.82
+    },
+    {
+      "date": "2026-09-22",
+      "daily_change_pct": 0.76,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 0.56,
+          "weekly_pct": 7.77,
+          "monthly_pct": 5.13
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.63,
+          "weekly_pct": 1.96,
+          "monthly_pct": 2.33
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 1.4,
+          "weekly_pct": 4.64,
+          "monthly_pct": 6.03
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.02,
+          "weekly_pct": 0.26,
+          "monthly_pct": -0.83
+        }
+      ],
+      "cumulative_index": 101.59
+    },
+    {
+      "date": "2026-09-23",
+      "daily_change_pct": 0.15,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 0.66,
+          "weekly_pct": 7.87,
+          "monthly_pct": 5.23
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.05,
+          "weekly_pct": 3.11,
+          "monthly_pct": 2.53
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 0.4,
+          "weekly_pct": 6.7,
+          "monthly_pct": 7.08
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.05,
+          "weekly_pct": 0.42,
+          "monthly_pct": -1.16
+        }
+      ],
+      "cumulative_index": 101.74
+    },
+    {
+      "date": "2026-09-24",
+      "daily_change_pct": -0.6,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -1.47,
+          "weekly_pct": 5.43,
+          "monthly_pct": 0.63
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": -0.53,
+          "weekly_pct": 2.25,
+          "monthly_pct": 2.1
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.74,
+          "weekly_pct": 5.78,
+          "monthly_pct": 6.86
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.17,
+          "weekly_pct": -0.39,
+          "monthly_pct": -1.57
+        }
+      ],
+      "cumulative_index": 101.13
+    },
+    {
+      "date": "2026-09-25",
+      "daily_change_pct": 0.67,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": -0.41,
+          "weekly_pct": 2.39,
+          "monthly_pct": -0.32
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.66,
+          "weekly_pct": 0.75,
+          "monthly_pct": 1.06
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": 1.13,
+          "weekly_pct": 3.82,
+          "monthly_pct": 5.05
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.09,
+          "weekly_pct": -0.75,
+          "monthly_pct": -1.72
+        }
+      ],
+      "cumulative_index": 101.81
+    },
+    {
+      "date": "2026-09-28",
+      "daily_change_pct": 0.09,
+      "holdings_snapshot": [
+        {
+          "ticker": "1NVDA.MI",
+          "daily_pct": 1.68,
+          "weekly_pct": 0.65,
+          "monthly_pct": 1.71
+        },
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 0.04,
+          "weekly_pct": 1.56,
+          "monthly_pct": 0.71
+        },
+        {
+          "ticker": "EQAC.MI",
+          "daily_pct": -0.01,
+          "weekly_pct": 4.29,
+          "monthly_pct": 4.62
+        },
+        {
+          "ticker": "AGGH.MI",
+          "daily_pct": -0.28,
+          "weekly_pct": -0.56,
+          "monthly_pct": -1.68
+        }
+      ],
+      "cumulative_index": 101.9
+    },
+    {
+      "date": "2026-09-29",
+      "daily_change_pct": 1.0,
+      "holdings_snapshot": [
+        {
+          "ticker": "VWCE.MI",
+          "daily_pct": 1.0,
+          "weekly_pct": 0.2,
+          "monthly_pct": 0.5
+        }
+      ],
+      "cumulative_index": 102.92
+    }
+  ],
+  "benchmark": {
+    "ticker": "VWCE",
+    "series": []
+  },
+  "signals": [
+    {
+      "date": "2026-09-28 13:47",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "Tieni d'occhio l'oro (su Fineco si compra come SGLD.MI o PHAU.MI) per un eventuale primo piccolo ingresso, ma senza fretta",
+      "reasoning": "Tre cose che si mettono insieme. Primo: l'oro è sceso del 3,3% in un giorno e del 6,2% in un mese, cioè è più a buon mercato di 4 settimane fa. Secondo: il motivo è identificabile e non drammatico - i titoli di stato USA stanno pagando rendimenti più alti, e questo rende l'oro meno attraente nel breve; non è un problema dell'oro in sé. Terzo, il più importante per te: il tuo portafoglio è 93% azioni e di oro non hai nemmeno un grammo. L'oro serve proprio perché tende a muoversi per conto suo ris",
+      "counter": "ATTENZIONE però: quando una cosa scende da tre settimane non c'è nessuna regola che dica che oggi è il fondo. Se venerdì 02/10/2026 il report sul lavoro USA esce forte, i rendimenti dei titoli di stato possono salire ancora e l'oro può perdere un altro 5-8% nelle settimane successive. E l'oro non pa",
+      "price_at_signal": 334.58,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-opus-5",
+      "what_to_do": "Oggi non serve fare niente di urgente. Se e quando decidi, su Fineco NON puoi comprare GLD (è un ETF americano, manca il documento europeo): l'equivalente comprabile è SGLD.MI o PHAU.MI, è lo stesso oro fisico in cassaforte. Controlla il prezzo reale (la colonna 'ask') su Fineco prima di comprare - non fidarti di numeri che trovi in giro. Sotto i 150€ lascia perdere: 2,95€ di commissione su 100€ vuol dire partire già col 3% di perdita; con 200€ la commissione pesa l'1,5%, accettabile.",
+      "what_to_watch": "1) I rendimenti dei titoli di stato USA a 10 anni: se continuano a salire, l'oro resta sotto pressione e conviene aspettare. Puoi seguirli indirettamente guardando IEF/IBTL: se smette di scendere, è il primo segnale che la pressione sta finendo. 2) Il report sul lavoro USA di venerdì 02/10/2026: dato forte = probabile altra spinta giù per l'oro, dato debole = possibile rimbalzo. 3) L'inflazione USA di mercoledì 14/10/2026: se esce più alta del previsto, storicamente aiuta l'oro.",
+      "importance": 3
+    },
+    {
+      "date": "2026-09-22 11:31",
+      "level": "YELLOW",
+      "ticker": "EEM",
+      "action": "valuta ingresso su Emerging Markets (via EIMI.MI o VFEM.MI su Fineco) - piccola quota per diversificare fuori dal tech USA",
+      "reasoning": "Gli Emerging Markets (paesi come Cina, India, Brasile, Corea...) stanno salendo forte: +5.6% nel mese, +4.3% solo questa settimana. Il tuo portafoglio è 70-80% USA (NVIDIA + EQAC + buona parte di VWCE): ti manca completamente esposizione a questi mercati. Storicamente, quando il tech USA rallenta o i tassi USA restano alti, gli emerging reggono meglio perché sono valutati meno cari (cioè costano meno rispetto a quanto guadagnano le aziende). In più, se il dollaro si indebolisce (cosa che succede",
+      "counter": "ATTENZIONE però: se oggi il dato PCE (l'inflazione USA) esce alto, il mercato può vendere tutto - anche gli emerging. Inoltre, la Cina (che pesa tanto negli emerging) ha un'economia ancora incerta (settore immobiliare in crisi). Se gli USA entrano in recessione seria, gli emerging soffrono più delle",
+      "price_at_signal": 60.03,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Se vuoi diversificare fuori dal tech USA: su Fineco cerca EIMI.MI (iShares MSCI Emerging Markets) oppure VFEM.MI (Vanguard Emerging Markets). Sono ETF UCITS che replicano EEM (il proxy USA che vedi nella watchlist). Controlla il prezzo reale (ask) su Fineco prima di comprare - NON usare il prezzo di EEM che vedi qui (60€), perché è un altro strumento. Con 200€ compri circa 1-2 quote di EIMI (dipende dal prezzo). Valuta di farlo DOPO il dato PCE di oggi: se esce peggio del previsto, il mercato scende e puoi comprare a meno. Se esce bene, compra subito.",
+      "what_to_watch": "Oggi alle 14:30 ora italiana esce il PCE (inflazione USA): se è sopra le attese, gli emerging possono scendere nel breve. Venerdì 2 ottobre esce il report sul lavoro USA: se è debole (pochi posti creati), può far salire gli emerging perché la Fed taglierebbe i tassi prima. Monitora anche il dollaro: se si indebolisce (puoi guardare l'indice DXY su tradingview o cercarlo su Google), gli emerging di solito salgono. Soglia psicologica per EEM: se scende sotto 58€, aspetta prima di comprare.",
+      "importance": 3
+    },
+    {
+      "date": "2026-09-21 12:42",
+      "level": "YELLOW",
+      "ticker": "AGGH.MI",
+      "action": "valuta piccolo accumulo bond globale (50-100€) se PCE domani esce tranquillo",
+      "reasoning": "AGGH (l'ETF che contiene tanti prestiti a stati e aziende in giro per il mondo) ha perso quasi 1% nel mese e oggi recupera appena +0.3%. È sceso perché i tassi hanno smesso di scendere nelle ultime settimane. DOMANI esce il dato PCE (inflazione USA): se esce più basso del previsto, i tassi dei Treasury scendono e AGGH recupera velocemente (tipicamente 0.5-1% in pochi giorni). TU NON HAI bond governativi nel portafoglio - hai solo AGGH ma è poco (54 quote = ~260€, il 10% del totale). Aggiungerne ",
+      "counter": "ATTENZIONE: se il PCE esce ALTO (sopra le attese), i tassi possono risalire e AGGH scende ancora - magari un altro 0.5-1% prima di stabilizzarsi. E comunque gli obbligazioni rendono poco in questo momento: anche se compri e tiene, il guadagno sarà lento (1-3% all'anno). Non è come comprare un'azione",
+      "price_at_signal": 4.85,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Aspetta domani mattina (martedì 22 settembre) l'uscita del dato PCE USA (di solito esce verso le 14:30-15:00 ora italiana - controlla l'orario esatto). Se il numero esce SOTTO le attese (lo vedrai scritto sui siti finanziari: 'PCE core +0.1% vs attese +0.2%' ad esempio), apri Fineco e compra 20-25 quote di AGGH.MI (circa 100€ + commissione 2.95€). Se esce SOPRA le attese, aspetta: il prezzo scenderà ancora e potrai comprare più in basso tra qualche giorno.",
+      "what_to_watch": "PCE core month-over-month domani mattina: se esce 0.2% o sotto è buono per gli obbligazioni. Rendimento Treasury USA a 10 anni (lo trovi su Investing.com cercando 'US 10Y'): se scende sotto 4.2% dopo il dato, è un segnale che AGGH può salire. Se invece sale sopra 4.4%, rivedi: significa che il mercato si aspetta tassi alti più a lungo e AGGH può scendere ancora.",
+      "importance": 3
+    },
+    {
+      "date": "2026-09-17 11:36",
+      "level": "YELLOW",
+      "ticker": "AGGH.MI",
+      "action": "valuta piccolo accumulo graduale se hai liquidità",
+      "reasoning": "L'obbligazionario globale (AGGH che hai in portafoglio) ha perso -1.06% nel mese e -0.38% questa settimana. Dopo un rialzo Fed, i bond governativi di solito scendono nel breve (settimane) ma poi si stabilizzano quando il mercato capisce che i rialzi sono finiti o quasi. Storicamente questi livelli (-2% in un mese) sono zone dove il prezzo inizia a diventare interessante per chi vuota mediare il prezzo di carico. ATTENZIONE: hai già 54 quote (circa 260€), quindi sei già esposto — non è che manchi",
+      "counter": "ATTENZIONE però: se la Fed dice che farà altri rialzi nei prossimi mesi (retorica 'hawkish', cioè aggressiva tipo falco), AGGH può scendere ancora un altro 1-2% prima di girare. Inoltre commissioni Fineco (~3€) su piccole somme pesano — se compri 1 quota (5€) perdi subito il 60% in commissioni, assu",
+      "price_at_signal": 4.84,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Se hai 150€+ liquidi che vuoi destinare ai bond: aspetta martedì 22/09 quando esce il dato PCE (l'inflazione che la Fed guarda di più). Se il PCE è basso (sotto 2.5%), il mercato penserà che la Fed non farà altri rialzi e i bond potrebbero rimbalzare — lì compri. Se il PCE è alto (sopra 3%), aspetta ancora perché i bond scenderanno di più. Per comprare vai su Fineco → cerca AGGH.MI → controlla il prezzo ask (quello che paghi davvero) e compra un multiplo di 30 quote per stare sotto 2% di commissioni. Alternativa: se hai meno liquidità, salta e aspetta il prossimo accumulo tra 1-2 mesi.",
+      "what_to_watch": "Dato PCE martedì 22/09 (se esce sotto 2.5% è positivo per bond). Dichiarazioni Fed nei prossimi giorni: se parlano di 'altri rialzi necessari' → bond giù ancora. Prezzo AGGH.MI: se va sotto 4.70€ (circa -3% da oggi) rivaluta se accumulare di più o aspettare. Report lavoro USA venerdì 02/10: se disoccupazione sale tanto, Fed potrebbe fermarsi e bond risalgono.",
+      "importance": 3
+    },
+    {
+      "date": "2026-09-16 11:27",
+      "level": "YELLOW",
+      "ticker": "AGGH.MI",
+      "action": "tieni fermo e non vendere nel panico — anzi, considera di accumulare piccole quote se scende ancora del 2-3% nelle prossime settimane",
+      "reasoning": "AGGH (il tuo bond globale) ha perso circa l'1% questa settimana e l'1% nel mese. È normale quando i tassi salgono o si pensa che salgano: i bond esistenti valgono meno perché pagano cedole più basse dei nuovi emessi a tassi più alti. PERÒ: storicamente, dopo il PRIMO rialzo della Fed, i bond tendono a stabilizzarsi e poi risalire nei 3-6 mesi successivi (perché il mercato aveva già 'prezzato' il rialzo, cioè lo aveva messo in conto). Se oggi la Fed dice qualcosa tipo 'rialziamo una volta sola e ",
+      "counter": "ATTENZIONE però: se la Fed oggi dice 'rialzeremo MOLTE altre volte nei prossimi mesi' (tono aggressivo, 'hawkish' = da falco), i bond possono scendere ancora del 3-5% nelle settimane successive prima di girare. E se l'inflazione non cala come sperano, i tassi resteranno alti a lungo e AGGH potrebbe ",
+      "price_at_signal": 4.84,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "OGGI: non fare nulla, aspetta le 20:00 quando la Fed annuncia la decisione sui tassi. Leggi il comunicato (lo trovi su Yahoo Finance o Il Sole 24 Ore) e cerca le parole chiave: se dicono 'pazienza', 'graduale', 'monitoriamo i dati' è un segnale morbido (buono per i bond). Se dicono 'determinati a combattere l'inflazione', 'rialzi multipli', 'continueremo finché necessario' è aggressivo (male per i bond). NEI PROSSIMI GIORNI: se AGGH scende sotto €4.70 (circa -3% da qui), imposta un alert su Fineco e valuta di comprare 20-30 quote in più (budget ~100-150€). Se invece rimbalza sopra €4.90 dopo l",
+      "what_to_watch": "1) Comunicato Fed di oggi alle 20:00: tono aggressivo (male) o morbido (bene)? 2) Prezzo AGGH: se va sotto €4.70 è un buon punto di accumulo. Se rimbalza sopra €4.90 il peggio è passato. 3) Tasso decennale USA: se supera il 5.3% i bond possono scendere ancora; se torna sotto 4.8% è il segnale che il mercato si è calmato. 4) Prossimo dato inflazione USA (CPI) a metà ottobre: se l'inflazione scende, i bond risalgono forte.",
+      "importance": 3
+    },
+    {
+      "date": "2026-09-15 11:40",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso su oro fisico (SGLD.MI o PHAU.MI su Fineco) - prezzo sceso del 3.4% in una settimana per paura rialzo tassi, potrebbe rimbalzare nei prossimi mesi",
+      "reasoning": "L'oro ha perso -3.4% questa settimana perché il mercato si aspetta tassi più alti dalla Fed - quando i tassi salgono, le obbligazioni pagano più interessi e l'oro (che non paga nulla) diventa meno attraente. MA: storicamente l'oro rimbalza 3-6 mesi dopo questi cali bruschi legati a rialzi di tassi, soprattutto se poi l'economia rallenta davvero e la Fed è costretta a tagliare di nuovo. Il portafoglio di Adriano ha ZERO oro - aggiungerne un po' ora che è scontato aiuterebbe a diversificare (l'oro",
+      "counter": "ATTENZIONE però: se la Fed alza davvero i tassi E dice che ne farà altri nei prossimi mesi (come suggerisce il sondaggio CNBC che parla di 'almeno due rialzi nel prossimo anno'), l'oro potrebbe scendere ancora del 5-8% prima di girare. Inoltre il timing è incerto: il rimbalzo storico può metterci an",
+      "price_at_signal": 340.24,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Aspetta la decisione Fed (questa settimana). Se alzano i tassi E l'oro scende ancora (sotto i 330 EUR del proxy GLD), valuta acquisto di 150€ di SGLD.MI su Fineco (NON comprare GLD che è USA - su Fineco cerca SGLD.MI o PHAU.MI, sono ETF oro fisico UCITS). IMPORTANTE: controlla il prezzo reale (ask) su Fineco prima di comprare - i €340 che vedi qui sono del proxy USA e NON coincidono col prezzo UCITS. Con 150€ paghi ~3€ di commissioni (2%), sopportabile. Se invece l'oro risale subito sopra 345 EUR salta il segnale.",
+      "what_to_watch": "Questa settimana: comunicato Fed (probabile rialzo tassi). Martedì 22 settembre: dato inflazione USA (PCE) - se esce sotto le attese la Fed potrebbe ammorbidirsi e l'oro risalirebbe. Prezzo oro: sotto 330 EUR (proxy GLD) diventa molto interessante; sopra 345 il segnale decade. Tasso decennale USA: se supera 5% l'oro potrebbe scendere ancora.",
+      "importance": 3
+    },
+    {
+      "date": "2026-09-11 11:15",
+      "level": "YELLOW",
+      "ticker": "AGGH.MI",
+      "action": "considera leggero accumulo (1-2 quote) se dopo il CPI di oggi il prezzo scende ancora",
+      "reasoning": "AGGH (obbligazioni globali) ha perso ~1.3% nel mese e oggi scende ancora. Storicamente quando le obbligazioni perdono per 3-4 settimane di fila e l'inflazione inizia a rallentare (oggi potremmo vederlo nel dato CPI), il prezzo tende a rimbalzare nei 2-3 mesi successivi. Adriano ne ha già 54 quote (circa 260€), quindi non è a zero - ma rappresentano solo il 10% del portafoglio, e averne un po' di più aiuterebbe a bilanciare tutto quel tech USA. Il momento ideale sarebbe SE il CPI di oggi esce bas",
+      "counter": "ATTENZIONE però: se il dato CPI di oggi esce ALTO (inflazione ostinata), i bond possono scendere ancora per settimane. Inoltre comprare solo 1-2 quote (10-20€ totali) significa pagare 2.95€ di commissione - quasi il 15-30% dell'importo, che è troppo. Ha più senso aspettare di avere 100-150€ di liqui",
+      "price_at_signal": 4.84,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Aspetta di vedere il dato CPI oggi pomeriggio (esce verso le 14:30 ora italiana, cerca 'CPI USA' su Google News). Se l'inflazione risulta più bassa delle attese E hai almeno 100€ liberi che non ti servono per mesi, valuta di comprare 20 quote di AGGH.MI su Fineco (circa 5€ cadauna = 100€ totali). NON farlo con meno di 100€ - le commissioni mangerebbero troppo. Controlla il prezzo ask reale su Fineco prima di comprare.",
+      "what_to_watch": "1) Dato CPI oggi pomeriggio: se esce sotto le attese (es. +2.5% annuo invece di +2.7%) è positivo per i bond. 2) Prezzo AGGH.MI: se scende a 4.75€ o meno dopo il dato, potrebbe essere un buon punto d'ingresso. 3) Prossimo dato PCE (l'indice che la Fed guarda di più) martedì 22/09/2026: se conferma inflazione in calo, i bond salgono.",
+      "importance": 3
+    },
+    {
+      "date": "2026-09-09 11:17",
+      "level": "YELLOW",
+      "ticker": "AGGH.MI",
+      "action": "valuta accumulo graduale (una quota alla volta) se scende ancora nei prossimi giorni",
+      "reasoning": "Le obbligazioni globali (AGGH) hanno perso l'1% nel mese e stanno scendendo da 3 settimane. Il motivo è chiaro: BCE alza i tassi giovedì, Fed probabilmente alzerà ancora (lo scopriremo dopo il dato inflazione di venerdì), e quando i tassi salgono le obbligazioni che pagano cedole basse perdono valore (perché nessuno le vuole: meglio comprare quelle nuove che pagano di più). PERÒ: storicamente, quando le obbligazioni aggregate scendono per 3-4 settimane di fila e l'inflazione comincia a rallentar",
+      "counter": "ATTENZIONE: se venerdì l'inflazione USA esce più alta del previsto, la Fed continuerà ad alzare i tassi anche a ottobre e novembre. In quel caso AGGH può scendere ancora per 1-2 mesi prima di girare. Inoltre, giovedì la BCE potrebbe dire che alzerà ANCORA a novembre (invece di fermarsi) - altro colp",
+      "price_at_signal": 4.87,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "1) Aspetta venerdì 11 settembre dopo le 14:30 (orario uscita CPI USA). 2) Se l'inflazione esce in calo o stabile (lo vedrai su tutte le news), considera di comprare 1 quota AGGH.MI su Fineco (circa 4.87€, quindi con 50€ ne prendi 10 quote - spesa totale ~52€ incluse commissioni 2.95€). 3) Se invece l'inflazione sale ancora, aspetta un'altra settimana. 4) NON comprare più di 1-2 volte al mese: l'idea è mediare il prezzo se scende, non accumulare tutto subito.",
+      "what_to_watch": "Venerdì 11/09 ore 14:30: dato inflazione USA (CPI). Se scende sotto 3% annuo = buono per obbligazioni. Se sopra 3.5% = tassi saliranno ancora, obbligazioni giù. • Prezzo AGGH.MI su Fineco: se scende sotto 4.80€ diventa più interessante (ma controlla sempre il prezzo ASK reale prima di comprare, non quello di chiusura). • Comunicato BCE giovedì 10/09: se usano parole tipo 'altri rialzi necessari' = male per bond, aspetta.",
+      "importance": 3
+    },
+    {
+      "date": "2026-09-08 11:13",
+      "level": "YELLOW",
+      "ticker": "EXV1.MI",
+      "action": "valuta ingresso piccolo sulle banche europee",
+      "reasoning": "Hai ZERO esposizione banche nel portafoglio (tutto tech e obbligazioni). L'ETF banche europee (EXV1.MI) ha fatto +2.23% questa settimana e le news oggi dicono che UniCredit ha ottenuto via libera BCE su una cosa tecnica importante (Danish compromise - aiuta le banche a essere più solide). Le banche europee di solito vanno BENE quando i tassi restano alti (guadagnano di più sui prestiti), e la Fed sta parlando di alzarli ancora. Questo è un settore che va OPPOSTO al tech: se il tech scende perché",
+      "counter": "ATTENZIONE però: se giovedì/venerdì l'inflazione USA esce PIÙ BASSA del previsto, i mercati penseranno che la Fed NON alzerà i tassi - e le banche scenderebbero subito (perdono valore se i tassi scendono). Inoltre le banche europee dipendono molto dall'economia europea, che non è fortissima adesso. ",
+      "price_at_signal": 42.91,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Aspetta DOPO venerdì 11/09 quando esce il dato inflazione USA. Se l'inflazione resta alta o sale, considera di comprare 4-5 quote di EXV1.MI (€170-215 totali, commissione €2.95). Controlla il prezzo reale (ask) su Fineco prima di comprare - io ti do solo il riferimento di chiusura. Se invece l'inflazione scende parecchio, lascia perdere per ora.",
+      "what_to_watch": "Dato CPI USA venerdì 11/09 mattina (ore 14:30 italiane di solito): se esce sopra 3.5% annuo, buono per banche. Se sotto 3%, male per banche. Prezzo EXV1.MI: se va sotto €41 prima di venerdì, diventa più interessante. Tasso BCE: se parla di tagli tassi nelle prossime settimane, abbandona l'idea.",
+      "importance": 3
+    },
+    {
+      "date": "2026-09-07 12:24",
+      "level": "YELLOW",
+      "ticker": "EEM",
+      "action": "Valuta primo ingresso su emerging markets (via EIMI.MI o VFEM.MI su Fineco) - piccola quota come diversificazione dal tech USA che hai già",
+      "reasoning": "Gli emerging markets (azioni di Cina, India, Brasile, Corea, ecc.) sono saliti del 7.98% nell'ultimo mese e del 2.32% questa settimana. Goldman Sachs oggi ha alzato le previsioni sul settore asiatico, il che suggerisce che le grandi banche vedono spazio per salire ancora. Nel tuo portafoglio mancano COMPLETAMENTE gli emerging: hai NVIDIA (USA tech), VWCE (70% USA), EQAC (100% USA tech) - sei molto sbilanciato sull'America e sul tech. Aggiungere un po' di emerging ti darebbe diversificazione geog",
+      "counter": "ATTENZIONE però: se la Fed alza davvero i tassi (come dice UBS), il dollaro si rafforza e di solito questo DANNEGGIA gli emerging markets - perché molti di quei paesi hanno debiti in dollari che diventano più pesanti. Inoltre giovedì/venerdì escono i dati sull'inflazione USA: se sono alti, i mercati",
+      "price_at_signal": 59.08,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Non comprare subito. Aspetta i dati di giovedì 10/09 (PPI) e venerdì 11/09 (CPI inflazione). Se escono BASSI o in linea con le attese (lo vedi sui titoli di giornale o su Fineco News), allora valuta di comprare 2-3 quote di EIMI.MI (iShares Emerging Markets) su Fineco - circa 150€. Su Fineco cerca EIMI.MI o VFEM.MI (sono la stessa cosa, emerging markets, entrambi UCITS comprабili). Controlla il prezzo reale (ask) su Fineco prima di comprare - quello che vedi qui (59.08€) è solo una stima da proxy USA.",
+      "what_to_watch": "1) Inflazione USA venerdì 11/09: se esce sopra le attese, rinvia l'acquisto (i mercati scendono). 2) Rendimento Treasury USA 10 anni: se supera il 4.8% in modo netto, gli emerging soffrono - aspetta che si calmi. 3) Prezzo EEM/EIMI: se scende sotto i 57€ (circa -3% da qui) diventa ancora più interessante; se sale sopra 62€ (+5%) forse hai perso il momento migliore.",
+      "importance": 3
+    },
+    {
+      "date": "2026-09-04 11:13",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso su oro fisico (via SGLD.MI o PHAU.MI su Fineco) - il prezzo ha perso quasi il 3% questa settimana dopo essere salito tanto ad agosto",
+      "reasoning": "L'oro ha fatto +10% ad agosto (è salito tanto), poi questa settimana ha perso il 3% circa. Storicamente l'oro tende a salire quando: (1) l'economia rallenta e la gente ha paura, (2) i tassi di interesse scendono (l'oro non paga interessi, quindi diventa più attraente), (3) c'è inflazione. OGGI esce il dato sul lavoro USA: se il lavoro va male, i mercati si aspetteranno che la banca centrale tagli i tassi prima - e l'oro potrebbe ripartire. Nel tuo portafoglio manca completamente: hai solo azioni",
+      "counter": "ATTENZIONE però: se il dato sul lavoro oggi esce fortissimo (tanti posti creati, disoccupazione bassa), la banca centrale potrebbe decidere di tenere i tassi alti più a lungo. In quel caso l'oro può scendere ancora (perché con tassi alti conviene tenere soldi in banca piuttosto che in oro, che non p",
+      "price_at_signal": 352.87,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "ASPETTA il dato sul lavoro USA che esce oggi pomeriggio (ore 14:30 italiane circa). Se il numero è DEBOLE (meno posti di lavoro del previsto), valuta di comprare 300€ di SGLD.MI oppure PHAU.MI su Fineco (sono due ETF che replicano l'oro fisico - stesso identico sottostante, scegli quello con lo spread ask-bid più stretto al momento). NON comprare GLD (non è disponibile su Fineco per normative europee). Controlla il prezzo reale (ask) su Fineco prima di comprare - i prezzi che vedi qui sono proxy USA e non coincidono. Con 300€ paghi 2.95€ di commissione (sotto l'1%) - accettabile.",
+      "what_to_watch": "Monitora oggi pomeriggio il dato sul lavoro USA (Non-Farm Payrolls): se sotto le attese, l'oro può ripartire. Settimana prossima tieni d'occhio l'inflazione USA (venerdì 11/09): se esce alta, rafforza il caso per l'oro. Prezzo oro: se scende sotto i 340€ (proxy GLD), diventa ancora più interessante. Se invece rimbalza sopra i 360€ senza motivo, forse hai perso il momento buono.",
+      "importance": 3
+    },
+    {
+      "date": "2026-09-03 11:09",
+      "level": "YELLOW",
+      "ticker": "AGGH.MI",
+      "action": "Valuta un piccolo accumulo (1-2 quote) se venerdì il dato sul lavoro esce debole",
+      "reasoning": "AGGH (l'ETF obbligazionario globale che hai in portafoglio) ha perso circa 0.8% nel mese e tutta la settimana scorsa è sceso. Il motivo è che la Fed sembra voler tenere i tassi alti (parole 'hawkish' = da falco, cioè aggressive contro l'inflazione). MA: se venerdì il dato sul lavoro USA esce peggio del previsto (= meno posti di lavoro creati, o disoccupazione in salita), il mercato si aspetterà che la Fed debba per forza abbassare i tassi prima - e questo farebbe risalire le obbligazioni. Storic",
+      "counter": "ATTENZIONE però: se il dato sul lavoro esce FORTE (tanti posti creati, disoccupazione bassa), il mercato penserà 'economia solida = Fed tiene tassi alti ancora mesi' e AGGH può scendere ancora del 2-3% nelle prossime settimane prima di girare. Inoltre le commissioni Fineco (€2.95) su 1-2 quote da €4",
+      "price_at_signal": 4.88,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Aspetta venerdì mattina il dato sul lavoro USA (esce alle 14:30 ora italiana). Se il numero di nuovi posti di lavoro è sotto le attese (i giornali lo diranno chiaramente), valuta di comprare 2 quote di AGGH.MI su Fineco (circa €10 totali + commissioni). Se il dato è in linea o sopra le attese, lascia stare.",
+      "what_to_watch": "Venerdì 04/09 ore 14:30: report sul lavoro USA (Non-Farm Payrolls). Numero chiave da guardare: quanti posti di lavoro creati ad agosto (attese tipicamente intorno a 150-200k, ma controlla sui siti di news prima). Se sotto 100k = debole, buono per obbligazioni. Se sopra 250k = forte, brutto per obbligazioni. Prossima settimana: inflazione USA (CPI) venerdì 11/09 - se scende sotto 3% annuo rafforza il caso per taglio tassi Fed.",
+      "importance": 3
+    },
+    {
+      "date": "2026-09-02 11:14",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso piccolo su oro fisico (SGLD.MI o PHAU.MI su Fineco) se hai liquidità disponibile",
+      "reasoning": "L'oro ha perso il 7.32% in una settimana senza che sia successo nulla di strutturale al metallo stesso - è solo perché i tassi USA stanno salendo velocemente e questo rende meno attraente tenere oro (che non paga interessi). Storicamente quando l'oro scende così velocemente in poche sedute per motivi di tassi (e non per crollo della domanda o altro), tende a recuperare nei mesi successivi quando la situazione si normalizza. In più: (1) hai ZERO esposizione all'oro nel portafoglio, (2) è completa",
+      "counter": "ATTENZIONE però: se venerdì il report sul lavoro USA esce fortissimo (tipo 300.000+ nuovi posti di lavoro invece dei 180.000 attesi), il mercato penserà che la Fed terrà i tassi alti ancora più a lungo - e l'oro potrebbe scendere ancora, magari un altro 3-5%, prima di girare. Inoltre i tassi alti po",
+      "price_at_signal": 342.71,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Se hai liquidità libera (almeno €150-200 per evitare che le commissioni Fineco di €2.95 pesino troppo), cerca su Fineco l'ETF SGLD.MI (iShares Physical Gold) o PHAU.MI (Invesco Physical Gold) - NON puoi comprare GLD che è americano. Controlla il prezzo reale (ask) su Fineco prima di comprare - quello che vedi qui è solo un riferimento. Potresti prendere 1 quota per iniziare come primo pezzo di diversificazione. Se non hai liquidità ora, mettilo in watchlist e aspetta di averne - non vendere altro per comprarlo, sarebbe solo spostare rischio senza ridurlo.",
+      "what_to_watch": "Venerdì mattina esce il dato sul lavoro USA (Non-Farm Payrolls): se sopra 250k nuovi posti, l'oro potrebbe scendere ancora. Se sotto 150k, potrebbe rimbalzare subito. Monitora anche il tasso del Treasury USA a 10 anni (lo trovi su Investing.com o Yahoo Finance): se supera il 4.6-4.7% l'oro rischia di scendere ancora; se torna sotto il 4.3% l'oro probabilmente rimbalza. Settimana prossima escono inflazione USA (CPI) e prezzi alla produzione (PPI) - se escono alti, tassi su e oro giù; se escono bassi, oro su.",
+      "importance": 3
+    },
+    {
+      "date": "2026-09-01 11:35",
+      "level": "YELLOW",
+      "ticker": "AGGH.MI",
+      "action": "tieni d'occhio per possibile acquisto incrementale se scende ancora",
+      "reasoning": "L'obbligazionario globale (AGGH) sta perdendo da un mese (-0.36%) per paura che i tassi restino alti. Ma ha già assorbito parte dello shock: storicamente, quando l'inflazione accelera il mercato reagisce subito (come sta succedendo ora), poi nei 3-6 mesi successivi le obbligazioni si stabilizzano e possono recuperare se l'inflazione poi rallenta davvero. Inoltre AGGH è euro-hedged (protetto dal cambio euro/dollaro), quindi se il dollaro si indebolisce non ti tocca. Il portafoglio ha solo 54 quot",
+      "counter": "ATTENZIONE però: se venerdì 4 settembre il dato sul lavoro USA esce troppo forte (tante assunzioni = economia che tira = la Fed terrà i tassi alti ancora di più), le obbligazioni possono scendere ancora per altre 2-4 settimane. E tra 10 giorni (venerdì 11 settembre) esce l'inflazione USA di agosto: ",
+      "price_at_signal": 4.87,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Non fare nulla oggi. Aspetta venerdì 4 settembre (dato lavoro USA) e venerdì 11 settembre (inflazione USA). Se entrambi i dati escono 'morbidi' (poche assunzioni o inflazione che rallenta), compra 30-35 quote AGGH su Fineco (circa 150-170€) per portare la quota obbligazionaria al 15-18% del portafoglio. Controlla il prezzo reale (ask) su Fineco prima di comprare - non fidarti del numero che vedi qui (4.87€ è approssimativo).",
+      "what_to_watch": "1) Venerdì 4 settembre ore 14:30: dato sul lavoro USA (Non-Farm Payrolls). Se esce sotto le aspettative (poche assunzioni) = buono per le obbligazioni. 2) Venerdì 11 settembre: inflazione USA di agosto. Se rallenta rispetto a luglio = buono per le obbligazioni. 3) Prezzo AGGH: se scende sotto 4.80€ (indicativo, controlla su Fineco) diventa ancora più interessante.",
+      "importance": 3
+    },
+    {
+      "date": "2026-08-31 13:39",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso su oro fisico tramite ETF UCITS (SGLD.MI o PHAU.MI su Fineco)",
+      "reasoning": "L'oro ha perso il 3.2% oggi dopo essere salito dell'11% in un mese - è un movimento brusco ma tecnicamente 'sano' dopo una corsa così veloce. Due fattori interessanti convergono: (1) sul mese l'oro è ancora fortemente positivo (+11%), quindi il trend di fondo resta intatto - oggi è solo una pausa, non un'inversione; (2) storicamente l'oro tende a fare questi 'gradini': sale veloce, poi corregge 3-5%, poi riprende. Questo calo potrebbe essere un punto d'ingresso migliore rispetto a comprare a +11",
+      "counter": "Il rischio principale è che il calo di oggi non sia finito: se venerdì i dati sul lavoro USA escono molto forti (tante assunzioni), il mercato potrebbe pensare che la Fed terrà i tassi alti più a lungo, e l'oro scenderebbe ancora del 2-3%. Inoltre l'oro è volatile (si muove tanto) e su orizzonti bre",
+      "price_at_signal": 352.38,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Aspetta venerdì 4 settembre (dati lavoro USA) prima di muoverti. Se l'oro resta stabile o scende ancora un altro 1-2%, considera di comprare 1-2 quote di SGLD.MI su Fineco (controlla il prezzo reale ask prima di comprare - non fidarti del numero che vedi sul proxy GLD). Budget indicativo 150-200€ se vuoi iniziare una posizione piccola. Fineco permette anche quote frazionarie su alcuni ETF, verifica.",
+      "what_to_watch": "Prezzo oro: se scende sotto i 340€ (proxy GLD), lo spunto si rafforza. Se risale sopra i 360€ prima di venerdì, hai perso la finestra. Dati lavoro USA venerdì 4 settembre: se escono deboli (poche assunzioni), l'oro potrebbe ripartire subito; se escono fortissimi, aspettati un altro -2% e rivaluta.",
+      "importance": 3
+    },
+    {
+      "date": "2026-08-28 18:38",
+      "level": "YELLOW",
+      "ticker": "AGGH.MI",
+      "action": "valuta ingresso/accumulo moderato (50-100€) sull'obbligazionario globale EUR hedged",
+      "reasoning": "Il tuo portafoglio è 100% azionario (NVIDIA + due ETF azionari) e quindi va su e giù come una montagna russa quando i mercati si agitano. AGGH (obbligazionario globale con copertura euro, cioè neutralizza il rischio cambio dollaro/euro) è sceso solo dello 0.14% oggi mentre le azioni tech ballavano molto di più - questo è esattamente il suo lavoro: fare da cuscinetto. Con la Fed che segnala possibili rialzi di tassi, le obbligazioni a breve-medio termine diventano più attraenti (pagano di più). A",
+      "counter": "ATTENZIONE però: se la Fed alza davvero i tassi nelle prossime settimane (la prossima riunione è tra qualche settimana), anche AGGH può scendere ancora un po' prima di stabilizzarsi - le obbligazioni perdono valore quando i tassi salgono. Inoltre con 50-100€ paghi 2.95€ di commissione (circa 3-6% de",
+      "price_at_signal": 4.89,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Se decidi di entrare: su Fineco cerca AGGH.MI (iShares Core Global Aggregate Bond EUR Hedged), controlla il prezzo reale (ask) e valuta acquisto di 15-20 quote (circa 75-100€ a seconda del prezzo). Operazione da fare con ordine a mercato in orario di negoziazione (9:00-17:30). Se vuoi aspettare, imposta un alert di prezzo su Fineco a 4.85€: se scende sotto, diventa ancora più interessante.",
+      "what_to_watch": "1) Dato inflazione USA venerdì 11 settembre: se esce più alto del previsto (sopra 3.5% annuo), la Fed potrebbe davvero alzare i tassi e AGGH scenderebbe ancora. 2) Prossima riunione Fed (circa metà settembre, data esatta non ancora nota): se alzano i tassi di 0.25%, AGGH può perdere 1-2% nei giorni seguenti. 3) Prezzo AGGH.MI: se scende sotto 4.80€, diventa un affare migliore (ma conferma prima che non ci siano brutte sorprese macro).",
+      "importance": 3
+    },
+    {
+      "date": "2026-08-26 07:06",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso su oro fisico (UCITS Fineco: SGLD.MI o PHAU.MI)",
+      "reasoning": "L'oro ha fatto +15% in un mese e +7.4% solo nell'ultima settimana. Movimento molto forte. Due fattori convergenti: 1) tensioni geopolitiche (Hormuz, anche se oggi c'è una tregua momentanea) spingono gli investitori verso 'beni rifugio' - l'oro è il classico asset dove parcheggi i soldi quando hai paura; 2) il tuo portafoglio è 100% azionario tech USA - zero decorrelazione. L'oro storicamente si muove in direzione opposta alle azioni tech: quando NVIDIA crolla, l'oro spesso sale. Aggiungerne un p",
+      "counter": "ATTENZIONE però: l'oro non produce nulla (niente dividendi, niente utili) - guadagni solo se il prezzo sale. E dopo +15% in un mese, potrebbe benissimo scendere del 5-10% nelle prossime settimane prima di ripartire. Inoltre se le tensioni su Hormuz si risolvono davvero (news di oggi), l'oro potrebbe",
+      "price_at_signal": 366.77,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Controlla il prezzo reale (ask) di SGLD.MI o PHAU.MI su Fineco - NON fidarti del numero che vedi qui (€366 è il proxy USA, il prezzo UCITS sarà diverso). Se hai €200-250 liberi che non ti servono nei prossimi mesi, valuta di comprare 1-2 quote come primo ingresso. Fallo solo se accetti che nei prossimi 15 giorni potrebbe scendere del 5-8% - l'oro non è una scommessa a breve, è un'assicurazione di lungo periodo.",
+      "what_to_watch": "Tieni d'occhio le news su Hormuz e Medio Oriente: se la situazione peggiora, l'oro sale ancora; se si calma, scende. Secondo punto: tra 16 giorni esce il dato sull'inflazione USA (CPI, venerdì 11/09/2026) - se l'inflazione resta alta, l'oro tende a salire; se scende molto, l'oro perde appeal. Terzo: se NVIDIA crolla di nuovo (ipotesi -10%+), l'oro probabilmente sale - confermando il ruolo di 'assicurazione' contro il tuo portafoglio tech.",
+      "importance": 3
+    },
+    {
+      "date": "2026-08-25 07:07",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso su oro fisico (ETF UCITS SGLD.MI o PHAU.MI su Fineco) - piccola quota come diversificazione e protezione inflazione",
+      "reasoning": "L'oro ha fatto +14.6% in un mese e oggi +0.8%, ma non è una bolla speculativa: ci sono 3 motivi concreti. PRIMO: i tassi reali USA (rendimento obbligazioni meno inflazione) stanno scendendo - quando i bond pagano meno, l'oro diventa più interessante perché non dà cedole ma almeno non ti fa perdere potere d'acquisto. SECONDO: nel tuo portafoglio manca completamente una protezione contro l'inflazione e contro le crisi - hai solo azioni (che crollano se scoppia un casino) e bond (che soffrono se l'",
+      "counter": "ATTENZIONE però: stai comprando vicino ai massimi storici - se domani esce un dato PCE molto basso (inflazione in calo forte) e la Fed dice 'possiamo tagliare i tassi più lentamente', l'oro può scendere del 5-8% in poche sedute. Inoltre le commissioni Fineco (2.95€) pesano: sotto i 200€ di acquisto ",
+      "price_at_signal": 365.89,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Su Fineco cerca SGLD.MI (iShares Physical Gold) o PHAU.MI (Invesco Physical Gold) - sono ETF che comprano oro fisico vero e lo tengono in caveau. Controlla il prezzo ASK reale su Fineco prima di comprare (NON usare il 365€ che vedi qui, è un proxy USA e non corrisponde al prezzo UCITS). Con 200€ prendi circa 3-4 quote a seconda del prezzo reale. Compra solo se oggi il dato PCE non fa schizzare i mercati - aspetta le 14:30 quando esce il dato.",
+      "what_to_watch": "Dato PCE oggi alle 14:30 ora italiana: se l'inflazione 'core' (quella senza cibo ed energia) esce sopra +0.3% mensile, l'oro può salire ancora. Se esce sotto +0.15%, può scendere. Prossimo meeting Fed tra 3 settimane (metà settembre): se Powell dice 'tagli lenti', l'oro soffre. Soglia tecnica: se l'oro (proxy GLD) rompe sotto i 350€, rivedi la posizione.",
+      "importance": 3
+    },
+    {
+      "date": "2026-08-24 07:18",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "Valuta ingresso piccolo su oro fisico (SGLD.MI o PHAU.MI su Fineco) come assicurazione portafoglio - ti manca completamente",
+      "reasoning": "L'oro ha fatto +15% in un mese e +5.4% solo questa settimana - è già 'caro' rispetto a dove stava, quindi NON è un affare da comprare tutto subito. MA: il tuo portafoglio è 100% azioni tech USA + obbligazioni normali - ZERO oro, ZERO materie prime. L'oro serve proprio quando tutto il resto va male (guerra, inflazione, crisi finanziaria) - è una 'polizza assicurativa', non un investimento per arricchirsi. Fattori che rendono sensato averne UN PO': (1) tensioni Iran-USA che possono esplodere da un",
+      "counter": "RISCHIO PRINCIPALE: stai comprando dopo un rialzo del 15% - se l'oro continua a salire bene, ma se martedì il PCE esce basso (inflazione rallenta) e la Fed diventa più 'morbida', l'oro può scendere parecchio. Inoltre l'oro NON paga dividendi, NON cresce - sta lì fermo e basta. Serve solo come protez",
+      "price_at_signal": 362.65,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Controlla il prezzo reale (ask) su Fineco di SGLD.MI o PHAU.MI prima di comprare - i numeri che vedi qui sono di GLD (ETF USA), non coincidono col prezzo UCITS europeo. Se decidi di entrare, fallo con massimo 150-200€ (meno del 10% del portafoglio) - è una 'assicurazione', non una scommessa. Aspetta DOPO il PCE di martedì per vedere se l'oro scende un po' (se l'inflazione rallenta potrebbe perdere qualche punto percentuale e darti un prezzo migliore). Non comprare tutto in un colpo - meglio dividere in 2 tranche (metà ora, metà tra un paio di settimane).",
+      "what_to_watch": "Martedì 25 agosto ore 14:30 (orario italiano) esce il PCE USA - se l'inflazione rallenta più del previsto, l'oro può scendere del 2-3% in giornata (momento migliore per entrare). Se invece l'inflazione resta alta, l'oro sale ancora. Mercoledì sera earnings NVIDIA: se deludono, tutto il portafoglio scende e l'oro probabilmente sale (effetto 'paura'). Tieni d'occhio anche le news Iran-USA: se escono sanzioni pesanti o tensioni militari, l'oro schizza su.",
+      "importance": 3
+    },
+    {
+      "date": "2026-08-21 07:05",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta primo ingresso su oro fisico (UCITS Fineco: SGLD.MI o PHAU.MI)",
+      "reasoning": "L'oro ha fatto +10% in un mese e +4% questa settimana - sta accelerando. Due motivi convergenti: (1) i tassi USA sono risaliti MA l'oro sale lo stesso (di solito quando i tassi salgono l'oro scende, quindi questa è una forza particolare), (2) tensioni geopolitiche e incertezza economica (vedi Walmart che va male) spingono gli investitori verso beni rifugio. L'oro nel tuo portafoglio MANCA completamente - avresti solo azioni tech USA e un po' di bond. Storicamente l'oro si muove in direzione oppo",
+      "counter": "ATTENZIONE però: l'oro è già salito parecchio - potrebbe correggere (scendere) nelle prossime settimane prima di ripartire. Se martedì 25/08 il dato PCE (inflazione USA) esce più basso del previsto, la Fed potrebbe abbassare i tassi prima del previsto e l'oro potrebbe scendere per qualche giorno (su",
+      "price_at_signal": 354.84,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Guarda il prezzo reale (ask) di SGLD.MI o PHAU.MI su Fineco (sono entrambi ETF che replicano l'oro fisico - scegli quello con lo spread bid-ask più stretto, cioè la differenza tra prezzo di acquisto e vendita più piccola). Se vuoi entrare, compra 1 quota per iniziare (circa 80-100€ dipende dal prezzo ask). Evita importi sotto 150€ perché le commissioni Fineco (~2.95€) peserebbero troppo (sopra il 2%). NON comprare tutto subito: meglio entrare in 2 tranche (es. metà ora, metà tra 2-3 settimane se scende o resta stabile).",
+      "what_to_watch": "Martedì 25/08 esce il PCE (inflazione USA): se esce sopra le attese, l'oro probabilmente continua a salire. Se esce sotto, potrebbe correggere per qualche giorno. Prezzo GLD (proxy): se scende sotto €345 (circa -3% da qui) aspetta e rivaluta; se supera €365 (+3%) l'accelerazione continua. Correlazione inversa con NVIDIA: se vedi giornate in cui NVIDIA perde 5%+ e l'oro sale, è il segnale che la decorrelazione funziona.",
+      "importance": 3
+    },
+    {
+      "date": "2026-08-20 07:04",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso su oro fisico tramite SGLD.MI o PHAU.MI su Fineco",
+      "reasoning": "L'oro ha perso circa il 15% dal picco di fine 2024 ed è tornato a livelli visti a metà 2024 (cioè un prezzo 'normale' dopo essere stato più caro). Oggi ha fatto +3.8% e nell'ultima settimana +2.2% - un rimbalzo deciso. Due motivi concreti convergono: (1) tensioni geopolitiche sul petrolio (notizia Iran-USA), l'oro di solito sale quando c'è incertezza; (2) il portafoglio di Adriano NON ha niente che si muova in modo decorrelato dal tech USA - l'oro storicamente va per conto suo e può proteggere q",
+      "counter": "ATTENZIONE però: l'oro non paga dividendi, non produce nulla, è solo una scommessa che la gente continui ad averne paura/voglia. Se martedì il dato PCE esce molto basso (inflazione in discesa netta), la Fed potrebbe abbassare i tassi prima del previsto e l'oro potrebbe riperdere terreno. Inoltre il ",
+      "price_at_signal": 354.12,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Su Fineco cerca SGLD.MI (iShares oro fisico) o PHAU.MI (altro ETF oro fisico). Controlla il prezzo reale (ask) su Fineco prima di comprare - NON usare i 354€ che vedi qui (quello è un proxy USA, il prezzo UCITS sarà diverso). Con 200€ compri probabilmente 1-2 quote. Aspetta martedì 25 agosto dopo il dato PCE per capire se il segnale tiene: se l'inflazione resta alta (PCE sopra 2.5%), l'oro potrebbe continuare a salire.",
+      "what_to_watch": "Martedì 25 agosto dato PCE inflazione USA: se esce sotto 2.2% l'oro potrebbe richiudersi. Tensioni Iran-USA: se si sgonfiano nei prossimi giorni, l'oro perde motivo di salire. Soglia grafico: se l'oro (proxy GLD) ricade sotto 345€ prima del dato PCE, il rimbalzo è fallito.",
+      "importance": 3
+    },
+    {
+      "date": "2026-08-19 07:02",
+      "level": "YELLOW",
+      "ticker": "AGGH.MI",
+      "action": "monitora per possibile accumulo moderato",
+      "reasoning": "Le obbligazioni globali (AGG/AGGH) stanno scendendo da tre settimane (-0.70% sul mese) e questo di solito significa che i rendimenti (ciò che pagano) stanno salendo - quando il prezzo scende, il rendimento sale, come una bilancia. Storicamente, quando AGG scende sotto certi livelli e poi si stabilizza, nei 3-6 mesi successivi tende a recuperare. Il fatto che CNBC parli di 'nuovi rendimenti solidi' conferma che le obbligazioni stanno tornando attraenti. PERÒ: hai già 54 quote di AGGH (circa €263,",
+      "counter": "ATTENZIONE: se i tassi continuano a salire (la Fed potrebbe tenerli alti più a lungo, come suggeriscono alcuni analisti), AGGH può scendere ancora prima di girare. Comprare ora significherebbe vedere il prezzo calare nelle prossime settimane - dovresti essere pronto a tenere fermo per mesi. Inoltre,",
+      "price_at_signal": 4.88,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "NON fare nulla oggi. Imposta un alert su Fineco a €4.75 per AGGH.MI (circa -2.5% da qui). Se ci arriva E nel frattempo hai accumulato almeno €200 di liquidità fresca (stipendio, risparmi), ALLORA valuta l'acquisto di 40 quote (~€190). Sotto €200 le commissioni pesano troppo.",
+      "what_to_watch": "1) Prezzo AGGH.MI: se scende sotto €4.75 diventa più interessante. 2) Comunicato sul reddito e inflazione USA (PCE) di martedì 25 agosto: se l'inflazione rallenta più del previsto, le obbligazioni salgono subito. 3) Tua liquidità disponibile: aspetta di avere almeno €200 prima di muoverti - altrimenti le commissioni ti mangiano il 2% subito.",
+      "importance": 3
+    },
+    {
+      "date": "2026-08-18 07:02",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta primo ingresso su oro fisico (SGLD.MI o PHAU.MI su Fineco)",
+      "reasoning": "L'oro ha fatto +7.4% in un mese e oggi continua a salire (+1%). Nel tuo portafoglio manca COMPLETAMENTE un asset decorrelato dall'azionario tech USA (che invece hai in abbondanza: NVIDIA + EQAC + 30% di VWCE). L'oro storicamente va in direzione opposta alle azioni tech quando arrivano problemi - è un 'paracadute'. In più: tra 7 giorni esce il dato PCE (l'inflazione che la Fed guarda di più). Se il numero è alto, l'oro tende a salire ancora (perché la gente compra oro come protezione dall'inflazi",
+      "counter": "ATTENZIONE però: l'oro è già salito parecchio (+7.4% in un mese non è poco). Se il dato PCE di martedì 25/08 esce BASSO (inflazione in discesa), l'oro potrebbe correggere e scendere del 2-3% nelle settimane successive. In più, l'oro non 'produce' niente - non paga dividendi, non cresce come un'azien",
+      "price_at_signal": 350.26,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Apri Fineco e cerca SGLD.MI (iShares oro fisico, accumulo) oppure PHAU.MI (Invesco oro fisico, accumulo). Controlla il prezzo reale (ask) prima di comprare - NON usare il prezzo di GLD che vedi qui (sono strumenti diversi). Se il prezzo ask di SGLD.MI sta sotto i 75€/quota, puoi comprare 2 quote con ~150€ (commissione 2.95€, quindi pesa ~2%, accettabile). Altrimenti aspetta di avere 200-250€ di liquidità per diluire meglio la commissione. NON comprare questa settimana: aspetta DOPO martedì 25/08 quando esce il dato PCE - se l'inflazione è alta, l'oro potrebbe salire ancora e a quel punto entri",
+      "what_to_watch": "Martedì 25/08: dato PCE USA (inflazione). Se esce sopra le attese (>2.5%), l'oro probabilmente continua a salire - a quel punto valuta l'acquisto. Se esce sotto (2.3% o meno), l'oro potrebbe scendere nei giorni successivi - aspetta che si stabilizzi prima di entrare. Controlla anche il prezzo: se GLD (il proxy) scende sotto 345€, lo spunto si indebolisce.",
+      "importance": 3
+    },
+    {
+      "date": "2026-08-13 07:50",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso piccolo sull'oro fisico (UCITS Fineco: SGLD.MI o PHAU.MI)",
+      "reasoning": "L'oro ha fatto +9% in un mese e continua a salire (+4% questa settimana). Due fattori convergenti: (1) l'inflazione USA non scende veloce - il dato di ieri conferma che resta sopra il 2% che la Fed vorrebbe, quindi i tassi resteranno alti ancora per un po', e l'oro storicamente va bene quando i tassi reali (tassi meno inflazione) sono bassi o negativi. (2) Incertezza generale: dollaro forte, mercati nervosi, geopolitica tesa - l'oro è il 'bene rifugio' classico in questi momenti. Il portafoglio ",
+      "counter": "ATTENZIONE però: l'oro è già salito parecchio (+9% in un mese è tanto). Potrebbe fare una pausa o scendere un po' nelle prossime settimane per 'prendere fiato'. Inoltre se la Fed dovesse sorprendere abbassando i tassi prima del previsto (cosa non scontata), l'oro potrebbe scendere nel breve. Infine ",
+      "price_at_signal": 351.23,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Controlla su Fineco il prezzo reale (ask, quello a cui compri) di SGLD.MI o PHAU.MI - sono entrambi ETF che replicano l'oro fisico, stessa cosa del GLD americano ma comprabile in Europa. Calcola quante quote riesci a comprare con 150€ (probabilmente 3-5 quote a seconda del prezzo). Fai l'ordine a mercato in apertura (ore 9-10) - evita chiusura perché c'è meno liquidità. RICORDA: commissione Fineco ~2.95€, quindi su 150€ paghi circa il 2% di commissione - accettabile per iniziare una posizione difensiva. Se hai meno di 150€ disponibili aspetta: sotto quella cifra le commissioni pesano troppo.",
+      "what_to_watch": "Oro: se torna sotto 340€ (proxy GLD) rivedi - vorrebbe dire che sta mollando. Dato PCE USA tra 12 giorni (martedì 25 agosto): è l'indice inflazione che la Fed guarda di più. Se esce più basso del previsto, l'oro potrebbe scendere perché i tassi potrebbero calare prima. Tieni d'occhio anche il dollaro: se si indebolisce molto, l'oro tende a salire ancora (sono inversamente correlati - quando uno sale, l'altro scende).",
+      "importance": 3
+    },
+    {
+      "date": "2026-08-12 07:49",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso su oro fisico (SGLD.MI o PHAU.MI su Fineco) se il dato inflazione di oggi esce alto",
+      "reasoning": "L'oro ha fatto +8.8% in un mese e +7% solo questa settimana - è un movimento forte. Di solito l'oro sale per 2 motivi: paura dell'inflazione (se i prezzi continuano a salire il denaro vale meno) oppure paura di crisi (la gente compra oro come 'cassaforte'. In questo momento stanno succedendo entrambe le cose: tra poche ore esce il dato inflazione USA e il mercato è nervoso. Se il CPI esce più alto del previsto (cioè inflazione che NON scende), l'oro probabilmente sale ancora perché diventa un ri",
+      "counter": "ATTENZIONE però: l'oro è già salito tanto in poche settimane - potrebbe essere 'caro' adesso. Se il dato inflazione di oggi esce BASSO (cioè buone notizie), l'oro probabilmente scende veloce nei prossimi giorni perché la paura si sgonfia. Inoltre l'oro non paga dividendi e non produce nulla - guadag",
+      "price_at_signal": 347.39,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "1) Aspetta le 14:30 di oggi (orario uscita CPI USA). 2) Se l'inflazione esce ALTA (giornali diranno 'inflazione sopra attese' o 'CPI batte stime'), apri Fineco e cerca SGLD.MI oppure PHAU.MI (sono entrambi oro fisico, stesso identico investimento - scegli quello che ha lo spread denaro/lettera più stretto al momento). 3) Controlla il prezzo reale (ask) su Fineco prima di comprare - non fidarti dei numeri che vedi qui, sono proxy. 4) Se decidi di comprare, fai un ordine di mercato per ~150€ (così le commissioni di 2.95€ pesano sotto il 2%). Se hai meno liquidità, aspetta - sotto i 100€ non conv",
+      "what_to_watch": "CPI USA oggi 14:30: se esce sopra il 3% (o comunque 'sopra le attese' secondo i giornali), l'oro probabilmente continua a salire. Se esce sotto il 2.5%, l'oro può scendere veloce. Prezzo oro (guarda GLD come riferimento, anche se compri SGLD.MI): se scende sotto i 340€ nei prossimi 2-3 giorni, potrebbe essere un punto migliore per entrare rispetto a oggi. Tasso decennale USA: se scende sotto il 4%, buono per l'oro (vuol dire che la Fed potrebbe tagliare i tassi presto). Se sale sopra il 4.5%, male per l'oro.",
+      "importance": 3
+    },
+    {
+      "date": "2026-08-11 07:33",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso su oro fisico (SGLD.MI o PHAU.MI su Fineco) se hai liquidità da diversificare",
+      "reasoning": "L'oro ha fatto +9% in un mese e +8% solo questa settimana. Storicamente, quando l'oro sale così velocemente, di solito poi rallenta o corregge (scende) del 3-5% prima di riprendere. PERÒ: i motivi per cui sta salendo sono ancora tutti lì (inflazione che non cala, tensioni commerciali, Fed che non taglia i tassi quanto vorrebbe il mercato). Nel tuo portafoglio manca completamente: hai solo azioni (tech soprattutto) e un po' di obbligazioni. L'oro è l'unica cosa che ti protegge davvero se sia azio",
+      "counter": "ATTENZIONE però: l'oro non paga dividendi e non produce nulla - sale solo se la gente ha paura o se l'inflazione morde. Se mercoledì l'inflazione USA è più bassa del previsto, l'oro può scendere del 2-3% in un giorno. Inoltre dopo +9% in un mese potrebbe 'tirare il fiato' (cioè scendere) prima di ri",
+      "price_at_signal": 348.8,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "1) Aspetta mercoledì 12 agosto (domani sera o giovedì mattina in Europa) ed esci il dato CPI inflazione USA. Se l'inflazione è ALTA (sopra le attese), l'oro probabilmente sale ancora: compra 1-2 quote di SGLD.MI su Fineco (sono circa 90-100€ l'una, controlla il prezzo ask prima). Se l'inflazione è BASSA, aspetta: l'oro potrebbe scendere del 2-3% e comprare dopo conviene. 2) NON comprare tutto in un colpo: prendi 1 quota ora (se decidi di entrare) e tieni altri 100€ per comprare un'altra quota se il prezzo scende. Su Fineco cerca SGLD.MI (iShares Physical Gold) o PHAU.MI (Invesco Physical Gold)",
+      "what_to_watch": "1) CPI inflazione USA mercoledì 12 agosto: se sopra 2.8% annuo → oro sale. Se sotto 2.5% → oro scende. 2) Prezzo dell'oro: se scende sotto 340€ (proxy GLD - controlla SGLD.MI su Fineco) è un buon momento per aggiungere. Se sale sopra 360€ senza correggere, aspetta. 3) Dollaro USA: se si rafforza (sale), l'oro di solito scende (sono inversamente correlati). Puoi monitorare l'indice DXY su Investing.com - se sale sopra 105, l'oro fatica.",
+      "importance": 3
+    },
+    {
+      "date": "2026-08-10 08:02",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso piccolo sull'oro fisico (UCITS: SGLD.MI o PHAU.MI su Fineco)",
+      "reasoning": "L'oro ha fatto +6.65% nell'ultimo mese e +7.25% negli ultimi 5 giorni. Due motivi convergono: (1) Mercoledì esce il dato sull'inflazione USA - se è alta, l'oro sale ancora perché protegge dal fatto che i soldi perdono valore. (2) Tensioni Medio Oriente - quando c'è incertezza geopolitica l'oro storicamente sale perché è visto come 'bene rifugio'. (3) Il tuo portafoglio è TUTTO su azioni tech USA e un po' di obbligazioni. L'oro si muove in modo completamente diverso: quando le azioni crollano, sp",
+      "counter": "ATTENZIONE però: l'oro è già salito parecchio (+6.65% in un mese è tanto). Se mercoledì l'inflazione esce BASSA, l'oro potrebbe perdere un 3-5% in pochi giorni perché la paura si sgonfia. Inoltre l'oro NON produce nulla (non dà dividendi, non guadagna - sta lì fermo come un lingotto), quindi sul lun",
+      "price_at_signal": 344.6,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "NON puoi comprare GLD su Fineco (è USA, manca il foglio UCITS). Devi comprare SGLD.MI oppure PHAU.MI - fanno la stessa cosa (seguono il prezzo dell'oro fisico). Vai su Fineco, cerca SGLD.MI, controlla il prezzo reale (ask) prima di comprare. Con €200 prendi circa 2-3 quote (dipende dal prezzo preciso). Commissione Fineco ~€2.95 - su €200 pesa l'1.5%, ancora accettabile.",
+      "what_to_watch": "Mercoledì 12 agosto ore 14:30 italiane esce il CPI USA. Se l'inflazione è sopra le attese (diciamo oltre 3.2% annuo), l'oro probabilmente sale ancora. Se è sotto 3%, l'oro potrebbe perdere il 3-5% nei giorni successivi. Tieni d'occhio anche le notizie Medio Oriente: se si calma tutto, l'oro scende.",
+      "importance": 3
+    },
+    {
+      "date": "2026-08-07 07:39",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso su oro fisico (comprando SGLD.MI o PHAU.MI su Fineco)",
+      "reasoning": "L'oro ha fatto +5.5% nell'ultimo mese e sta accelerando (+3.3% solo questa settimana). Due fattori convergenti: 1) il mercato si aspetta che i tassi USA inizino a scendere nei prossimi mesi (quando i tassi scendono, tenere oro invece di obbligazioni diventa più conveniente), 2) le tensioni geopolitiche restano alte (vedi notizia su attacchi ucraini in Russia) e l'oro è il classico 'bene rifugio' quando la gente ha paura. Nel tuo portafoglio manca completamente: hai solo azioni tech (NVIDIA, EQAC",
+      "counter": "ATTENZIONE però: l'oro non produce nulla (non paga dividendi, non genera interessi). Guadagni solo se il prezzo sale. Se oggi il dato sul lavoro esce fortissimo e i mercati decidono che la Fed terrà i tassi alti ancora a lungo, l'oro può tornare giù velocemente. Inoltre è già salito parecchio - potr",
+      "price_at_signal": 338.12,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Controlla il prezzo reale (ask) di SGLD.MI o PHAU.MI su Fineco - sono due ETF che replicano l'oro fisico, stesso identico sottostante. Con €300 prendi circa 1 quota (l'oro costa intorno a €320-340 a quota in questo momento, verifica il prezzo preciso). Aspetta che esca il dato sul lavoro di oggi prima di comprare: se esce molto forte, l'oro potrebbe scendere un po' e avresti un ingresso migliore nei prossimi giorni. Se invece esce debole o in linea, puoi procedere lunedì.",
+      "what_to_watch": "Mercoledì 12/08 esce il dato sull'inflazione USA (CPI): se scende ancora, rinforza la storia che i tassi scenderanno presto → buono per l'oro. Se invece risale a sorpresa, l'oro può perdere appeal. Tieni d'occhio anche il cambio EUR/USD: se l'euro si rafforza molto sul dollaro, l'oro quotato in euro può sembrare più caro (ma è un effetto tecnico, non fondamentale).",
+      "importance": 3
+    },
+    {
+      "date": "2026-08-06 08:51",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso piccolo sull'oro (tramite ETF UCITS SGLD.MI o PHAU.MI su Fineco)",
+      "reasoning": "L'oro ha fatto +6.5% in un mese e +5% nell'ultima settimana - sta accelerando. Due fattori convergono: 1) La Fed parla di possibili nuovi rialzi dei tassi → incertezza → gli investitori comprano oro come 'rifugio'. 2) Il tuo portafoglio è 100% azionario (NVIDIA + ETF azioni): NON hai NESSUN asset decorrelato. L'oro storicamente si comporta DIVERSAMENTE dalle azioni tech - quando quelle scendono, spesso l'oro sale o tiene. Sei giovane (38 anni), ma anche un portafoglio aggressivo beneficia di un ",
+      "counter": "ATTENZIONE però: l'oro è già salito tanto (+6.5% in un mese). Se domani il report sul lavoro esce MOLTO positivo (tante assunzioni, economia forte), la Fed potrebbe sembrare meno aggressiva e l'oro potrebbe scendere del 2-3% in un giorno. Inoltre l'oro non paga cedole né dividendi - guadagni solo se",
+      "price_at_signal": 337.51,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Su Fineco cerca SGLD.MI (iShares Physical Gold) o PHAU.MI (Invesco Physical Gold) - sono ETF che contengono oro fisico vero, non carta. Controlla il prezzo reale (ask) su Fineco prima di comprare. Con 150€ prendi circa 2-3 quote di SGLD (commissione 2.95€ = ~2%, accettabile). NON comprare subito: aspetta DOPO il report sul lavoro di domani mattina (esce prima dell'apertura europea, verso le 14:30 ora italiana). Se l'oro scende 1-2% su quel dato, compri a prezzo migliore. Se invece sale ancora, decidi se entrare comunque o aspettare.",
+      "what_to_watch": "Domani venerdì 07/08 ore 14:30 circa: report Non-Farm Payrolls USA. Se le assunzioni sono MOLTE (sopra 200k) e la disoccupazione SCENDE, l'oro probabilmente cala → aspetta. Se le assunzioni sono POCHE (sotto 150k) o la disoccupazione SALE, l'oro probabilmente accelera ancora → valuta ingresso rapido. Mercoledì 12/08 esce l'inflazione USA (CPI): se è ALTA (sopra 3.5% annuo), l'oro continua a salire. Prezzo dell'oro: se supera 350€ (proxy GLD), è già molto tirato - aspetta un ritracciamento.",
+      "importance": 3
+    },
+    {
+      "date": "2026-08-04 08:52",
+      "level": "YELLOW",
+      "ticker": "EEM",
+      "action": "valuta ingresso piccolo su emerging markets (EIMI.MI su Fineco) - sono scesi del 9.7% nel mese, molto più del resto del mondo, e hai zero esposizione là",
+      "reasoning": "I mercati emergenti (Cina, India, Brasile, ecc.) hanno perso quasi il 10% in un mese mentre USA e Europa hanno tenuto o guadagnato. Storicamente quando il divario si allarga così tanto (emergenti -10% vs sviluppati piatti) nei 3-6 mesi successivi c'è spesso un rimbalzo. Il tuo portafoglio è 90% USA/Europa via VWCE+EQAC+NVIDIA: aggiungere emergenti diversifica geograficamente e ti espone a economie che crescono più veloce (India fa +6-7% PIL all'anno, Cina +5%, vs USA +2%). ATTENZIONE però: se ve",
+      "counter": "Se il dollaro continua a salire (scenario probabile se la Fed resta 'falco' = tiene tassi alti), gli emergenti possono scendere ancora prima di girare. Inoltre questo indice contiene ~30% Cina, e lì il governo sta ancora cercando di sistemare il casino immobiliare - può volerci tempo. Rischio concre",
+      "price_at_signal": 55.87,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Su Fineco cerca EIMI.MI (iShares MSCI Emerging Markets) o VFEM.MI (Vanguard Emerging Markets). Controlla il prezzo reale (ask) su Fineco prima di comprare - non usare il prezzo di EEM che vedi qui, è solo un riferimento americano. Se decidi di entrare, fallo con piccole somme (150-200€ max): 2-3 quote per iniziare, così se scende ancora hai margine per mediare dopo senza aver bruciato tutto subito. Commissione Fineco ~2.95€, quindi su 150€ pesi ~2% - accettabile ma non ideale (meglio sarebbe 200€+). Aspetta almeno dopo venerdì 07/08 (dato sul lavoro USA) per avere un quadro più chiaro su cosa ",
+      "what_to_watch": "1) Venerdì 07/08 ore 14:30 italiane esce il report sul lavoro USA: se i posti creati sono sopra 200k e la disoccupazione scende, il dollaro sale e gli emergenti soffrono ancora - in quel caso aspetta. 2) Tieni d'occhio l'indice del dollaro (DXY): se supera 106 gli emergenti fanno fatica, se scende sotto 104 hanno più spazio per risalire. 3) Notizie dalla Cina su stimoli economici del governo: se annunciano aiuti veri (non solo parole) l'indice emergenti può rimbalzare forte, visto che la Cina pesa 30%.",
+      "importance": 3
+    },
+    {
+      "date": "2026-08-03 10:04",
+      "level": "YELLOW",
+      "ticker": "AAPL",
+      "action": "valuta ingresso piccolo se il prezzo scende ancora nei prossimi giorni",
+      "reasoning": "Apple ha perso il 7% in un giorno senza che sia crollata l'economia - probabilmente è una reazione esagerata a qualche notizia specifica (earnings, dichiarazioni, timori sui dazi). Il prezzo sta tornando a livelli che non vedeva da settimane. PERÒ: (1) il motivo esatto del crollo non è chiaro dalle news che ho - potrebbe esserci qualcosa di strutturale che non so; (2) hai già troppa esposizione tech USA (NVIDIA + EQAC + il 30% di VWCE è tutto tech americano), quindi comprare Apple significherebb",
+      "counter": "ATTENZIONE: il crollo potrebbe continuare se venerdì 7 agosto il dato sul lavoro USA esce male, o se mercoledì 12 agosto l'inflazione esce alta (la Fed terrebbe i tassi alti più a lungo, che fa male al tech). Inoltre comprare Apple ora significherebbe aumentare ancora di più la quota di tech USA nel",
+      "price_at_signal": 268.01,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Per ora NON fare nulla. Nei prossimi 2-3 giorni cerca di capire PERCHÉ Apple è crollata (earnings usciti male? Problema sui prodotti? Timori sui dazi?). Se il motivo è temporaneo e il prezzo scende ancora a €250 o meno, ALLORA valuta se comprare - ma solo se hai almeno 150€ liberi da investire (sotto quella cifra le commissioni Fineco di 3€ pesano troppo, parti già col 2% di perdita). E ricordati: comprare Apple significa aumentare ancora di più il tech USA nel portafoglio.",
+      "what_to_watch": "Prezzo Apple: se scende sotto €250 diventa più interessante. News Apple nei prossimi giorni: cerca di capire il motivo del crollo. Report lavoro USA venerdì 7 agosto: se esce male il tech potrebbe scendere ancora. Inflazione USA mercoledì 12 agosto: se esce alta la Fed tiene i tassi alti e il tech soffre.",
+      "importance": 3
+    },
+    {
+      "date": "2026-07-31 09:15",
+      "level": "YELLOW",
+      "ticker": "EEM",
+      "action": "valuta ingresso su mercati emergenti (via EIMI.MI su Fineco)",
+      "reasoning": "Due fattori convergenti interessanti: (1) Gli emergenti hanno perso il 7.25% nel mese - sono tornati a livelli 'scontati' rispetto a dove erano - e oggi rimbalzano forte del 4%. (2) Il tuo portafoglio è tutto USA/Europa sviluppata: VWCE è 70% Stati Uniti, EQAC è 100% USA, NVIDIA è USA. Gli emergenti sono decorrelati (si muovono diversamente) e storicamente dopo cali così forti tendono a recuperare nei 3-6 mesi successivi. PERÒ: manca un catalizzatore concreto oggi - non c'è una notizia specifica",
+      "counter": "ATTENZIONE: il rimbalzo di oggi potrebbe essere solo un 'salto del gatto morto' (un rimbalzo breve in mezzo a una discesa più lunga). Se le tensioni commerciali USA-Cina peggiorano o se l'economia cinese rallenta ancora, gli emergenti possono scendere parecchio. E storicamente sono più volatili (sal",
+      "price_at_signal": 55.2,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Controlla il prezzo reale (ask) di EIMI.MI su Fineco - NON usare il prezzo del proxy EEM qui sopra, non coincide. Se decidi di entrare, parti con 2-3 quote (circa 300€) per testare - è un mercato nuovo per te e volatile. Imposta un alert su Fineco se EIMI.MI scende ancora del 3-4% da qui: potrebbe essere un secondo punto di ingresso migliore.",
+      "what_to_watch": "Tieni d'occhio: (1) Il dato sull'inflazione USA mercoledì 12/08 - se esce più alto del previsto i mercati emergenti potrebbero scendere ancora. (2) Notizie su Cina: se rallenta la crescita economica cinese (PIL, consumi) gli emergenti soffrono. (3) Andamento prossimi 2-3 giorni di EEM/EIMI: se il rimbalzo regge è buon segno, se torna giù subito era solo un rimbalzo di 1 giorno.",
+      "importance": 3
+    },
+    {
+      "date": "2026-07-30 08:47",
+      "level": "YELLOW",
+      "ticker": "EIMI.MI",
+      "action": "Valuta ingresso piccolo sugli emergenti (100-150€) solo SE sei disposto a vedere ancora -5/10% prima di un rimbalzo nei prossimi 3-6 mesi",
+      "reasoning": "Gli emergenti (EIMI è l'ETF che li contiene) hanno perso l'11% in un mese — una botta seria. Storicamente, quando scendono così tanto in poco tempo, nei 3-6 mesi successivi spesso recuperano almeno metà della perdita (non sempre, ma spesso). Due motivi per cui POTREBBE essere interessante ora: (1) Hai ZERO emergenti in portafoglio — tutto il tuo azionario è USA ed Europa ricca, quindi comprare emergenti ti diversificherebbe davvero. (2) Il prezzo è tornato a livelli che non vedevamo da mesi — ti",
+      "counter": "ATTENZIONE: gli emergenti possono scendere ancora -5/10% tranquillamente. La Cina (che è il pezzo grosso degli emergenti) ha l'economia che cresce poco, il settore immobiliare in crisi, e litiga con gli USA (notizia di oggi sui robot). Se compri ora, devi mettere in conto che tra un mese potresti es",
+      "price_at_signal": null,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Se decidi di entrare: vai su Fineco, cerca EIMI.MI (è l'ETF MSCI Emerging Markets di iShares, replica EEM). Controlla il prezzo reale (ask) prima di comprare — i prezzi che ti do io sono approssimativi. Compra 2-3 quote (circa 100-150€ totali). NON di più: è un esperimento di diversificazione, non una scommessa grossa. Imposta un alert a -15% dal prezzo di acquisto: se ci arriva, rivaluta se ha ancora senso tenerlo o se è meglio tagliare la perdita.",
+      "what_to_watch": "Monitora: (1) Notizie dalla Cina — se annunciano stimoli economici (tipo 'stampiamo soldi' o 'tagliamo i tassi'), gli emergenti ripartono. (2) Il dollaro USA (simbolo DXY): se scende, gli emergenti salgono (e viceversa). (3) Tensioni USA-Cina: se peggiorano (tipo dazi nuovi, altre ritorsioni), gli emergenti soffrono. (4) Il dato sul lavoro USA del 7 agosto (venerdì prossimo): se esce male (tanti disoccupati), la Fed potrebbe tagliare i tassi prima — buono per emergenti. Se esce troppo bene, la Fed resta dura — male per emergenti.",
+      "importance": 3
+    },
+    {
+      "date": "2026-07-29 08:54",
+      "level": "YELLOW",
+      "ticker": "EXV1.MI",
+      "action": "valuta ingresso iniziale sulle banche europee",
+      "reasoning": "Le banche europee (EXV1.MI raccoglie le principali) hanno fatto +2.1% nell'ultimo mese mentre tutto il resto del portafoglio di Adriano ha perso terreno (NVIDIA -7%, EQAC -7%, VWCE -0.9%). Questo è il classico momento di 'rotazione settoriale' - i soldi si spostano dal tech (che è diventato caro e rischioso) verso settori più 'noiosi' come le banche. Due fattori a favore: (1) se la Fed domani conferma che i tassi resteranno alti ancora per un po', le banche guadagnano di più (prestano soldi a ta",
+      "counter": "ATTENZIONE però: è un settore che dipende molto dall'economia reale. Se l'economia rallenta forte (recessione), le banche soffrono perché più gente non ripaga i prestiti. Inoltre EXV1 è denominato in euro - se il dollaro si rafforza molto, questo ETF perde valore in termini relativi (anche se Adrian",
+      "price_at_signal": 41.14,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Aspetta la decisione della Fed di domani (mercoledì sera, verso le 20:00 ora italiana). Se confermano tassi fermi e Powell dice che non li abbasseranno presto, le banche dovrebbero continuare a fare bene. A quel punto valuta di comprare 4-5 quote di EXV1.MI su Fineco (sono circa €41 l'una, quindi ~€160-200 totali). Commissione Fineco €2.95 - su €200 pesa l'1.5%, accettabile.",
+      "what_to_watch": "Domani sera: se Powell parla di tagliare i tassi 'presto' (tono dovish, da colomba) le banche scendono - aspetta. Se invece dice 'restiamo prudenti, l'inflazione non è ancora sotto controllo' (tono hawkish, da falco) le banche salgono - quello è il momento. Prezzo EXV1: se scende sotto €40 è un buon ingresso. Venerdì 7 agosto esce il report sul lavoro USA - se i numeri sono brutti (pochi posti di lavoro creati) il mercato penserà che l'economia rallenta e le banche possono soffrire.",
+      "importance": 3
+    },
+    {
+      "date": "2026-07-28 08:50",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso su oro fisico (SGLD.MI o PHAU.MI su Fineco) - ha perso il 3% nel mese ma oggi sta risalendo",
+      "reasoning": "L'oro ha perso circa il 3% nell'ultimo mese (da sopra 340€ a 329€ del proxy GLD) ed è tornato vicino ai livelli di inizio anno. Storicamente l'oro tende a salire quando: 1) c'è incertezza sul futuro dei tassi (e questa settimana c'è meeting Fed con un presidente nuovo), 2) gli investitori si spaventano sul tech (e oggi i chip asiatici sono crollati), 3) l'inflazione resta sopra il target Fed (e oggi esce il PCE che potrebbe confermare questo). Il tuo portafoglio è 100% azionario tech-pesante + u",
+      "counter": "Se il PCE esce basso e la Fed conferma che abbasserà i tassi presto, il dollaro si indebolisce e l'oro potrebbe scendere ancora (paradossalmente tassi bassi non sempre aiutano l'oro subito - dipende dalle aspettative). Inoltre -3% in un mese non è un grande sconto - potrebbe arrivare a -5/-8% prima ",
+      "price_at_signal": 329.37,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Su Fineco cerca SGLD.MI (iShares Physical Gold) o PHAU.MI (Invesco Physical Gold) - NON comprare GLD che è USA e non è disponibile. Controlla il prezzo reale (ask) su Fineco prima di comprare - il proxy GLD a 329€ NON corrisponde al prezzo UCITS. Se hai ~200€ liberi, potresti prendere 1-2 quote (dipende dal prezzo che trovi). Aspetta DOPO l'uscita del PCE oggi pomeriggio (ore 14:30 italiane circa) per vedere la reazione del mercato - se l'oro sale forte subito, meglio aspettare che si stabilizzi.",
+      "what_to_watch": "Dato PCE oggi ore 14:30 italiane: se esce sopra 3% annuo (inflation ancora alta) → oro probabilmente sale. Se esce sotto 2.5% → potrebbe scendere ancora. Conferenza stampa di Kevin Warsh (nuovo presidente Fed) questa settimana: se usa parole tipo 'patient' (paziente), 'data-dependent' (dipende dai dati) → vuol dire che NON ha fretta di abbassare i tassi → oro su. Se dice 'dovish' (colomba, cioè vuole abbassare presto) → oro giù. Prezzo oro: se scende sotto 320€ (proxy GLD) aspetta e rivaluta - potrebbe arrivare a 310€.",
+      "importance": 3
+    },
+    {
+      "date": "2026-07-27 10:07",
+      "level": "YELLOW",
+      "ticker": "AGGH.MI",
+      "action": "tieni d'occhio per possibile accumulo nelle prossime settimane",
+      "reasoning": "L'ETF obbligazionario globale (AGGH) che hai in portafoglio ha perso l'1.44% sul mese (proxy AGG) e continua a scendere piano. Questo succede perché i tassi restano alti e la gente si aspetta che restino così ancora per mesi. PERÒ: 1) Domani esce il dato PCE sull'inflazione - se scende più del previsto, le obbligazioni potrebbero rimbalzare subito; 2) Storicamente, quando le obbligazioni scendono per 4-6 settimane di fila senza motivi drammatici (tipo una crisi vera), di solito nei 2-3 mesi dopo",
+      "counter": "ATTENZIONE però: se il dato di domani esce peggio del previsto (inflazione ancora alta), il mercato potrebbe aspettarsi altri rialzi dei tassi e le obbligazioni scenderebbero ancora per settimane. Inoltre la Fed ha detto chiaramente che potrebbe alzare ancora i tassi se serve - quindi il 'fondo' pot",
+      "price_at_signal": 4.9,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Per ora NON fare nulla. Domani mattina guarda il dato PCE USA (esce alle 14:30 ora italiana di solito). Se l'inflazione scende più del previsto e AGGH.MI sale di colpo dell'1% o più, lascia perdere - hai perso il treno. Se invece il dato è neutro o brutto e AGGH scende ancora, mettiti un alert su Fineco a €4.75 (circa 3% sotto il prezzo attuale di €4.90). Se ci arriva nei prossimi 10-15 giorni, valuta di comprare 10-15 quote in più (circa €50-70 - sopra le commissioni). Non di più: hai già abbastanza bond per il tuo profilo.",
+      "what_to_watch": "Dato PCE domani 28/07: se inflazione core (quella 'di fondo', senza cibo e energia) scende sotto 2.6% annuo rivedi al rialzo. Se resta sopra 2.8% le obbligazioni possono scendere ancora. Prezzo AGGH.MI: se rompe €4.70 (cioè -4% da qui) fermati e aspetta - potrebbe esserci un motivo più grosso che non vediamo. Comunicati Fed delle prossime settimane: se Powell (il capo della Fed) dice esplicitamente 'pensiamo a tagliare i tassi entro fine anno', le obbligazioni salgono subito.",
+      "importance": 3
+    },
+    {
+      "date": "2026-07-24 08:40",
+      "level": "YELLOW",
+      "ticker": "AGGH.MI",
+      "action": "valuta incremento piccolo (1-2 quote) se il prezzo scende ancora",
+      "reasoning": "AGGH sta perdendo da 3 settimane (-1.56% sul mese) per colpa dei tassi che salgono. Storicamente, quando i bond perdono così per un mese intero e poi i tassi smettono di salire (cosa che succede sempre prima o poi), recuperano nei 3-6 mesi successivi. Tu ne hai già 54 quote (circa 260€), quindi non è che ti manca - però se scende ancora di un altro 1-2% potrebbe essere un buon momento per aggiungerne 1-2 (circa 10-20€) visto che ti serve diversificazione dai bond per bilanciare tutto quel tech c",
+      "counter": "ATTENZIONE però: se martedì 28 luglio il dato PCE (inflazione) esce più alto del previsto, la Fed potrebbe alzare ancora i tassi e AGGH scenderebbe di un altro 1-2% prima di girare. Inoltre stai comprando piccole cifre (10-20€ = commissione 2.95€ = quasi 15-30% di costo iniziale) - troppo pesante. C",
+      "price_at_signal": 4.88,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Per ora NON comprare nulla - le cifre piccole (10-20€) ti fanno pagare commissioni troppo alte (3€ su 10€ = 30% di perdita immediata). Invece: tieni d'occhio il prezzo di AGGH.MI su Fineco nei prossimi giorni. Se scende sotto i 4.80€ E hai almeno 150€ da investire, valuta l'acquisto di 30 quote (~150€, commissione sotto 2%).",
+      "what_to_watch": "1) Martedì 28/07 ore 14:30 esce il dato PCE USA: se l'inflazione è più alta del previsto, AGGH scende ancora (aspetta). Se è in linea o più bassa, i tassi si stabilizzano e AGGH può rimbalzare. 2) Prezzo AGGH.MI: sotto 4.80€ diventa più interessante. 3) Tua liquidità: accumula almeno 150€ prima di muoverti, altrimenti le commissioni ti mangiano tutto.",
+      "importance": 3
+    },
+    {
+      "date": "2026-07-23 08:44",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "Valuta primo ingresso su oro fisico (SGLD.MI o PHAU.MI su Fineco) - piccola quota come diversificatore e protezione inflazione",
+      "reasoning": "2 fattori convergenti: (1) Tensione Iran + petrolio a 98$ = scenario classico pro-oro. Storicamente quando il petrolio schizza per motivi geopolitici, l'oro sale nei mesi successivi perché la gente teme inflazione (benzina cara = tutto più caro). (2) Martedì 28/07 esce il dato PCE USA (l'indice inflazione che la Fed guarda di più): se esce alto (sopra 2.5%), l'oro tipicamente sale perché gli investitori cercano protezione. (3) Nel portafoglio manca COMPLETAMENTE un asset decorrelato: hai solo az",
+      "counter": "ATTENZIONE però: l'oro è già salito +1.8% questa settimana - potresti star comprando dopo un mini-rally, non al minimo. Inoltre se martedì il dato inflazione esce BASSO (sotto 2.3%), la paura si sgonfia e l'oro può riscendere. Infine se la crisi Iran si calma nel weekend, lunedì il petrolio cala e l",
+      "price_at_signal": 332.22,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "1) Controlla il prezzo reale (ask) di SGLD.MI o PHAU.MI su Fineco lunedì mattina (sono entrambi oro fisico UCITS, stessa cosa - prendi quello col prezzo più basso). NON comprare GLD che è USA. 2) Se decidi di entrare, compra 1 quota (circa 150€ - con commissione 2.95€ sei al 2%, limite accettabile). 3) ASPETTA martedì sera dopo le 20:30 per vedere il dato PCE: se inflazione alta conferma la tesi, tieni. Se inflazione bassa, rivaluta.",
+      "what_to_watch": "Martedì 28/07 ore 20:30 esce il PCE USA: se il 'core PCE' (inflazione al netto di cibo ed energia) è sopra 2.5% annuo, l'oro tende a salire. Se sotto 2.3%, la narrativa si indebolisce. Weekend: monitora news Iran/Golfo Persico - se la tensione cala, petrolio e oro scendono insieme. Prezzo oro: se supera 340€ (proxy GLD), il rally si rafforza; se scende sotto 325€, lo spunto decade.",
+      "importance": 3
+    },
+    {
+      "date": "2026-07-22 08:43",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso piccolo sull'oro fisico (ETF UCITS SGLD.MI o PHAU.MI su Fineco) - da comprare su Fineco, NON GLD che è USA",
+      "reasoning": "L'oro ha perso il 5.65% nel mese (da circa 347€ a 328€) e oggi rimbalza +1.96% spinto dalle tensioni geopolitiche in Medio Oriente. Storicamente, quando l'oro scende del 5-7% in poche settimane senza motivi strutturali (tipo crollo della domanda), tende a recuperare nei 2-3 mesi successivi. In più manca COMPLETAMENTE nel tuo portafoglio - averlo serve come 'assicurazione' quando le azioni tech crollano tutte insieme (cosa che può succedere se i tassi salgono o se c'è una crisi). ATTENZIONE però:",
+      "counter": "L'oro non paga dividendi né interessi - lo compri solo sperando che il prezzo salga. Se i tassi USA restano alti a lungo (sopra il 4%), l'oro può continuare a scendere per mesi. Inoltre è un asset che si muove per paura e speculazione - non ha 'fondamentali' come un'azienda che guadagna soldi. Se le",
+      "price_at_signal": 328.33,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Su Fineco cerca SGLD.MI (iShares Physical Gold) o PHAU.MI (Invesco Physical Gold) - sono ETF UCITS che replicano il prezzo dell'oro fisico, identici a GLD ma comprabile in Europa. Controlla il prezzo reale (ask) su Fineco prima di comprare - NON usare il prezzo di GLD che vedi qui (328€), quello è un proxy USA e non corrisponde al prezzo UCITS. Con 150€ compri circa 1-2 quote (dipende dal prezzo ask). Considera di aspettare martedì 28 luglio dopo l'uscita del PCE: se il dato inflazione è più basso del previsto, l'oro potrebbe salire ancora - se è più alto, potrebbe riscendere e comprare dopo c",
+      "what_to_watch": "1) Dato PCE USA martedì 28 luglio: se l'inflazione scende più del previsto, oro tende a salire (Fed può abbassare i tassi). Se sale più del previsto, oro può scendere ancora. 2) Prezzo dell'oro: se scende sotto 320€ (proxy GLD), potrebbe essere un punto ancora migliore per entrare. 3) Notizie su Medio Oriente: se le tensioni si sgonfiano, il rimbalzo dell'oro può fermarsi.",
+      "importance": 3
+    },
+    {
+      "date": "2026-07-20 09:33",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso su oro fisico (SGLD.MI o PHAU.MI su Fineco) - il prezzo è sceso del 10% in un mese",
+      "reasoning": "L'oro ha perso oltre il 10% nell'ultimo mese (da 358€ a 322€ circa per il proxy GLD). Storicamente, quando l'oro perde così tanto in poco tempo senza motivi fondamentali (tipo pace mondiale improvvisa), tende a rimbalzare nei 3-6 mesi successivi. In più: (1) il petrolio sta salendo per tensioni Iran-USA, e di solito quando c'è instabilità geopolitica l'oro sale come bene rifugio; (2) il tuo portafoglio è 100% azioni/obbligazioni e zero oro - l'oro si muove spesso in direzione opposta alle azioni",
+      "counter": "Se i tassi USA continuano a salire (la prossima riunione Fed è tra qualche settimana), l'oro può scendere ancora prima di girare. Inoltre il calo del 10% potrebbe non essere finito: se il dollaro si rafforza ulteriormente (cosa che succede quando i tassi salgono), l'oro tende a soffrire. E attenzion",
+      "price_at_signal": 322.17,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Su Fineco cerca SGLD.MI (iShares Physical Gold) o PHAU.MI (Invesco Physical Gold) - sono ETF che contengono oro fisico vero, come il proxy GLD che vedi qui. Controlla il prezzo reale (quello che ti chiedono di pagare, si chiama 'ask') su Fineco prima di comprare - NON usare il prezzo 322€ di GLD che vedi qui, è un altro strumento. Se il prezzo su Fineco è tipo 40-45€ a quota, con 300€ prendi 6-7 quote. Aspetta almeno martedì 28 luglio (esce il dato inflazione PCE USA) per capire se conviene entrare subito o aspettare ancora.",
+      "what_to_watch": "Dato inflazione PCE USA martedì 28 luglio: se esce più alto del previsto, l'oro potrebbe ripartire subito. Prezzo del petrolio: se continua a salire sopra 85-90 dollari al barile (guardalo su Google Finance 'crude oil price'), rafforza il caso per l'oro. Tassi Treasury USA a 10 anni: se scendono sotto 4.2% (li trovi su Investing.com cercando 'US 10-Year'), è positivo per l'oro; se salgono sopra 4.5%, meglio aspettare.",
+      "importance": 3
+    },
+    {
+      "date": "2026-07-17 08:26",
+      "level": "YELLOW",
+      "ticker": "AGGH.MI",
+      "action": "valuta accumulo graduale piccole quote (2-3 al mese per 3-4 mesi)",
+      "reasoning": "Hai un problema di bilanciamento serio: 89% del portafoglio in azioni tech USA (quasi tutto concentrato su NVIDIA + Nasdaq + la parte USA di VWCE), solo 11% in obbligazioni. Oggi si vede benissimo: azioni giù del 2%, bond su dello 0.15% - fanno esattamente il mestiere per cui esistono (limitare le botte quando il mercato scende). AGGH costa 4.92€ a quota: con 150-200€ al mese compri 30-40 quote e in 3-4 mesi arrivi a 150-200 quote totali (~750-1000€), portando le obbligazioni dal 11% attuale al ",
+      "counter": "ATTENZIONE però: le obbligazioni rendono poco (2-3% all'anno) e se i tassi di interesse salgono ancora possono perdere qualche punto percentuale prima di stabilizzarsi. Non sono 'sicure' nel senso che non scendono mai - perdono meno delle azioni quando i mercati crollano, ma perdono comunque qualcos",
+      "price_at_signal": 4.92,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Accumula liquidità per 1-2 mesi fino ad avere almeno 300€ disponibili (così le commissioni pesano meno dell'1%). Poi compra 60-70 quote di AGGH.MI su Fineco in un'unica operazione. Ripeti ogni 2 mesi per i prossimi 6-8 mesi. Obiettivo: arrivare a 25-30% del portafoglio in obbligazioni entro fine anno.",
+      "what_to_watch": "Prezzo AGGH.MI su Fineco (usa il prezzo 'ask' che vedi in piattaforma, non quello del proxy AGG che ti do io - sono diversi). Riunioni della banca centrale europea e americana: se alzano ancora i tassi, AGGH può scendere un altro 2-3% prima di stabilizzarsi (non è un dramma, ma è da sapere). Il dato chiave è la PERCENTUALE del portafoglio: tieni d'occhio che le obbligazioni non restino sotto il 15-20% del totale.",
+      "importance": 3
+    },
+    {
+      "date": "2026-07-15 08:34",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso su oro fisico (SGLD.MI o PHAU.MI su Fineco) in caso di ulteriore discesa verso -10/-12% sul mese",
+      "reasoning": "L'oro ha perso il 9.5% in un mese - un calo significativo per un asset che di solito è stabile. Oggi rimbalza (+1.4%) ma potrebbe scendere ancora se il dollaro resta forte. PERÒ: (1) le tensioni USA-Iran potrebbero far salire petrolio e inflazione, e storicamente in questi casi l'oro sale perché la gente lo compra come 'rifugio sicuro'; (2) il tuo portafoglio è 100% azionario tech USA e bond - l'oro lo diversificherebbe tantissimo perché si muove in modo completamente diverso dalle azioni; (3) s",
+      "counter": "ATTENZIONE: se la Fed continua a tenere i tassi alti (lo saprai alla prossima riunione Fed, che è una delle 8 all'anno) e il dollaro resta forte, l'oro può scendere ancora per settimane. Inoltre l'oro non paga dividendi: guadagni solo se il prezzo sale. Se compri ora e scende ancora del 5%, devi ess",
+      "price_at_signal": 325.63,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Per ora NON fare nulla. Imposta un alert su Fineco per SGLD.MI (è l'ETF UCITS che replica l'oro fisico - NON puoi comprare GLD che è USA). Controlla il prezzo attuale di SGLD.MI su Fineco (io vedo solo il proxy GLD a 325€ ma il prezzo reale di SGLD.MI sarà diverso - controllalo tu). Se SGLD.MI scende di un altro 2-3% nei prossimi giorni e arriva vicino a -11/-12% sul mese, valuta di comprare 1-2 quote (circa 200€ totali, così le commissioni Fineco di 2.95€ pesano solo l'1.5% invece del 3%). SGLD.MI e PHAU.MI sono equivalenti per Adriano - scegli quello che ha lo spread bid-ask più stretto al m",
+      "what_to_watch": "Prezzo oro: se scende ancora 2-3% da qui diventa più interessante. Tensioni Iran: se escalano davvero (attacchi concreti, non solo parole), l'oro salta su. Prossima riunione Fed: se dicono che taglieranno i tassi presto (retorica 'dovish', da colomba), l'oro sale; se dicono che li tengono alti ('hawkish', da falco), l'oro scende ancora. Dollaro USA: se si indebolisce (lo vedi dal cambio EUR/USD che sale), l'oro tende a salire.",
+      "importance": 3
+    },
+    {
+      "date": "2026-07-14 08:27",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso su oro fisico (ETF UCITS: SGLD.MI o PHAU.MI su Fineco) - possibile rimbalzo tecnico dopo calo eccessivo",
+      "reasoning": "L'oro ha perso il 12% in un mese (-2,6% solo oggi). È un movimento molto ampio per un asset che normalmente oscilla poco. Storicamente dopo cali così marcati in poco tempo l'oro tende a rimbalzare nei 2-3 mesi successivi (non sempre subito, ma il prezzo diventa interessante). INOLTRE: le tensioni in Medio Oriente (Stretto di Hormuz) di solito fanno salire l'oro come bene rifugio - per ora non è successo perché tutti guardano l'inflazione, ma se la situazione peggiora l'oro potrebbe recuperare ve",
+      "counter": "ATTENZIONE però: se oggi i dati sull'inflazione USA escono più alti del previsto, la banca centrale potrebbe tenere i tassi alti ancora per mesi - e l'oro continuerebbe a scendere (perché i bond che pagano interessi diventano più attraenti). Inoltre l'oro non paga dividendi né interessi: lo compri s",
+      "price_at_signal": 322.01,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Su Fineco NON puoi comprare GLD (è USA). Devi comprare l'equivalente UCITS: SGLD.MI (iShares Physical Gold) o PHAU.MI (Invesco Physical Gold). Sono ETF che comprano oro fisico vero e lo tengono in caveau - stesso identico risultato di GLD. Controlla il prezzo reale (ask) su Fineco prima di comprare - i miei dati sono proxy USA e non coincidono esattamente. Se decidi di entrare, fallo con 150-200€ max (1-2 quote) per non pesare troppo sulle commissioni (2,95€). Aspetta DOPO i dati inflazione di oggi pomeriggio: se l'inflazione esce alta l'oro scende ancora e compri meglio domani.",
+      "what_to_watch": "1) Dato inflazione USA oggi pomeriggio: se CPI esce sopra le attese (+0,3% mensile o più) l'oro probabilmente scende ancora - aspetta. Se esce in linea o sotto (+0,2% o meno) l'oro potrebbe rimbalzare subito. 2) Evoluzione Medio Oriente: se la situazione peggiora (blocchi veri al petrolio, non solo minacce) l'oro sale come rifugio. 3) Prezzo oro: se scende sotto 310€ (proxy GLD) diventa ancora più interessante - ma sotto quella soglia storicamente rimbalza quasi sempre entro 4-6 settimane.",
+      "importance": 3
+    },
+    {
+      "date": "2026-07-13 09:46",
+      "level": "YELLOW",
+      "ticker": "AGGH.MI",
+      "action": "valuta piccolo accumulo (1-2 quote) sull'ETF obbligazionario globale",
+      "reasoning": "Due fattori convergenti: (1) L'ETF obbligazionario che hai (AGGH) ha perso quasi 1% nel mese e sta ai minimi recenti - è più 'a sconto' rispetto a qualche settimana fa. (2) Domani esce il dato inflazione USA: se scende (come molti si aspettano), i tassi potrebbero iniziare a scendere nei prossimi mesi, e quando i tassi scendono le obbligazioni salgono di prezzo (perché i prestiti vecchi con tassi più alti diventano più preziosi). PERÒ: se l'inflazione sorprende al rialzo, le obbligazioni possono",
+      "counter": "ATTENZIONE: se domani l'inflazione USA esce più alta del previsto (sopra il 3.2-3.3% annuo che si aspetta il mercato), l'ETF obbligazionario può perdere un altro 0.5-1% in pochi giorni. Inoltre, AGGH è 'hedged' in euro (protetto dal cambio dollaro/euro), quindi se il dollaro si rafforza molto non ci",
+      "price_at_signal": 4.91,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Se vuoi posizionarti PRIMA del dato inflazione di domani: compra 1-2 quote di AGGH.MI su Fineco (circa €5-10, prezzo ask reale da controllare in piattaforma). Commissione Fineco €2.95 - su €10 pesa il 30%, quindi ha senso SOLO se sei disposto ad accumularne altre nei prossimi mesi per ammortizzare il costo. Altrimenti aspetta di avere €50-100 disponibili e compra tutto insieme. Esegui OGGI (lunedì) se vuoi entrare prima del dato di domani sera.",
+      "what_to_watch": "Domani sera ore 14:30 italiane esce il CPI USA (inflazione). Se scende sotto il 3.2% annuo, AGGH dovrebbe salire. Se esce sopra il 3.5%, scende. Dopo il dato, guarda anche cosa dice il mercato dei tassi: se il rendimento del Treasury decennale USA (lo trovi su Fineco o Google 'US 10Y yield') scende sotto il 4.2%, le obbligazioni hanno spazio per salire ancora. Se supera il 4.5%, rivedi - vuol dire che i tassi resteranno alti più a lungo.",
+      "importance": 3
+    },
+    {
+      "date": "2026-07-10 09:52",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso piccolo sull'oro (SGLD.MI o PHAU.MI su Fineco) per diversificare",
+      "reasoning": "L'oro ha perso il 7.4% in un mese - e' uno dei cali piu' forti dell'anno. Oggi rimbalza +1%, che e' normale dopo un crollo cosi'. Ma ci sono 2 motivi per cui potrebbe essere interessante adesso: 1) Il tuo portafoglio e' 100% azionario USA (NVIDIA + VWCE + EQAC si sovrappongono tutti sul tech americano) - l'oro e' l'opposto: quando le azioni scendono, spesso l'oro sale (si chiama decorrelazione). 2) Con l'inflazione che resta alta (vedi i dati CPI che escono martedi' 14 luglio) e la Fed divisa su",
+      "counter": "ATTENZIONE pero': se martedi' 14 luglio il dato sull'inflazione USA esce piu' basso del previsto, l'oro puo' scendere ancora (perche' se l'inflazione cala, la gente compra meno oro come protezione). E se la Fed decide di tagliare i tassi presto, il dollaro si indebolisce e l'oro tende a salire - ma ",
+      "price_at_signal": 330.79,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Su Fineco cerca SGLD.MI (iShares Physical Gold) oppure PHAU.MI (Invesco Physical Gold) - sono ETF che contengono oro fisico in cassaforte, NON derivati. Controlla il prezzo reale (ask) su Fineco prima di comprare - quello che vedi qui (€330) e' un proxy USA e non coincide col prezzo UCITS. Con €150-200 compri circa mezza quota (dipende dal prezzo esatto). Considera di fare l'ordine lunedi' mattina: se l'oro continua a salire nel weekend per tensioni geopolitiche, entri sul rimbalzo; se scende ancora, aspetti martedi' dopo il CPI.",
+      "what_to_watch": "Martedi' 14/07 esce il CPI USA (inflazione): se e' sopra le attese (sopra il 3.5% annuo), l'oro tende a salire. Se e' sotto (tipo 3% o meno), puo' scendere ancora. Secondo punto: monitora il prezzo di SGLD.MI su Fineco - se supera i massimi di ieri (cioe' se il rimbalzo continua), e' un segnale che il calo e' finito. Se invece torna a scendere sotto €325-330 (proxy), meglio aspettare.",
+      "importance": 3
+    },
+    {
+      "date": "2026-07-09 10:02",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso su oro fisico (SGLD.MI o PHAU.MI su Fineco) - compra piccola quota (~€150-200) come diversificazione e protezione dall'incertezza sui tassi",
+      "reasoning": "L'oro ha perso quasi il 10% in un mese (-9.55%) e questa settimana ha rimbalzato leggermente (+1.65%). Fattori che convergono: 1) La Fed è divisa sui tassi (verbali di oggi) - l'incertezza di solito aiuta l'oro perché è visto come 'bene rifugio'. 2) Il tuo portafoglio è 100% azioni/obbligazioni - zero protezione contro inflazione o crisi improvvise. L'oro è storicamente decorrelato (cioè si muove in modo diverso rispetto alle azioni). 3) Il prezzo è tornato a livelli che non si vedevano da novem",
+      "counter": "ATTENZIONE però: se la Fed decidesse di alzare davvero i tassi nelle prossime settimane, l'oro potrebbe scendere ancora. I tassi alti 'costano' all'oro perché l'oro non paga interessi - meglio tenere soldi in banca o bond. Inoltre, il rimbalzo di questa settimana potrebbe essere solo un momento pass",
+      "price_at_signal": 327.49,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Su Fineco cerca SGLD.MI (iShares Physical Gold) o PHAU.MI (Invesco Physical Gold) - sono ETF che replicano il prezzo dell'oro fisico, NON comprare GLD che è USA e non acquistabile. Controlla il prezzo reale (ask) su Fineco prima di comprare - non fidarti del prezzo proxy che ti ho dato. Se hai €180-200 disponibili senza bisogno a breve, valuta di comprare 1 quota per iniziare. Commissione Fineco €2.95, quindi su €180 pesa ~1.6% - accettabile.",
+      "what_to_watch": "Tieni d'occhio: 1) Cosa dice la Fed nei prossimi comunicati - se usano parole tipo 'continueremo ad alzare i tassi' (hawkish, da falco aggressivo) l'oro potrebbe scendere ancora. 2) Il prezzo dell'oro stesso - se scende sotto €310 (proxy GLD sotto $320), la discesa potrebbe continuare. 3) Dati inflazione USA martedì 14 luglio: se l'inflazione è più alta del previsto, potrebbe aiutare l'oro (più inflazione = oro più attraente). Se è più bassa, male per l'oro.",
+      "importance": 3
+    },
+    {
+      "date": "2026-07-08 08:43",
+      "level": "YELLOW",
+      "ticker": "XLV",
+      "action": "valuta ingresso su healthcare USA (UCITS Fineco: HEAL.MI o IHCU.MI) con 150-200€",
+      "reasoning": "Il settore healthcare USA ha fatto +9.7% nell'ultimo mese mentre il tuo portafoglio (tutto tech e azionario globale) ha faticato. È un settore difensivo: quando i mercati sono nervosi, la gente si rifugia su aziende che vendono farmaci e cure mediche (la gente si ammala sempre, crisi o no). Il tuo portafoglio è MOLTO sbilanciato sul tech USA (NVIDIA + 30% di VWCE + tutto EQAC): aggiungere healthcare ti diversifica sia come settore che come stile (difensivo vs aggressivo). Il prezzo è salito ma n",
+      "counter": "ATTENZIONE però: se aggiungi adesso stai comprando dopo un mese di salita (+9.7%). Il rischio è che nei prossimi giorni il settore si fermi o scenda un po' per 'presa di profitto' (gente che vende per incassare il guadagno fatto). Inoltre healthcare tende ad andare male se i tassi di interesse scend",
+      "price_at_signal": 144.13,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Su Fineco cerca HEAL.MI (iShares Healthcare Innovation) o IHCU.MI (iShares S&P 500 Health Care): sono gli equivalenti UCITS di XLV. Controlla il prezzo reale (ask) su Fineco - io vedo solo il proxy USA. Con 175€ compri 1-2 quote a seconda del prezzo. Fallo solo se ti restano almeno altri 100€ liquidi per eventuali occasioni future.",
+      "what_to_watch": "Martedì 14 luglio esce il dato sull'inflazione USA (CPI): se l'inflazione scende più del previsto, i mercati penseranno che la Fed taglierà presto i tassi, e a quel punto il tech riparte forte mentre healthcare rallenta. In quel caso rivaluta se ha ancora senso comprare healthcare o se è meglio aspettare. Inoltre tieni d'occhio il calendario earnings di UnitedHealth (UNH, nella watchlist): se pubblica risultati buoni trascina su tutto il settore.",
+      "importance": 2
+    },
+    {
+      "date": "2026-07-07 22:19",
+      "level": "YELLOW",
+      "ticker": "XLV",
+      "action": "valuta ingresso su healthcare USA (ETF UCITS Fineco: HEAL.MI o IHCU.MI) con piccola quota (100-150€)",
+      "reasoning": "Il settore healthcare USA ha fatto +11.7% nell'ultimo mese mentre il tuo portafoglio (tutto tech) ha sofferto. È un settore difensivo: quando la gente ha paura per l'economia o per le tensioni geopolitiche (vedi Iran), tende a comprare azioni di ospedali e farmaceutiche perché 'la gente si ammala sempre, qualunque cosa succeda'. Ti manca completamente questa diversificazione - hai solo tech e un po' di obbligazioni. Il proxy XLV è a 144€, +3.1% oggi: il trend è forte. Su Fineco compreresti HEAL.",
+      "counter": "ATTENZIONE però: questo settore è già salito parecchio (+11.7% in un mese). Potrebbe essere 'tardi' per entrare ora - magari tra 2-3 settimane scende e trovi un prezzo migliore. Inoltre se mercoledì 15 luglio (quando esce il dato sui prezzi alla produzione USA) l'inflazione risulta più alta del prev",
+      "price_at_signal": 144.18,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Controlla il prezzo reale (ask, quello a cui compri) di HEAL.MI o IHCU.MI su Fineco - NON fidarti del numero 144€ che è riferito al proxy USA. Se il prezzo ti sembra ragionevole e hai ~120€ di liquidità disponibile (così paghi 2.95€ di commissione che è solo il 2.5%, accettabile), puoi comprare 1 quota. Oppure aspetta 1-2 settimane e vedi se il prezzo scende un po' prima di entrare.",
+      "what_to_watch": "Mercoledì 15 luglio esce il dato PPI (prezzi alla produzione USA): se è più alto del previsto, aspettati che healthcare scenda insieme al resto del mercato. Controlla anche se il proxy XLV continua a salire o si ferma: se fa +2-3% ancora questa settimana, probabilmente è davvero tardi per entrare. Se invece si stabilizza o perde 1-2%, diventa più interessante.",
+      "importance": 2
+    },
+    {
+      "date": "2026-07-07 21:59",
+      "level": "YELLOW",
+      "ticker": "GLD",
+      "action": "valuta ingresso piccolo sull'oro fisico (UCITS Fineco: SGLD.MI o PHAU.MI) dopo il calo del mese",
+      "reasoning": "L'oro ha perso l'8.3% nell'ultimo mese ma oggi rimbalza del 2% - è tornato a un livello più 'normale' dopo essere stato molto caro a inizio 2025. Storicamente, l'oro tende a fare da cuscinetto quando il tech va male (come oggi) e quando ci sono incertezze geopolitiche o inflazione. Il portafoglio di Adriano è 100% azionario e quasi tutto tech USA (NVIDIA + 30% di VWCE + tutto EQAC): aggiungere un po' di oro fisico (che NON è correlato con le azioni) migliorerebbe la diversificazione. PERÒ: l'oro",
+      "counter": "ATTENZIONE: l'oro è sceso per un motivo - i tassi reali (tassi di interesse meno inflazione) sono alti, e quando puoi guadagnare il 4-5% lasciando i soldi in banca o in obbligazioni sicure, l'oro diventa meno attraente. Se la Fed (banca centrale USA) decide di tenere i tassi così o alzarli ancora, l",
+      "price_at_signal": 330.87,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Su Fineco cerca SGLD.MI (iShares Physical Gold) o PHAU.MI (Invesco Physical Gold) - sono ETF che comprano oro fisico vero e proprio, come avere lingotti in cassaforte senza tenerli in casa. Controlla il prezzo reale (ask) su Fineco prima di comprare: i dati qui sono proxy USA e NON coincidono col prezzo UCITS. Se hai €150-200 disponibili e il prezzo ti sembra ragionevole, valuta 1-2 quote come primo ingresso piccolo per diversificare dal tech.",
+      "what_to_watch": "Tasso decennale USA (Treasury 10Y): se supera stabilmente il 4.6-4.7% l'oro rischia altro calo - lo trovi sui siti finanziari o su TradingView. Comunicati della Fed: il prossimo dato sull'inflazione USA esce martedì 14 luglio (CPI) - se l'inflazione torna a salire forte, l'oro può ripartire; se scende tanto, la Fed può abbassare i tassi e l'oro ne beneficia. Prezzo oro: se scende sotto i €320 (proxy GLD), aspetta - potrebbe arrivare a €310-315 prima di stabilizzarsi.",
+      "importance": 2
+    },
+    {
+      "date": "2026-07-07 09:59",
+      "level": "YELLOW",
+      "ticker": "EEM",
+      "action": "valuta ingresso su mercati emergenti (EIMI.MI o VFEM.MI su Fineco) - diversifica geograficamente",
+      "reasoning": "Gli emergenti (Asia, Latam, Est Europa) hanno fatto +2.9% oggi e nel mese sono già +2.3%. Il tuo portafoglio è 90% USA/Europa sviluppata - gli emergenti mancano completamente. VWCE ne contiene solo il 10% circa, quindi aggiungere un ETF dedicato come EIMI ti darebbe vera diversificazione geografica. Il prezzo è ragionevole (non ai massimi storici) e storicamente gli emergenti vanno bene quando il dollaro si stabilizza o scende, come sta accadendo ora. Inoltre, tra 7 giorni esce l'inflazione USA:",
+      "counter": "ATTENZIONE però: gli emergenti sono più volatili (saltano su e giù più forte) delle azioni USA/Europa. Se l'inflazione USA di martedì 14 luglio è più alta del previsto, il dollaro si rafforza e gli emergenti possono perdere il 3-5% in pochi giorni. Inoltre, tra 8 giorni (mercoledì 15 luglio) escono ",
+      "price_at_signal": 59.12,
+      "price_now": null,
+      "performance_pct": null,
+      "model": "claude-sonnet-4-5",
+      "what_to_do": "Controlla il prezzo reale (ask) di EIMI.MI su Fineco - dovrebbe essere sui 35-40€ a quota (NON usare il prezzo del proxy EEM che vedi qui, è diverso). Se vuoi diversificare, puoi comprare 3-4 quote di EIMI (~120-160€ totali) OPPURE aspettare martedì 14 luglio dopo l'uscita del dato sull'inflazione USA - se è più bassa del previsto, il dollaro scende e gli emergenti salgono ancora, quindi potresti entrare con più convinzione.",
+      "what_to_watch": "Martedì 14 luglio: inflazione USA (CPI). Se scende o resta stabile, è buono per emergenti. Se sale sopra attese, aspetta. Mercoledì 15 luglio: prezzi alla produzione USA (PPI), stesso ragionamento. Dollaro: se il cambio EUR/USD sale (dollaro si indebolisce), gli emergenti ne beneficiano - tienilo d'occhio su Google Finanza.",
+      "importance": 2
+    }
+  ],
+  "backtest": {
+    "total_signals": 99,
+    "analyzable": 3,
+    "hit_rate": 100.0,
+    "avg_performance": 6.89,
+    "green_count": 0,
+    "yellow_count": 3,
+    "green_avg_perf": null,
+    "yellow_avg_perf": 6.89
+  },
+  "news": [],
+  "events_upcoming": [],
+  "watchlist": [],
+  "pillola_corrente": null,
+  "archivio_pillole": [
+    {
+      "numero": 4,
+      "titolo": "Aspettare il momento giusto è una pessima idea",
+      "sottotitolo": "PAC vs Timing: chi vince davvero",
+      "corpo": "C'è una domanda che fanno tutti i principianti: <em>\"meglio aspettare che il mercato scenda e comprare a poco, o iniziare subito?\"</em>. La risposta scientifica esiste. Ti spiego senza usare termini complicati.\n\n<strong>Strategia 1 — Il timing</strong> (\"aspetto il momento giusto\"): aspetti che il mercato crolli, poi compri tanto in un colpo solo.\n\n<strong>Strategia 2 — Il PAC</strong> (Piano di Accumulo Capitale): ogni mese compri sempre la stessa cifra, indipendentemente dal prezzo. Se il mercato è alto compri poco. Se è basso compri tanto. Senza pensarci.\n\nTi dico chi vince: <strong>il PAC vince nell'85% dei casi su periodi lunghi</strong>. Non lo dico io, lo dicono studi accademici fatti su 30+ anni di mercati USA, Europa, Asia.\n\nPerché?\n<ol>\n  <li><strong>Nessuno sa quando il mercato è \"basso\"</strong>. Quello che oggi sembra basso domani può essere il nuovo \"massimo\" prima di un altro crollo. O viceversa: quello che ti sembra \"alto e da non comprare\" può essere solo l'inizio di una salita di 10 anni.</li>\n  <li><strong>Il PAC ti toglie le emozioni</strong>. Compri a prescindere. Non leggi le news, non guardi il grafico. Bonifico automatico, fine.</li>\n</ol>\n\n<strong>Esempio numerico</strong> (da gennaio 2020 a oggi, su VWCE):\n<ul>\n  <li>Timing perfetto (\"dio del mercato\"): aspetti il minimo COVID di marzo 2020 e investi €12.000 lì → oggi avresti ~€26.000.</li>\n  <li>PAC stupido (€100/mese da gennaio 2020, totale €6.500 investito): oggi avresti ~€10.500.</li>\n  <li>\"Tutto subito gennaio 2020\" (€6.500 a gennaio): oggi avresti ~€12.800.</li>\n</ul>\n\nIl timing perfetto vince <em>se sei un dio</em>. Ma nella realtà nessuno azzecca il minimo. Il \"tutto subito da subito\" batte spesso il PAC, ma richiede di avere già i soldi pronti. <strong>Il PAC batte chiunque aspetti \"il momento giusto\" senza investire</strong>, che è quello che la maggior parte delle persone finisce per fare.",
+      "esercizio": "Vai su <a href=\"https://www.justetf.com/it/etf-profile.html?isin=IE00BK5BQT80\">la scheda di VWCE su justetf</a> e cerca la sezione \"Calcolatore di Investimento\" o \"Simulatore PAC\".\n\nConfronta:\n<ul>\n  <li>PAC: €100 al mese su VWCE dal 1° gennaio 2020 a oggi</li>\n  <li>Lump sum: €6.000 il 1° gennaio 2020 in unica soluzione</li>\n</ul>\n\nQuale ha funzionato meglio? Di quanto? <strong>Annota la cifra</strong>, ti servirà più avanti.",
+      "riflessione": "Il tuo portafoglio attuale è stato costruito \"a botte\" senza un PAC. Tra 6 mesi vorresti aver attivato un PAC mensile automatico da €50-100? Pensaci, ne riparliamo a giugno."
+    },
+    {
+      "numero": 3,
+      "titolo": "Quanto ti costa davvero comprare su Fineco",
+      "sottotitolo": "Commissioni: il nemico silenzioso",
+      "corpo": "Fineco ti fa pagare <strong>€2,95 ogni volta che compri o vendi un'azione o ETF</strong>. Sembra poco, ma non lo è. Ti spiego con un esempio reale del tuo portafoglio.\n\nQuando hai comprato la tua quota di EQAC a €368,36, Fineco si è preso €2,95 di commissione. Vuol dire che il tuo \"punto di pareggio\" non era €368,36, ma €371,31. Per andare in guadagno, EQAC doveva salire <strong>dello 0,8%</strong> solo per coprire la commissione.\n\n<strong>Adesso il caso che ti riguarda di più</strong>: hai €75 di liquidità su Fineco. Diciamo che domani vorresti aggiungere altri €75 su VWCE.\n\n<ul>\n  <li>Investi: €75</li>\n  <li>Commissione: €2,95</li>\n  <li>Già perso prima di iniziare: <strong>3,9%</strong></li>\n</ul>\n\nPer andare in pari, VWCE deve salire del 4%. Storicamente VWCE rende ~8% all'anno, quindi quel 4% di commissione ti mangia <strong>6 mesi di rendimento medio</strong>. Solo per comprare 75 euro.\n\n<strong>Regola pratica</strong>: la commissione dovrebbe essere <strong>massimo l'1%</strong> della cifra che investi. Quindi:\n<ul>\n  <li>€100 → 2,95% = troppo</li>\n  <li>€300 → 0,98% = appena tollerabile</li>\n  <li>€500 → 0,59% = ok</li>\n  <li>€1000+ → 0,30% o meno = ottimo</li>\n</ul>\n\nPer questo il tuo agente Fineco ti ripete sempre che con €100-€200 non conviene fare singole operazioni: aspetta di accumulare almeno €300-500 sul conto, poi compri.",
+      "esercizio": "Calcola, per ogni tua attuale posizione, <strong>quanto la commissione iniziale ha pesato in percentuale</strong>:\n<ul>\n  <li>NVIDIA: 1 quota a ~€161 → commissione €2,95 → quanto è % di 161?</li>\n  <li>VWCE: 10 quote totali, ipotizziamo comprate in 2 tranche da 5 → €2,95 × 2 = €5,90 → su quanto totale?</li>\n  <li>EQAC: 1 quota a €368 → €2,95 → quanto è %?</li>\n</ul>",
+      "riflessione": "Se Fineco ti facesse pagare €15 invece di €3 a operazione, faresti comunque queste compere? Probabilmente no. Quindi la prossima volta che ti viene voglia di comprare \"una piccola cosa\", ricorda: la commissione fissa è il tuo vero nemico."
+    },
+    {
+      "numero": 2,
+      "titolo": "Perché un titolo \"balla\" e l'altro no",
+      "sottotitolo": "La volatilità: il pallone gonfiato",
+      "corpo": "Hai presente quando lanci un pallone gonfio e uno mezzo sgonfio? Il gonfio rimbalza alto, fa rumore, esce dalla portata in fretta. Lo sgonfio rimbalza piano, resta lì. Le azioni funzionano uguale, e questa caratteristica si chiama <strong>volatilità</strong>.\n\n<strong>Volatilità</strong> vuol dire: quanto un prezzo salta su e giù in un periodo di tempo. NVIDIA è un titolo \"molto volatile\": può fare +10% e -10% nella stessa settimana. VWCE è \"poco volatile\": si muove di solito tra +0,5% e -0,5% al giorno.\n\nVolatilità alta non vuol dire \"cattivo\". Vuol dire <strong>stomaco</strong>. Se sei una persona che apre Fineco ogni 10 minuti, un titolo volatile come NVIDIA ti farà soffrire: vedi rossi grossi, ti viene voglia di vendere, fai operazioni di pancia.\n\nSe sei una persona che apre Fineco una volta al mese, NVIDIA volatile ti scivola addosso: oggi -8%, domani +5%, alla fine del mese magari sei a +3% e non hai sofferto niente.\n\n<strong>La volatilità è la tassa che paghi per avere rendimenti più alti</strong>. Le azioni rendono storicamente di più delle obbligazioni proprio perché ti fanno passare brutti momenti. Se vuoi solo cose calme, prendi un conto deposito al 3%: zero stress, ma anche zero crescita reale (l'inflazione si mangia tutto).",
+      "esercizio": "Per 5 giorni di fila (lun-ven), apri <a href=\"https://www.borsaitaliana.it/borsa/etf/scheda/IE00BK5BQT80-ETFP.html?lang=it\">la scheda di VWCE su Borsa Italiana</a> alle 9:30, 13:00 e 18:00. Annotati i 3 prezzi in un foglio.\n\nA fine settimana fai il conto:\n<ul>\n  <li>Qual è stato il prezzo <strong>più alto</strong> della settimana?</li>\n  <li>Qual è stato il prezzo <strong>più basso</strong>?</li>\n  <li>Differenza in percentuale? <em>(esempio: max 158, min 155, differenza = 1,9%)</em></li>\n</ul>",
+      "riflessione": "L'oscillazione che hai visto su VWCE in 1 settimana, ti ha fatto venire voglia di \"fare qualcosa\"? Se sì, immagina la stessa cosa con NVIDIA, che balla 5-10 volte di più."
+    },
+    {
+      "numero": 1,
+      "titolo": "Hai NVIDIA in 3 posti diversi e non lo sai",
+      "sottotitolo": "Cos'è davvero un ETF",
+      "corpo": "Ciao Adriano, oggi parliamo di una cosa che ti riguarda direttamente. Hai 3 strumenti nel tuo portafoglio Fineco: NVIDIA, VWCE e EQAC. Ma in realtà tu possiedi NVIDIA <strong>tre volte</strong>. Ti spiego come.\n\nNVIDIA è un'azione singola: 1 quota = un pezzettino dell'azienda NVIDIA. Fin qui chiaro.\n\n<strong>VWCE</strong> è un ETF. ETF in italiano si dice \"fondo a gestione passiva\" ma chiamarlo così non aiuta. Pensa a un ETF come a una <strong>cassetta di frutta mista del fruttivendolo</strong>: invece di comprare 1 mela, 1 pera, 1 banana presi singolarmente, compri una cassetta in cui c'è già un po' di tutto. VWCE è la \"cassetta mista\" delle aziende mondiali: dentro ci sono ~3.700 aziende di tutto il mondo, comprese le grandi del tech americano. NVIDIA è dentro per circa il <strong>4%</strong> del peso totale.\n\n<strong>EQAC</strong> è un altro ETF, ma più \"stretto\": dentro ci sono solo le 100 più grandi del Nasdaq americano. NVIDIA dentro questo pesa <strong>~8-9%</strong>.\n\n<strong>Quindi cosa vuol dire per te?</strong> Quando vedi che NVIDIA è salita del +5% in un giorno, ti senti contento perché la tua quota singola di NVIDIA è salita. Ma in realtà sono salite <em>anche</em> le frazioni di NVIDIA dentro VWCE e EQAC. Una buona giornata di NVIDIA è una <em>tripla</em> buona giornata per te.\n\nIl rovescio della medaglia: se NVIDIA crolla, perdi 3 volte. Il tuo portafoglio è \"sbilanciato sul tech USA\" non perché hai comprato male, ma perché molti ETF \"globali\" sono in realtà 60-70% americani: le aziende USA pesano tanto sui mercati mondiali.",
+      "esercizio": "1. Vai su <a href=\"https://www.justetf.com/it/etf-profile.html?isin=IE00BK5BQT80\">justetf - scheda VWCE</a>\n2. Scorri fino alla sezione \"Top 10 Holdings\"\n3. Trovi NVIDIA? Che peso ha? Quali altre aziende vedi nelle prime 10?\n4. Fai la stessa cosa per EQAC: <a href=\"https://www.justetf.com/it/etf-profile.html?isin=IE00BFZXGZ54\">justetf - scheda EQAC</a>",
+      "riflessione": "Se NVIDIA, Apple e Microsoft messe insieme pesassero il 30% del tuo VWCE, sei davvero \"diversificato a livello mondiale\" come pensavi?"
+    }
+  ],
+  "micro_tip": {
+    "termine": "a",
+    "spiegazione": "b",
+    "esempio": "c"
+  },
+  "paper": {
+    "active": true,
+    "started": "2026-10-01",
+    "updated_at": "2026-10-12T08:00:00+00:00",
+    "current_month": {
+      "month": "2026-10",
+      "days": 8,
+      "operations": 1,
+      "hold_days": 7,
+      "sealed": true
+    },
+    "closed_months": []
+  }
+}

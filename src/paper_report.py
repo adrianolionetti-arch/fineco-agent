@@ -222,10 +222,59 @@ def to_html(r: dict) -> str:
     """
 
 
+def publish(rep: dict, path: str = "data/paper_public.json") -> None:
+    """
+    Apre la busta: sposta il mese concluso nella vetrina pubblica, questa volta
+    con tutto il dettaglio. E' l'unico momento in cui le decisioni diventano
+    visibili sulla dashboard.
+    """
+    if rep.get("error"):
+        return
+    pubblico = {}
+    if os.path.exists(path):
+        try:
+            with open(path, encoding="utf-8") as f:
+                pubblico = json.load(f)
+        except (json.JSONDecodeError, OSError):
+            pubblico = {}
+
+    chiusi = [m for m in pubblico.get("closed_months", []) if m.get("month") != rep["month"]]
+    chiusi.append({
+        "month": rep["month"],
+        "start": rep["start"], "end": rep["end"],
+        "giorni": rep["giorni"],
+        "n_operazioni": rep["n_operazioni"],
+        "n_hold": rep["n_hold"],
+        "n_rifiutate": rep["n_rifiutate"],
+        "quota_hold": round(rep["quota_hold"], 1),
+        "commissioni_eur": rep["commissioni_eur"],
+        "twr_paper": rep["twr_paper"],
+        "twr_reale": rep["twr_reale"],
+        "twr_benchmark": rep["twr_benchmark"],
+        "alfa_vs_reale": rep["alfa_vs_reale"],
+        "alfa_vs_benchmark": rep["alfa_vs_benchmark"],
+        "integra": rep["integra"],
+        "operazioni": [
+            {"date": d["date"], "action": d["action"], "ticker": d["ticker"],
+             "amount_eur": d["amount_eur"], "conviction": d.get("conviction"),
+             "rationale": d.get("rationale")}
+            for d in rep["operazioni"]
+        ],
+    })
+    pubblico["closed_months"] = sorted(chiusi, key=lambda m: m["month"], reverse=True)
+    if (pubblico.get("current_month") or {}).get("month") == rep["month"]:
+        pubblico["current_month"]["sealed"] = False
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(pubblico, f, indent=2, ensure_ascii=False)
+    print(f"Verdetto pubblicato sulla dashboard: {rep['month']}")
+
+
 if __name__ == "__main__":
     mese = sys.argv[1] if len(sys.argv) > 1 else None
     rep = build(mese)
     print(to_text(rep))
+    if not rep.get("error"):
+        publish(rep)
     if "--email" in sys.argv and not rep.get("error"):
         from weekend_quiz import send_email
         send_email(f"📊 Verdetto mensile — portafoglio parallelo {rep['month']}",

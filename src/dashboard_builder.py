@@ -261,6 +261,17 @@ def _sanitize_watchlist(watchlist: list) -> list:
     return out
 
 
+def _load_paper_public(path: str = "data/paper_public.json") -> dict | None:
+    """Vetrina del portafoglio parallelo. Assente finche' l'esperimento non parte."""
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+    except (json.JSONDecodeError, OSError):
+        return None
+
+
 def build_dashboard_data(portfolio_data: dict, briefing: dict, news: list, events: dict,
                           watchlist: list | None = None):
     """Genera docs/data.json con tutto quello che serve alla dashboard."""
@@ -362,6 +373,10 @@ def build_dashboard_data(portfolio_data: dict, briefing: dict, news: list, event
         "archivio_pillole": archivio_pillole,
         # Micro-tip giornaliero
         "micro_tip": briefing.get("micro_tip"),
+        # Portafoglio parallelo: conteggi finche' il mese e' in corso, dettaglio
+        # completo sui mesi gia' chiusi dal verdetto. Il file cifrato non viene
+        # mai letto qui: la dashboard non ha modo di aprirlo.
+        "paper": _load_paper_public(),
     }
 
     with open(DASHBOARD_JSON, "w", encoding="utf-8") as f:

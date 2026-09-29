@@ -184,6 +184,12 @@ Le regole che lo tengono onesto:
 | Ordine minimo **200 €**, tranne le liquidazioni totali | Sotto i 200 € la commissione supera l'1,5%; ma da una posizione piccola si deve poter uscire |
 | Validazione **in codice**, non nel prompt | Un modello che si auto-certifica i fondi disponibili è lo stesso errore già fatto col livello dei segnali |
 
+Sulla dashboard c'è il tab **Parallelo**: durante il mese mostra solo la "busta
+sigillata" — giorni decisi, operazioni, giorni fermo, countdown al verdetto e le regole
+dell'esperimento — senza ticker né importi. Il primo del mese la busta si apre e il tab
+mostra le operazioni con le motivazioni e le tre barre di rendimento a confronto.
+La dashboard legge `data/paper_public.json`, mai il file cifrato: non ha modo di aprirlo.
+
 Il verdetto arriva il primo del mese (`monthly-verdict.yml`) e confronta i **rendimenti
 time-weighted** di agente, portafoglio reale e VWCE. Il TWR è obbligatorio qui: il paper
 riceve 500 €/mese e confrontare i valori finali premierebbe chi versa di più, non chi

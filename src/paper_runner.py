@@ -13,6 +13,12 @@ from portfolio import _cache_recover, _cache_store, _fetch_yfinance
 
 MODEL = os.environ.get("PAPER_MODEL", os.environ.get("CLAUDE_MODEL", "claude-opus-5"))
 
+# Vetrina pubblica del paper: ci finisce SOLO cio' che si puo' mostrare durante
+# il mese, cioe' dei conteggi. Le decisioni restano nel file cifrato finche' il
+# verdetto mensile non le apre. Questo file e' in chiaro apposta: lo legge la
+# dashboard, che sta su GitHub Pages.
+PUBLIC_PATH = "data/paper_public.json"
+
 SYSTEM = """Gestisci un portafoglio reale di un investitore privato italiano, profilo
 medio/medio-basso, che opera su Fineco. Non stai scrivendo a lui: stai prendendo una
 decisione operativa che verra' eseguita cosi' com'e' e misurata a fine mese.
@@ -140,6 +146,37 @@ def market_summary(portfolio_data: dict, watchlist: list, events: dict) -> str:
     return "\n".join(out)
 
 
+def write_public(state: dict, mese: str, decisioni_mese: list, ops: int) -> None:
+    """
+    Aggiorna la vetrina pubblica. Nessun ticker, nessun importo, nessuna
+    motivazione: solo quante decisioni sono state prese e quante di queste
+    erano operazioni. Il resto si apre col verdetto.
+    """
+    pubblico = {}
+    if os.path.exists(PUBLIC_PATH):
+        try:
+            with open(PUBLIC_PATH, encoding="utf-8") as f:
+                pubblico = json.load(f)
+        except (json.JSONDecodeError, OSError):
+            pubblico = {}
+
+    hold = sum(1 for d in decisioni_mese if d["action"] == "HOLD")
+    pubblico["active"] = True
+    pubblico["started"] = state.get("started_at")
+    pubblico["updated_at"] = datetime.now(timezone.utc).isoformat()
+    pubblico["current_month"] = {
+        "month": mese,
+        "days": len(decisioni_mese),
+        "operations": ops,
+        "hold_days": hold,
+        "sealed": True,
+    }
+    pubblico.setdefault("closed_months", [])
+    os.makedirs(os.path.dirname(PUBLIC_PATH), exist_ok=True)
+    with open(PUBLIC_PATH, "w", encoding="utf-8") as f:
+        json.dump(pubblico, f, indent=2, ensure_ascii=False)
+
+
 def daily_run(portfolio_data: dict, watchlist: list, events: dict) -> dict:
     """
     Entrypoint del briefing. Non solleva mai: se qualcosa non va, il paper salta
@@ -194,8 +231,9 @@ def daily_run(portfolio_data: dict, watchlist: list, events: dict) -> dict:
         pp.save_state(state)
 
         mese = datetime.now(timezone.utc).strftime("%Y-%m")
-        ops = sum(1 for d in state["decisions"]
-                  if d["date"].startswith(mese) and d["action"] != "HOLD" and d["executed"])
+        del_mese = [d for d in state["decisions"] if d["date"].startswith(mese)]
+        ops = sum(1 for d in del_mese if d["action"] != "HOLD" and d["executed"])
+        write_public(state, mese, del_mese, ops)
         return {
             "decisioni_totali": len(state["decisions"]),
             "operazioni_questo_mese": ops,

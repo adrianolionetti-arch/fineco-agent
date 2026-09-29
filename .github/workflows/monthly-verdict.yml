@@ -17,7 +17,7 @@ on:
         default: ''
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: 'monthly-verdict'
@@ -46,3 +46,22 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
         run: python src/paper_report.py ${{ inputs.month }} --email
+
+      - name: Pubblica il verdetto sulla dashboard
+        run: |
+          git config user.name "fineco-agent-bot"
+          git config user.email "bot@noreply.local"
+          git add data/paper_public.json || true
+          if git diff --staged --quiet; then
+            echo "Nessun verdetto nuovo da pubblicare"
+            exit 0
+          fi
+          git commit -m "chore: pubblica verdetto paper $(date -u +%Y-%m)"
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "Push completato al tentativo $attempt"
+              exit 0
+            fi
+            git pull --rebase --autostash origin main || true
+          done
+          echo "::warning::Push fallito dopo 3 tentativi"
