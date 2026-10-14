@@ -1,19 +1,21 @@
 {
   "user": "adriano",
   "created_at": "2026-05-25",
-  "last_updated": "2026-10-06T13:16:47.209401+00:00",
+  "last_updated": "2026-10-14T11:46:13.198766+00:00",
   "current_level": 1,
   "last_exercise_sent": "L1-E15",
   "last_exercise_date": "2026-09-05T11:18:45.207826+00:00",
   "stats": {
-    "total_points": 125,
+    "total_points": 175,
     "current_streak": 0,
     "longest_streak": 6,
-    "exercises_attempted": 14,
+    "exercises_attempted": 15,
     "exercises_correct": 11,
-    "exercises_missed": 1
+    "exercises_missed": 0
   },
-  "badges_earned": [],
+  "badges_earned": [
+    "level_1_completion"
+  ],
   "badge_thresholds": {
     "apprendista": 0,
     "risparmiatore_consapevole": 50,
@@ -161,13 +163,14 @@
       "exercise_id": "L1-E12",
       "topic": "Conto deposito vs investimento",
       "sent_at": "2026-08-15T07:48:56.448173+00:00",
-      "answered_at": null,
-      "user_answer": null,
+      "answered_at": "2026-10-13T14:20:34.042Z",
+      "user_answer": "A",
       "correct_answer": "C",
-      "is_correct": null,
+      "is_correct": false,
       "points_earned": 0,
       "streak_bonus": 0,
-      "level_completion_bonus": 0
+      "level_completion_bonus": 50,
+      "recovered": true
     },
     {
       "exercise_id": "L1-E13",
