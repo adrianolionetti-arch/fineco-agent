@@ -1,12 +1,12 @@
 {
   "active": true,
   "started": "2026-10-01",
-  "updated_at": "2026-10-23T11:33:53.350888+00:00",
+  "updated_at": "2026-10-26T12:53:25.913221+00:00",
   "current_month": {
     "month": "2026-10",
-    "days": 16,
+    "days": 17,
     "operations": 2,
-    "hold_days": 4,
+    "hold_days": 5,
     "sealed": true
   },
   "closed_months": []
