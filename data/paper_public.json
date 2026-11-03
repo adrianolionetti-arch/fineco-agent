@@ -18,13 +18,16 @@
       "n_operazioni": 2,
       "n_hold": 9,
       "n_rifiutate": 10,
+      "motivi_rifiuto": {
+        "prezzo non disponibile": 10
+      },
       "quota_hold": 42.9,
       "commissioni_eur": 5.9,
       "twr_paper": -1.5222316032334149,
       "twr_reale": -3.4819077343216653,
-      "twr_benchmark": null,
+      "twr_benchmark": -2.1939250931964693,
       "alfa_vs_reale": 1.9596761310882505,
-      "alfa_vs_benchmark": null,
+      "alfa_vs_benchmark": 0.6716934899630544,
       "integra": true,
       "operazioni": [
         {
