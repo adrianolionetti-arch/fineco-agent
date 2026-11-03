@@ -3533,9 +3533,9 @@
     "holdings_snapshot": [
       {
         "ticker": "1NVDA.MI",
-        "daily_pct": 3.28,
-        "weekly_pct": -4.25,
-        "monthly_pct": -7.46
+        "daily_pct": 3.32,
+        "weekly_pct": -4.21,
+        "monthly_pct": -7.42
       },
       {
         "ticker": "VWCE.MI",
