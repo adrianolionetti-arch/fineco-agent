@@ -1963,6 +1963,19 @@ function renderPaperMonth(m) {
   </div>`;
 }
 
+// Il verdetto mensile committa data/paper_public.json ma NON ricostruisce la
+// dashboard: quella la rigenera il briefing quotidiano, che gira solo lun-ven.
+// Il primo del mese puo' cadere di weekend (1 novembre 2026 era domenica), e
+// in quel caso il verdetto sarebbe rimasto invisibile per giorni. Quindi il
+// file lo leggiamo direttamente dal repo, con data.json come ripiego.
+async function loadPaper(fallback) {
+  try {
+    const r = await fetch(QUIZ_REPO_RAW + '/data/paper_public.json?t=' + Date.now());
+    if (r.ok) { renderPaper(await r.json()); return; }
+  } catch (e) { /* offline o file assente: si usa il ripiego */ }
+  renderPaper(fallback);
+}
+
 function renderPaper(paper) {
   const el = document.getElementById('paper-content');
   if (!el) return;
@@ -2036,7 +2049,7 @@ function render(d) {
   document.getElementById('today-date').textContent = today.toLocaleDateString('it-IT', {
     weekday: 'long', day: 'numeric', month: 'long'
   }).toUpperCase();
-  renderPaper(d.paper);
+  loadPaper(d.paper);
   if (d.generated_at) {
     const gen = new Date(d.generated_at);
     document.getElementById('gen-at').textContent = gen.toLocaleTimeString('it-IT', {hour:'2-digit', minute:'2-digit'});

@@ -269,13 +269,33 @@ def publish(rep: dict, path: str = "data/paper_public.json") -> None:
     print(f"Verdetto pubblicato sulla dashboard: {rep['month']}")
 
 
+def parse_args(argv: list) -> tuple[str | None, bool]:
+    """
+    Separa il mese dai flag.
+
+    Il bug del 2026-11-01: il workflow invoca
+        python src/paper_report.py ${{ inputs.month }} --email
+    e quando inputs.month e' vuoto (cioe' a ogni esecuzione schedulata, che e'
+    il caso normale) la riga diventa `paper_report.py --email`. Prendendo
+    sys.argv[1] alla cieca, il mese diventava la stringa "--email", build()
+    non trovava nessuna decisione per quel "mese" e il verdetto di ottobre non
+    e' mai stato pubblicato. Il workflow risultava comunque "success" perche'
+    lo script usciva con 0 anche in caso di errore.
+    """
+    mese = next((a for a in argv[1:] if not a.startswith("-")), None)
+    return mese, ("--email" in argv)
+
+
 if __name__ == "__main__":
-    mese = sys.argv[1] if len(sys.argv) > 1 else None
+    mese, vuole_email = parse_args(sys.argv)
     rep = build(mese)
     print(to_text(rep))
-    if not rep.get("error"):
-        publish(rep)
-    if "--email" in sys.argv and not rep.get("error"):
+    if rep.get("error"):
+        # Uscire con 0 qui significava un workflow verde su un verdetto mai
+        # generato. Meglio rompere rumorosamente.
+        sys.exit(1)
+    publish(rep)
+    if vuole_email:
         from weekend_quiz import send_email
         send_email(f"📊 Verdetto mensile — portafoglio parallelo {rep['month']}",
                    to_html(rep), to_text(rep))
