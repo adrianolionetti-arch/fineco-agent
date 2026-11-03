@@ -49,17 +49,52 @@ MIN_ORDER_EUR = 200.0
 # Universo investibile: solo UCITS in euro acquistabili su Fineco.
 # I proxy USA usati dal briefing (GLD, EEM, XLV...) NON entrano qui: servono a
 # leggere il mercato, non sono strumenti che Adriano possa comprare.
+# Universo investibile: solo UCITS in euro acquistabili su Fineco.
+#
+# "price_from" dice da dove viene il prezzo. Quando e' diverso dal ticker, il
+# prezzo arriva da un ETF americano equivalente che il briefing gia' scarica e
+# converte in euro ogni giorno.
+#
+# Perche' questo compromesso: i prezzi diretti degli UCITS non si riescono ad
+# avere. yfinance e' bloccato dai runner GitHub; il piano EODHD non copre questi
+# simboli e la sua ricerca risponde 402; il piano gratuito TwelveData non da'
+# accesso alle borse europee ("symbol SGLD is not available with your plan");
+# Stooq serve un challenge anti-bot. Risultato: a ottobre questi strumenti non
+# sono stati prezzati NEANCHE UNA VOLTA e il paper ha potuto operare solo sui
+# titoli gia' in portafoglio.
+#
+# Il proxy introduce un errore: GLD e' in dollari convertiti, SGLD e' in euro, e
+# un ETC non coperto dal cambio non replica l'altro al centesimo. L'errore e'
+# piccolo e, soprattutto, e' dichiarato nel verdetto: meglio di un esperimento
+# che non puo' comprare nulla. Per avere i prezzi veri serve un piano dati a
+# pagamento.
 UNIVERSE = {
-    "VWCE.MI":  {"name": "Vanguard FTSE All-World",            "kind": "azionario globale"},
-    "EQAC.MI":  {"name": "Invesco EQQQ Nasdaq-100",            "kind": "azionario tech USA"},
-    "AGGH.MI":  {"name": "iShares Core Global Aggregate Bond", "kind": "obbligazionario globale"},
-    "1NVDA.MI": {"name": "NVIDIA",                             "kind": "azione singola"},
-    "SGLD.MI":  {"name": "Invesco Physical Gold",              "kind": "oro"},
-    "EIMI.MI":  {"name": "iShares Core MSCI EM IMI",           "kind": "azionario emergenti"},
-    "IBGL.MI":  {"name": "iShares Euro Govt Bond 15-30y",      "kind": "obbligazionario govt euro"},
-    "IBTM.MI":  {"name": "iShares USD Treasury 7-10y",         "kind": "obbligazionario govt USA"},
-    "XDWH.MI":  {"name": "Xtrackers MSCI World Health Care",   "kind": "azionario settoriale"},
+    "VWCE.MI":  {"name": "Vanguard FTSE All-World",            "kind": "azionario globale",
+                 "price_from": "VWCE.MI"},
+    "EQAC.MI":  {"name": "Invesco EQQQ Nasdaq-100",            "kind": "azionario tech USA",
+                 "price_from": "EQAC.MI"},
+    "AGGH.MI":  {"name": "iShares Core Global Aggregate Bond", "kind": "obbligazionario globale",
+                 "price_from": "AGGH.MI"},
+    "1NVDA.MI": {"name": "NVIDIA",                             "kind": "azione singola",
+                 "price_from": "1NVDA.MI"},
+    "EXV1.MI":  {"name": "iShares STOXX Europe 600 Banks",     "kind": "azionario banche europee",
+                 "price_from": "EXV1.MI"},
+    "SGLD.MI":  {"name": "Invesco Physical Gold",              "kind": "oro",
+                 "price_from": "GLD"},
+    "EIMI.MI":  {"name": "iShares Core MSCI EM IMI",           "kind": "azionario emergenti",
+                 "price_from": "EEM"},
+    "XDWH.MI":  {"name": "Xtrackers MSCI World Health Care",   "kind": "azionario settoriale salute",
+                 "price_from": "XLV"},
+    "IBTM.MI":  {"name": "iShares USD Treasury 7-10y",         "kind": "obbligazionario govt USA",
+                 "price_from": "IEF"},
 }
+
+
+def prezzo_da_proxy(ticker: str) -> str | None:
+    """Ticker del proxy usato per prezzare questo strumento, se ce n'e' uno."""
+    meta = UNIVERSE.get(ticker) or {}
+    fonte = meta.get("price_from")
+    return fonte if fonte and fonte != ticker else None
 
 
 # --- Cifratura -----------------------------------------------------------

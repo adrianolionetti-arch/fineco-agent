@@ -154,7 +154,11 @@ def fetch_universe_prices(known: dict | None = None) -> dict:
     gli altri, poi la cache per chi resta scoperto.
     """
     known = known or {}
-    prices = {t: known[t] for t in pp.UNIVERSE if known.get(t)}
+    prices = {}
+    for t, meta in pp.UNIVERSE.items():
+        fonte = meta.get("price_from", t)
+        if known.get(fonte):
+            prices[t] = known[fonte]
 
     mancanti = [t for t in pp.UNIVERSE if t not in prices]
 
@@ -197,8 +201,10 @@ def _build_user_content(state: dict, prices: dict, market: str) -> str:
         pos = state["positions"].get(t, {"qty": 0})
         val = (pos["qty"] * p) if p and pos["qty"] else 0
         peso = f"{val / navv * 100:5.1f}%" if navv and val else "    -"
+        proxy = pp.prezzo_da_proxy(t)
+        nota = f" [prezzo via {proxy}, stesso sottostante]" if proxy else ""
         righe.append(f"  {t:9} {meta['kind']:28} prezzo {p if p else 'n/d':>9} "
-                     f"posseduto €{val:8.2f} peso {peso}  — {meta['name']}")
+                     f"posseduto €{val:8.2f} peso {peso}  — {meta['name']}{nota}")
 
     versato = state.get("contributed_eur", 0.0)
     iniziale = state.get("initial_capital_eur", 0.0)

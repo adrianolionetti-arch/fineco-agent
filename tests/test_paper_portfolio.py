@@ -12,7 +12,7 @@ def check(nome, got, want):
     else: ko += 1; print(f"  FAIL  {nome}: atteso {want!r}, ottenuto {got!r}")
 
 PRICES = {"VWCE.MI":170.15,"EQAC.MI":455.34,"AGGH.MI":4.855,"1NVDA.MI":197.68,
-          "SGLD.MI":348.66,"EIMI.MI":48.13,"IBGL.MI":149.13,"IBTM.MI":143.80,"XDWH.MI":54.90}
+          "EXV1.MI":37.95,"SGLD.MI":348.66,"EIMI.MI":48.13,"IBTM.MI":143.80,"XDWH.MI":54.90}
 HOLD = [{"ticker":"VWCE.MI","quantity":16,"current":170.15},
         {"ticker":"EQAC.MI","quantity":2,"current":455.34},
         {"ticker":"AGGH.MI","quantity":54,"current":4.855},
