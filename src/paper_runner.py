@@ -317,8 +317,15 @@ def daily_run(portfolio_data: dict, watchlist: list, events: dict) -> dict:
         if oggi < start:
             return {"skipped": f"l'esperimento parte il {start}"}
 
-        known = {h["ticker"]: h.get("current")
-                 for h in portfolio_data.get("holdings", []) if h.get("ticker")}
+        # I prezzi gia' scaricati dal briefing, posizioni E watchlist. La
+        # watchlist e' indispensabile: e' li' che stanno GLD, EEM, XLV e IEF,
+        # cioe' i proxy con cui l'universo prezza oro, emergenti, salute e
+        # Treasury. Passando le sole posizioni, quei quattro strumenti
+        # risultavano senza prezzo pur essendo gia' in memoria.
+        known = {}
+        for h in list(portfolio_data.get("holdings", [])) + list(watchlist or []):
+            if h.get("ticker") and "error" not in h and h.get("current"):
+                known[h["ticker"]] = h["current"]
         prices = fetch_universe_prices(known)
         if not prices:
             return {"skipped": "nessun prezzo disponibile"}
