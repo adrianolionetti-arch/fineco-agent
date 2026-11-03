@@ -1921,6 +1921,20 @@ function renderPaperBars(m) {
   return `<div class="paper-bars">${righe}</div>`;
 }
 
+function renderPaperRejects(m) {
+  const mot = m.motivi_rifiuto || {};
+  const voci = Object.entries(mot).sort((a, b) => b[1] - a[1]);
+  if (!voci.length) return '';
+  // Quando l'agente propone molte operazioni che non puo' eseguire, il dato
+  // interessante non e' quante ne ha azzeccate ma quante erano impossibili.
+  return `<div class="paper-note" style="margin:4px 0 14px;">
+    <strong style="color:var(--ink)">${m.n_rifiutate} ordini respinti dai vincoli</strong>
+    — ${voci.map(([k, n]) => `${n}× ${esc(k)}`).join(', ')}.
+    Non sono errori di valutazione: sono operazioni che non si potevano eseguire
+    con il capitale e le regole in vigore.
+  </div>`;
+}
+
 function renderPaperMonth(m) {
   const ops = (m.operazioni || []).length
     ? m.operazioni.map(o => `<tr>
@@ -1949,6 +1963,7 @@ function renderPaperMonth(m) {
         ${m.n_operazioni} operazioni · ${Math.round(m.quota_hold)}% fermo ·
         €${(m.commissioni_eur || 0).toFixed(2)} commissioni</div>
     </div>
+    ${renderPaperRejects(m)}
     ${renderPaperBars(m)}
     <table class="paper-ops">
       <thead><tr><th>Data</th><th>Mossa</th><th>Strumento</th>

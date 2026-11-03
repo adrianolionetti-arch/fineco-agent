@@ -48,13 +48,51 @@ def real_portfolio_twr(start: str, end: str) -> float | None:
 
 
 def benchmark_twr(start: str, end: str, ticker: str = "VWCE.MI") -> float | None:
+    """
+    Rendimento del benchmark nel periodo.
+
+    Prima prova con i dati che abbiamo gia' in casa: VWCE e' una posizione del
+    portafoglio, quindi history.json contiene la sua variazione giornaliera per
+    ogni giorno tracciato. Comporre quelle variazioni da' lo stesso rendimento
+    time-weighted che useremmo per il portafoglio reale, senza chiamare nessuno.
+
+    Il verdetto di ottobre 2026 e' uscito con benchmark "n/d" proprio perche'
+    yfinance aveva fallito in CI (il rate limit e' un classico di questo
+    progetto) e l'eccezione veniva ingoiata senza una riga di log. Senza
+    benchmark il confronto perde il termine di paragone piu' importante.
+    """
+    # 1) Dati locali
+    if os.path.exists(HISTORY_FILE):
+        try:
+            with open(HISTORY_FILE, encoding="utf-8") as f:
+                hist = json.load(f)
+            fattore, giorni = 1.0, 0
+            for riga in hist:
+                if not (start <= riga["date"] <= end):
+                    continue
+                for h in riga.get("holdings_snapshot", []):
+                    if h.get("ticker") == ticker and h.get("daily_pct") is not None:
+                        fattore *= (1 + h["daily_pct"] / 100)
+                        giorni += 1
+                        break
+            if giorni >= 2:
+                return (fattore - 1) * 100
+            print(f"[benchmark] solo {giorni} giorni di {ticker} in history.json, "
+                  f"provo yfinance")
+        except (json.JSONDecodeError, OSError, KeyError) as e:
+            print(f"[benchmark] history.json non utilizzabile ({type(e).__name__}), "
+                  f"provo yfinance")
+
+    # 2) Ripiego di rete
     try:
         import yfinance as yf
         h = yf.Ticker(ticker).history(start=start, end=end, auto_adjust=True)["Close"]
         if len(h) < 2:
+            print(f"[benchmark] yfinance ha restituito {len(h)} righe per {ticker}")
             return None
         return (float(h.iloc[-1]) / float(h.iloc[0]) - 1) * 100
-    except Exception:
+    except Exception as e:
+        print(f"[benchmark] yfinance fallito per {ticker}: {type(e).__name__}: {str(e)[:120]}")
         return None
 
 
@@ -85,8 +123,29 @@ def build(month: str | None = None) -> dict:
     reale = real_portfolio_twr(start, end)
     bench = benchmark_twr(start, end)
 
+    # Perche' gli ordini sono stati respinti: se l'agente propone operazioni che
+    # non puo' eseguire, il problema non e' il gusto delle sue scelte ma il fatto
+    # che non tiene conto dei vincoli. Va misurato, non nascosto.
+    motivi = {}
+    for d in rifiutate:
+        det = (d.get("detail") or "").lower()
+        if "liquidita" in det:
+            k = "liquidità insufficiente"
+        elif "sotto il minimo" in det:
+            k = "sotto l'ordine minimo di 200 €"
+        elif "nessuna posizione" in det:
+            k = "vendita di un titolo non posseduto"
+        elif "prezzo" in det:
+            k = "prezzo non disponibile"
+        elif "universo" in det:
+            k = "strumento fuori universo"
+        else:
+            k = "altro"
+        motivi[k] = motivi.get(k, 0) + 1
+
     commissioni = len(operazioni) * pp.COMMISSION_EUR
     return {
+        "motivi_rifiuto": motivi,
         "month": month, "start": start, "end": end,
         "integrita": msg, "integra": integra,
         "giorni": len(decisioni),
@@ -117,7 +176,11 @@ def to_text(r: dict) -> str:
         "DECISIONI",
         f"  Operazioni eseguite : {r['n_operazioni']}",
         f"  Giorni di HOLD      : {r['n_hold']} ({r['quota_hold']:.0f}%)",
-        f"  Ordini rifiutati    : {r['n_rifiutate']} (fondi o soglia minima)",
+        f"  Ordini rifiutati    : {r['n_rifiutate']}",
+    ]
+    for motivo, n in sorted((r.get("motivi_rifiuto") or {}).items(), key=lambda kv: -kv[1]):
+        righe.append(f"      · {n}× {motivo}")
+    righe += [
         f"  Commissioni pagate  : €{r['commissioni_eur']:.2f}",
         "",
     ]
@@ -246,6 +309,7 @@ def publish(rep: dict, path: str = "data/paper_public.json") -> None:
         "n_operazioni": rep["n_operazioni"],
         "n_hold": rep["n_hold"],
         "n_rifiutate": rep["n_rifiutate"],
+        "motivi_rifiuto": rep.get("motivi_rifiuto") or {},
         "quota_hold": round(rep["quota_hold"], 1),
         "commissioni_eur": rep["commissioni_eur"],
         "twr_paper": rep["twr_paper"],
