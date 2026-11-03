@@ -82,7 +82,13 @@ def _fetch_twelvedata_milano(tickers: list) -> dict:
     url = ("https://api.twelvedata.com/price?"
            f"symbol={','.join(simboli)}&exchange={TWELVE_EXCHANGE}"
            f"&apikey={TWELVE_DATA_API_KEY}")
-    dati, err = _http_json(url, attempts=2)
+
+    # Il piano gratuito concede poche richieste al minuto, e quando il paper
+    # arriva il briefing le ha gia' spese quasi tutte: la prima chiamata prende
+    # 429 quasi sempre. Il limite pero' si azzera ogni minuto, quindi conviene
+    # aspettare sul serio invece di riprovare subito. Una sola richiesta utile
+    # al giorno, vale l'attesa.
+    dati, err = _http_json(url, attempts=3, backoff=30, timeout=20)
     if not isinstance(dati, dict):
         print(f"  [paper] TwelveData non ha risposto: {err}")
         return {}
