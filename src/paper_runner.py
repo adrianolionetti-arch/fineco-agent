@@ -9,21 +9,28 @@ from datetime import datetime, timezone
 import anthropic
 
 import paper_portfolio as pp
-from portfolio import _cache_recover, _cache_store, _fetch_eodhd, _fetch_yfinance
+from portfolio import (EOD_API_KEY, _cache_recover, _cache_store, _fetch_eodhd,
+                       _fetch_yfinance, _http_json)
 
-# Simboli candidati su EODHD per gli strumenti che non sono in portafoglio.
+# ISIN degli strumenti che non sono in portafoglio.
+#
 # yfinance funziona da una macchina normale ma non dai runner GitHub, che Yahoo
-# rate-limita: a ottobre questi cinque non sono stati prezzati NEANCHE UNA VOLTA.
-# EODHD invece regge, ed e' gia' la fonte primaria delle posizioni. Non sapendo
-# con quale piazza siano censiti, si provano in ordine e si registra nel log
-# quale ha risposto, per poi fissarlo.
-EODHD_CANDIDATI = {
-    "SGLD.MI":  ["SGLD.MI", "8PSG.XETRA", "SGLD.LSE"],
-    "EIMI.MI":  ["EIMI.MI", "IS3N.XETRA", "EIMI.LSE"],
-    "IBGL.MI":  ["IBGL.MI", "IBCL.XETRA", "IBGL.LSE"],
-    "IBTM.MI":  ["IBTM.MI", "IBTM.XETRA", "IBTM.LSE"],
-    "XDWH.MI":  ["XDWH.MI", "XDWH.XETRA"],
+# rate-limita: a ottobre questi cinque non sono stati prezzati NEANCHE UNA VOLTA
+# e il paper ha potuto operare solo sui titoli gia' posseduti. EODHD invece
+# risponde, ma indovinare i suoi simboli non ha funzionato: quindici tentativi,
+# quindici fallimenti. Quindi non si indovina piu': si chiede a EODHD stesso
+# quale simbolo corrisponde all'ISIN, e la risposta si memorizza in
+# data/universe_symbols.json perche' la ricerca avvenga una volta sola.
+UNIVERSE_ISIN = {
+    "SGLD.MI": "IE00B579F325",   # Invesco Physical Gold A
+    "EIMI.MI": "IE00BKM4GZ66",   # iShares Core MSCI EM IMI
+    "IBGL.MI": "IE00B1FZS913",   # iShares Euro Govt Bond 15-30yr
+    "IBTM.MI": "IE00B3VWN518",   # iShares USD Treasury Bond 7-10yr
+    "XDWH.MI": "IE00BM67HK77",   # Xtrackers MSCI World Health Care
 }
+SYMBOLS_PATH = "data/universe_symbols.json"
+# Piazze accettabili, in ordine di preferenza: la valuta dev'essere euro.
+BORSE_PREFERITE = ("MI", "XETRA", "F", "AS")
 
 MODEL = os.environ.get("PAPER_MODEL", os.environ.get("CLAUDE_MODEL", "claude-opus-5"))
 
@@ -60,6 +67,57 @@ REGOLE NON NEGOZIABILI
 Rispondi SOLO con JSON valido:
 {"action":"BUY"|"SELL"|"HOLD","ticker":"<ticker o null>","amount_eur":<numero o null>,
  "conviction":1-5,"rationale":"max due frasi"}"""
+
+
+def _load_symbols(path: str = SYMBOLS_PATH) -> dict:
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
+def _save_symbols(mappa: dict, path: str = SYMBOLS_PATH) -> None:
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(mappa, f, indent=2, ensure_ascii=False, sort_keys=True)
+    except OSError:
+        pass
+
+
+def _resolve_symbol(ticker: str) -> str | None:
+    """
+    Chiede a EODHD quale simbolo corrisponde all'ISIN dello strumento.
+    Gira una volta sola per ticker: il risultato finisce in universe_symbols.json.
+    """
+    isin = UNIVERSE_ISIN.get(ticker)
+    if not isin or not EOD_API_KEY:
+        return None
+    url = f"https://eodhd.com/api/search/{isin}?api_token={EOD_API_KEY}&fmt=json&limit=30"
+    dati, err = _http_json(url, attempts=2)
+    if not isinstance(dati, list) or not dati:
+        print(f"  [paper] ricerca ISIN {isin} per {ticker}: nessun risultato ({err})")
+        return None
+
+    in_euro = [r for r in dati if str(r.get("Currency", "")).upper() == "EUR"]
+    for borsa in BORSE_PREFERITE:
+        for r in in_euro:
+            if str(r.get("Exchange", "")).upper() == borsa:
+                simbolo = f"{r['Code']}.{r['Exchange']}"
+                print(f"  [paper] {ticker} risolto via ISIN {isin} → {simbolo} "
+                      f"({r.get('Name', '')[:45]})")
+                return simbolo
+    if in_euro:
+        r = in_euro[0]
+        simbolo = f"{r['Code']}.{r['Exchange']}"
+        print(f"  [paper] {ticker} risolto via ISIN {isin} → {simbolo} "
+              f"(piazza non preferita)")
+        return simbolo
+    piazze = sorted({f"{r.get('Code')}.{r.get('Exchange')}" for r in dati[:8]})
+    print(f"  [paper] {ticker}: nessuna quotazione in euro per {isin}. "
+          f"Trovate: {', '.join(piazze)}")
+    return None
 
 
 def _download_batch(tickers: list) -> dict:
@@ -107,21 +165,24 @@ def fetch_universe_prices(known: dict | None = None) -> dict:
 
     mancanti = [t for t in pp.UNIVERSE if t not in prices]
 
-    # 2a) EODHD, che dai runner GitHub e' l'unica fonte che risponde davvero
+    # 2a) EODHD, l'unica fonte che risponde davvero dai runner GitHub
+    mappa = _load_symbols()
     for t in list(mancanti):
-        for simbolo in EODHD_CANDIDATI.get(t, []):
-            dati = _fetch_eodhd(simbolo)
-            if "error" not in dati and dati.get("current"):
-                prices[t] = round(float(dati["current"]), 4)
-                _cache_store(t, {"current": prices[t], "currency": "EUR",
-                                 "daily_change_pct": dati.get("daily_change_pct"),
-                                 "weekly_change_pct": dati.get("weekly_change_pct"),
-                                 "monthly_change_pct": dati.get("monthly_change_pct")})
-                print(f"  [paper] {t} prezzato da EODHD come {simbolo}: {prices[t]}")
-                break
+        simbolo = mappa.get(t) or _resolve_symbol(t)
+        if not simbolo:
+            continue
+        dati = _fetch_eodhd(simbolo)
+        if "error" not in dati and dati.get("current"):
+            prices[t] = round(float(dati["current"]), 4)
+            mappa[t] = simbolo
+            _cache_store(t, {"current": prices[t], "currency": "EUR",
+                             "daily_change_pct": dati.get("daily_change_pct"),
+                             "weekly_change_pct": dati.get("weekly_change_pct"),
+                             "monthly_change_pct": dati.get("monthly_change_pct")})
         else:
-            print(f"  [paper] {t}: nessun simbolo EODHD ha risposto "
-                  f"({', '.join(EODHD_CANDIDATI.get(t, []))})")
+            print(f"  [paper] {t} ({simbolo}): {dati.get('error', 'nessun prezzo')[:90]}")
+            mappa.pop(t, None)      # simbolo non piu' valido: si ricerchera'
+    _save_symbols(mappa)
 
     mancanti = [t for t in pp.UNIVERSE if t not in prices]
     scaricati = _download_batch(mancanti)
