@@ -9,5 +9,41 @@
     "hold_days": 0,
     "sealed": true
   },
-  "closed_months": []
+  "closed_months": [
+    {
+      "month": "2026-10",
+      "start": "2026-10-01",
+      "end": "2026-10-30",
+      "giorni": 21,
+      "n_operazioni": 2,
+      "n_hold": 9,
+      "n_rifiutate": 10,
+      "quota_hold": 42.9,
+      "commissioni_eur": 5.9,
+      "twr_paper": -1.5222316032334149,
+      "twr_reale": -3.4819077343216653,
+      "twr_benchmark": null,
+      "alfa_vs_reale": 1.9596761310882505,
+      "alfa_vs_benchmark": null,
+      "integra": true,
+      "operazioni": [
+        {
+          "date": "2026-10-07",
+          "action": "BUY",
+          "ticker": "AGGH.MI",
+          "amount_eur": 350,
+          "conviction": 3,
+          "rationale": "Il portafoglio e' oltre l'80% azionario con forte concentrazione tech: aumentare la quota obbligazionaria globale dal 5% a circa il 12% riduce il rischio senza toccare le posizioni core. I tassi hanno gia' scontato molto (AGGH -1.6% sul mese) e la liquidita' resta comunque superiore a €300 in vista del CPI del 14/10."
+        },
+        {
+          "date": "2026-10-23",
+          "action": "BUY",
+          "ticker": "AGGH.MI",
+          "amount_eur": 300,
+          "conviction": 3,
+          "rationale": "Il portafoglio e' all'83% azionario con forte concentrazione USA/tech: impiego la liquidita' residua nell'obbligazionario globale portando i bond da 13% a ~19%, riducendo il rischio gia' elevato. I titoli di Stato sono in rally (IEF +1.08% oggi) e l'ingresso prima del PCE offre copertura, non scommessa direzionale."
+        }
+      ]
+    }
+  ]
 }
