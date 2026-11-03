@@ -48,29 +48,71 @@ Rispondi SOLO con JSON valido:
  "conviction":1-5,"rationale":"max due frasi"}"""
 
 
+def _download_batch(tickers: list) -> dict:
+    """
+    Una sola richiesta per tutti i ticker mancanti invece di una ciascuno.
+
+    A ottobre 2026 i cinque strumenti aggiunti per la diversificazione (SGLD,
+    EIMI, IBGL, IBTM, XDWH) non sono stati prezzati NEANCHE UNA VOLTA in tutto
+    il mese: venivano chiesti singolarmente a yfinance in coda alle decine di
+    richieste gia' fatte dal briefing, prendevano 429 ogni volta, e la cache non
+    ha mai potuto salvarli perche' si popola solo dopo una lettura riuscita.
+    Risultato: 10 ordini su 12 respinti per "prezzo non disponibile" e un agente
+    che, potendo operare di fatto solo sui quattro titoli gia' in portafoglio,
+    non poteva fare la cosa che continuava a proporre, cioe' diversificare.
+    """
+    if not tickers:
+        return {}
+    try:
+        import yfinance as yf
+        dati = yf.download(tickers, period="5d", auto_adjust=True,
+                           progress=False, group_by="ticker")
+    except Exception as e:
+        print(f"  [paper] download batch fallito: {type(e).__name__}: {str(e)[:100]}")
+        return {}
+
+    out = {}
+    for t in tickers:
+        try:
+            serie = (dati[t]["Close"] if len(tickers) > 1 else dati["Close"]).dropna()
+            if len(serie):
+                out[t] = round(float(serie.iloc[-1]), 4)
+        except (KeyError, IndexError, TypeError):
+            continue
+    return out
+
+
 def fetch_universe_prices(known: dict | None = None) -> dict:
     """
-    Prezzi dell'universo paper. Riusa i prezzi gia' scaricati dal briefing dove
-    possibile, poi yfinance, poi la cache locale: ogni chiamata in meno e' un 429
-    in meno.
+    Prezzi dell'universo paper, in tre passaggi dal piu' economico al piu' caro:
+    quelli gia' scaricati dal briefing, poi una sola richiesta batch per tutti
+    gli altri, poi la cache per chi resta scoperto.
     """
-    prices = {}
     known = known or {}
-    for ticker in pp.UNIVERSE:
-        if ticker in known and known[ticker]:
-            prices[ticker] = known[ticker]
-            continue
-        data = _fetch_yfinance(ticker)
+    prices = {t: known[t] for t in pp.UNIVERSE if known.get(t)}
+
+    mancanti = [t for t in pp.UNIVERSE if t not in prices]
+    scaricati = _download_batch(mancanti)
+    for t, prezzo in scaricati.items():
+        prices[t] = prezzo
+        _cache_store(t, {"current": prezzo, "currency": "EUR"})
+
+    for t in [x for x in mancanti if x not in prices]:
+        data = _fetch_yfinance(t)
         if "error" not in data and data.get("current"):
-            prices[ticker] = round(float(data["current"]), 4)
-            _cache_store(ticker, {"current": prices[ticker], "currency": "EUR",
-                                  "daily_change_pct": data.get("daily_change_pct"),
-                                  "weekly_change_pct": data.get("weekly_change_pct"),
-                                  "monthly_change_pct": data.get("monthly_change_pct")})
+            prices[t] = round(float(data["current"]), 4)
+            _cache_store(t, {"current": prices[t], "currency": "EUR",
+                             "daily_change_pct": data.get("daily_change_pct"),
+                             "weekly_change_pct": data.get("weekly_change_pct"),
+                             "monthly_change_pct": data.get("monthly_change_pct")})
         else:
-            rec = _cache_recover(ticker, data.get("error", "fonte non disponibile"))
+            rec = _cache_recover(t, data.get("error", "fonte non disponibile"))
             if rec:
-                prices[ticker] = rec["current"]
+                prices[t] = rec["current"]
+
+    scoperti = [t for t in pp.UNIVERSE if t not in prices]
+    if scoperti:
+        print(f"  [paper] senza prezzo oggi: {', '.join(scoperti)}")
     return prices
 
 
