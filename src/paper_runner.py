@@ -9,7 +9,21 @@ from datetime import datetime, timezone
 import anthropic
 
 import paper_portfolio as pp
-from portfolio import _cache_recover, _cache_store, _fetch_yfinance
+from portfolio import _cache_recover, _cache_store, _fetch_eodhd, _fetch_yfinance
+
+# Simboli candidati su EODHD per gli strumenti che non sono in portafoglio.
+# yfinance funziona da una macchina normale ma non dai runner GitHub, che Yahoo
+# rate-limita: a ottobre questi cinque non sono stati prezzati NEANCHE UNA VOLTA.
+# EODHD invece regge, ed e' gia' la fonte primaria delle posizioni. Non sapendo
+# con quale piazza siano censiti, si provano in ordine e si registra nel log
+# quale ha risposto, per poi fissarlo.
+EODHD_CANDIDATI = {
+    "SGLD.MI":  ["SGLD.MI", "8PSG.XETRA", "SGLD.LSE"],
+    "EIMI.MI":  ["EIMI.MI", "IS3N.XETRA", "EIMI.LSE"],
+    "IBGL.MI":  ["IBGL.MI", "IBCL.XETRA", "IBGL.LSE"],
+    "IBTM.MI":  ["IBTM.MI", "IBTM.XETRA", "IBTM.LSE"],
+    "XDWH.MI":  ["XDWH.MI", "XDWH.XETRA"],
+}
 
 MODEL = os.environ.get("PAPER_MODEL", os.environ.get("CLAUDE_MODEL", "claude-opus-5"))
 
@@ -90,6 +104,24 @@ def fetch_universe_prices(known: dict | None = None) -> dict:
     """
     known = known or {}
     prices = {t: known[t] for t in pp.UNIVERSE if known.get(t)}
+
+    mancanti = [t for t in pp.UNIVERSE if t not in prices]
+
+    # 2a) EODHD, che dai runner GitHub e' l'unica fonte che risponde davvero
+    for t in list(mancanti):
+        for simbolo in EODHD_CANDIDATI.get(t, []):
+            dati = _fetch_eodhd(simbolo)
+            if "error" not in dati and dati.get("current"):
+                prices[t] = round(float(dati["current"]), 4)
+                _cache_store(t, {"current": prices[t], "currency": "EUR",
+                                 "daily_change_pct": dati.get("daily_change_pct"),
+                                 "weekly_change_pct": dati.get("weekly_change_pct"),
+                                 "monthly_change_pct": dati.get("monthly_change_pct")})
+                print(f"  [paper] {t} prezzato da EODHD come {simbolo}: {prices[t]}")
+                break
+        else:
+            print(f"  [paper] {t}: nessun simbolo EODHD ha risposto "
+                  f"({', '.join(EODHD_CANDIDATI.get(t, []))})")
 
     mancanti = [t for t in pp.UNIVERSE if t not in prices]
     scaricati = _download_batch(mancanti)
